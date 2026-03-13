@@ -14,6 +14,7 @@ const LogoMark = () => (
 );
 
 const NavBar = ({ onOpenModal }: NavBarProps) => {
+  const navigate = useNavigate();
   return (
     <nav className="fixed top-0 left-0 right-0 z-[200] h-[52px] flex items-center justify-between px-7 bg-background/90 backdrop-blur-[20px] backdrop-saturate-[160%] border-b border-border">
       <a href="#home" className="text-[15px] font-semibold tracking-tight text-foreground no-underline flex items-center gap-[7px]">
