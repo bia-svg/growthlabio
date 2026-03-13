@@ -13,6 +13,9 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ["'Geist'", "-apple-system", "system-ui", "sans-serif"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -57,28 +60,38 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        gl: {
+          white: "hsl(var(--gl-white))",
+          off: "hsl(var(--gl-off))",
+          g50: "hsl(var(--gl-g50))",
+          g100: "hsl(var(--gl-g100))",
+          g200: "hsl(var(--gl-g200))",
+          g300: "hsl(var(--gl-g300))",
+          g400: "hsl(var(--gl-g400))",
+          g500: "hsl(var(--gl-g500))",
+          g700: "hsl(var(--gl-g700))",
+          g900: "hsl(var(--gl-g900))",
+          black: "hsl(var(--gl-black))",
+          green: "hsl(var(--gl-green))",
+          "green-bg": "hsl(var(--gl-green-bg))",
+          amber: "hsl(var(--gl-amber))",
+          "amber-bg": "hsl(var(--gl-amber-bg))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        xl: "var(--radius-lg)",
       },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
         },
       },
       animation: {
