@@ -1,7 +1,7 @@
 import RevealUp from "./RevealUp";
 
 const steps = [
-  { n: "01", title: "Conecta as fontes", desc: "Meta Ads via OAuth, mais Shopify, HubSpot ou Sympla para receita. Dados fluindo no mesmo dia." },
+  { n: "01", title: "Conecta as fontes", desc: "Meta Ads, CRMs, plataformas de cobranças. Dados fluindo no mesmo dia." },
   { n: "02", title: "Configura o produto", desc: "Define funil, ticket médio e metas. Faz upload de PDFs e brand guides — a IA lê e usa como contexto." },
   { n: "03", title: "IA analisa e propõe", desc: "Insights semanais automáticos. Fila de otimizações priorizadas por impacto. AI Agent disponível 24/7." },
   { n: "04", title: "Você aprova. Executa.", desc: "Nada muda sem a sua aprovação. Um clique executa via Meta Ads API com auditoria completa." },
