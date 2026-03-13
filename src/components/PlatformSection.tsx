@@ -17,7 +17,7 @@ const PlatformSection = () => (
         <h2 className="text-[clamp(32px,4vw,56px)] font-bold leading-[1.05] tracking-[-0.035em] text-foreground mb-3.5">
           Inteligência que amplifica<br />quem já é bom.
         </h2>
-        <p className="text-[17px] font-light text-gl-g400 leading-[1.75] max-w-[520px]">
+        <p className="text-lg font-light text-gl-g400 leading-[1.75] max-w-[520px]">
           GrowthLab é o copiloto para gestores de tráfego, times in-house, consultores e qualquer pessoa que trabalha com growth e mídia paga. Você no controle — com IA acelerando cada decisão.
         </p>
       </RevealUp>
