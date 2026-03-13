@@ -28,8 +28,8 @@ const HowAndStats = () => (
         {steps.map((s, i) => (
           <div key={s.n} className={`p-8 px-6 ${i < 3 ? "lg:border-r border-b lg:border-b-0" : ""} ${i < 2 ? "sm:border-r" : "sm:border-r-0"} border-border`}>
             <div className="text-[42px] font-bold tracking-[-0.04em] text-gl-g100 leading-none mb-4">{s.n}</div>
-            <h3 className="text-[14.5px] font-semibold text-foreground mb-[7px]">{s.title}</h3>
-            <p className="text-[13px] font-light text-gl-g400 leading-relaxed">{s.desc}</p>
+            <h3 className="text-base font-semibold text-foreground mb-2">{s.title}</h3>
+            <p className="text-[15px] font-light text-gl-g400 leading-relaxed">{s.desc}</p>
           </div>
         ))}
       </div>
