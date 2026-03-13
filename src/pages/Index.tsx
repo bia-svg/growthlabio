@@ -1,13 +1,33 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import NavBar from "@/components/NavBar";
+import HeroSection from "@/components/HeroSection";
+import IntegrationsBar from "@/components/IntegrationsBar";
+import PlatformSection from "@/components/PlatformSection";
+import AgentSection from "@/components/AgentSection";
+import HowAndStats from "@/components/HowAndStats";
+import PricingSection from "@/components/PricingSection";
+import CTASection from "@/components/CTASection";
+import Footer from "@/components/Footer";
+import DemoModal from "@/components/DemoModal";
 
 const Index = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <>
+      <NavBar onOpenModal={openModal} />
+      <HeroSection onOpenModal={openModal} />
+      <IntegrationsBar />
+      <PlatformSection />
+      <AgentSection />
+      <HowAndStats />
+      <PricingSection onOpenModal={openModal} />
+      <CTASection onOpenModal={openModal} />
+      <Footer />
+      <DemoModal open={modalOpen} onClose={closeModal} />
+    </>
   );
 };
 
