@@ -29,17 +29,10 @@ const Billing = () => {
           <div className="divide-y divide-dash-border">
             <div className="px-5 py-4 flex justify-between">
               <div>
-                <div className="text-[14px] text-dash-text-primary">Growth base fee</div>
-                <div className="text-[12px] text-dash-text-tertiary">3 brands × 5 integrated products</div>
+                <div className="text-[14px] text-dash-text-primary">Professional monthly subscription</div>
+                <div className="text-[12px] text-dash-text-tertiary">Up to 5 users · 10 ad accounts</div>
               </div>
-              <div className="text-[14px] font-medium text-dash-text-primary">R$10,000.00</div>
-            </div>
-            <div className="px-5 py-4 flex justify-between">
-              <div>
-                <div className="text-[14px] text-dash-text-primary">Performance bonus</div>
-                <div className="text-[12px] text-dash-text-tertiary">ROAS above 3.5× for 18 consecutive days</div>
-              </div>
-              <div className="text-[14px] font-medium text-dash-green">R$2,800.00</div>
+              <div className="text-[14px] font-medium text-dash-text-primary">R$479.00</div>
             </div>
             <div className="px-5 py-4 flex justify-between">
               <div>
@@ -49,14 +42,14 @@ const Billing = () => {
             </div>
             <div className="px-5 py-3 flex justify-between">
               <div className="text-[13px] text-dash-text-secondary">Subtotal</div>
-              <div className="text-[14px] font-medium text-dash-text-primary">R$12,800.00</div>
+              <div className="text-[14px] font-medium text-dash-text-primary">R$479.00</div>
             </div>
           </div>
 
           {/* Total */}
           <div className="bg-dash-sidebar border-t border-dash-border px-5 py-4 flex justify-between items-center">
             <div className="text-[14px] font-semibold text-dash-text-primary">Total March 2026</div>
-            <div className="text-[22px] font-bold tracking-[-0.04em] text-dash-text-primary">R$12,800.00</div>
+            <div className="text-[22px] font-bold tracking-[-0.04em] text-dash-text-primary">R$479.00</div>
           </div>
 
           {/* Actions */}
@@ -89,26 +82,24 @@ const Billing = () => {
 
         {/* Right sidebar */}
         <div className="flex flex-col gap-4">
-          {/* Current plan */}
           <div className="border border-dash-border rounded-lg p-5">
             <div className="text-[11px] font-semibold uppercase tracking-[0.07em] text-dash-text-tertiary mb-3">Current Plan</div>
-            <div className="text-[15px] font-semibold text-dash-text-primary mb-1">Growth · R$10,000/mo</div>
+            <div className="text-[15px] font-semibold text-dash-text-primary mb-1">Professional · R$479/mo</div>
             <div className="text-[12.5px] text-dash-text-secondary space-y-0.5">
-              <div>3 brands · 5 products</div>
-              <div>Human support · SLA 24h</div>
+              <div>Up to 5 users · 10 ad accounts</div>
+              <div>Automated reports · auto alerts</div>
               <div>Renewal: Apr 1, 2026</div>
             </div>
             <button className="text-[12px] text-dash-blue hover:underline mt-3">Manage plan →</button>
           </div>
 
-          {/* Invoice history */}
           <div className="border border-dash-border rounded-lg p-5">
             <div className="text-[11px] font-semibold uppercase tracking-[0.07em] text-dash-text-tertiary mb-3">Invoice History</div>
             <div className="space-y-2.5">
               {[
-                { month: "Feb 2026", value: "R$11,200", status: "Paid" },
-                { month: "Jan 2026", value: "R$10,000", status: "Paid" },
-                { month: "Dec 2025", value: "R$10,000", status: "Paid" },
+                { month: "Feb 2026", value: "R$479", status: "Paid" },
+                { month: "Jan 2026", value: "R$479", status: "Paid" },
+                { month: "Dec 2025", value: "R$479", status: "Paid" },
               ].map(inv => (
                 <div key={inv.month} className="flex items-center justify-between text-[12.5px]">
                   <div className="text-dash-text-secondary">{inv.month} · {inv.value}</div>
