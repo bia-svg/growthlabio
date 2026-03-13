@@ -15,6 +15,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ["'Geist'", "-apple-system", "system-ui", "sans-serif"],
+        inter: ["'Inter'", "-apple-system", "system-ui", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -76,6 +77,25 @@ export default {
           "green-bg": "hsl(var(--gl-green-bg))",
           amber: "hsl(var(--gl-amber))",
           "amber-bg": "hsl(var(--gl-amber-bg))",
+        },
+        dash: {
+          sidebar: "hsl(var(--dash-sidebar))",
+          hover: "hsl(var(--dash-hover))",
+          active: "hsl(var(--dash-active))",
+          border: "hsl(var(--dash-border))",
+          "text-primary": "hsl(var(--dash-text-primary))",
+          "text-secondary": "hsl(var(--dash-text-secondary))",
+          "text-tertiary": "hsl(var(--dash-text-tertiary))",
+          green: "hsl(var(--dash-green))",
+          "green-bg": "hsl(var(--dash-green-bg))",
+          amber: "hsl(var(--dash-amber))",
+          "amber-bg": "hsl(var(--dash-amber-bg))",
+          red: "hsl(var(--dash-red))",
+          "red-bg": "hsl(var(--dash-red-bg))",
+          blue: "hsl(var(--dash-blue))",
+          "blue-bg": "hsl(var(--dash-blue-bg))",
+          lime: "hsl(var(--dash-lime))",
+          "lime-bg": "hsl(var(--dash-lime-bg))",
         },
       },
       borderRadius: {
