@@ -37,6 +37,12 @@ const HowAndStats = () => (
 
     {/* Stats */}
     <RevealUp className="py-[72px]">
+      <div className="text-center mb-14">
+        <p className="text-xs font-semibold tracking-widest uppercase text-gl-g300 mb-3.5">Resultados</p>
+        <h2 className="text-[clamp(32px,4vw,56px)] font-bold leading-[1.05] tracking-[-0.035em] text-foreground">
+          O impacto no seu negócio.
+        </h2>
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border border-border rounded-xl overflow-hidden">
         {stats.map((s, i) => (
           <div key={s.value} className={`p-9 px-7 ${i < 3 ? "lg:border-r" : ""} ${i < 2 ? "sm:border-r" : "sm:border-r-0"} border-b lg:border-b-0 border-border last:border-b-0`}>
