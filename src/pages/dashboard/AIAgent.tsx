@@ -161,12 +161,15 @@ const AIAgent = () => {
               </button>
             ))}
           </div>
-          <div className="p-2 border-t border-dash-border">
+          <div className="p-2 border-t border-dash-border space-y-1">
             <button
               onClick={handleNewConversation}
               className="w-full text-[12px] text-dash-text-secondary hover:text-dash-text-primary hover:bg-dash-hover py-2 rounded-md transition-colors"
             >
               + New conversation
+            </button>
+            <button className="w-full text-[11px] text-dash-text-tertiary hover:text-dash-text-secondary py-1 rounded-md transition-colors">
+              ↑ Import from meeting
             </button>
           </div>
         </div>
