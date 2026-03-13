@@ -138,7 +138,7 @@ const AIAgent = () => {
   return (
     <div className="p-10 dash-page-enter flex flex-col" style={{ height: "calc(100vh - 44px - 40px)" }}>
       <h1 className="text-[30px] font-bold tracking-[-0.04em] text-dash-text-primary mb-1">AI Agent</h1>
-      <p className="text-[14px] text-dash-text-secondary mb-6">Chat with your data and execute changes with approval</p>
+      <p className="text-[14px] text-dash-text-secondary mb-6">Chat with your data. Analyze, propose, execute — all in one conversation.</p>
 
       <div className="flex-1 flex border border-dash-border rounded-lg overflow-hidden min-h-0">
         {/* Sessions panel */}
