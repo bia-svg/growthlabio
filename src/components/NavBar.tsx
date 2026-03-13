@@ -31,7 +31,7 @@ const NavBar = ({ onOpenModal }: NavBarProps) => {
         ))}
       </ul>
       <div className="flex gap-2 items-center">
-        <button onClick={() => navigate("/dashboard")} className="text-[13.5px] font-medium text-gl-g500 bg-transparent border border-border rounded-lg px-3.5 py-1.5 hover:bg-gl-g50 hover:border-gl-g200 hover:text-foreground transition-all">
+        <button onClick={() => navigate("/login")} className="text-[13.5px] font-medium text-gl-g500 bg-transparent border border-border rounded-lg px-3.5 py-1.5 hover:bg-gl-g50 hover:border-gl-g200 hover:text-foreground transition-all">
           Login
         </button>
         <button onClick={onOpenModal} className="text-[13.5px] font-medium text-primary-foreground bg-primary border-none rounded-lg px-4 py-[7px] hover:bg-gl-g700 transition-colors">

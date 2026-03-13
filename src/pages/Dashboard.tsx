@@ -9,6 +9,7 @@ import Optimizer from "@/pages/dashboard/Optimizer";
 import Competitor from "@/pages/dashboard/Competitor";
 import Attribution from "@/pages/dashboard/Attribution";
 import Billing from "@/pages/dashboard/Billing";
+import Integrations from "@/pages/dashboard/Integrations";
 import { useLocation } from "react-router-dom";
 
 const breadcrumbMap: Record<string, string> = {
@@ -18,6 +19,7 @@ const breadcrumbMap: Record<string, string> = {
   "/dashboard/competitor": "Competitor",
   "/dashboard/attribution": "Attribution",
   "/dashboard/billing": "Billing",
+  "/dashboard/integrations": "Integrations",
 };
 
 const Dashboard = () => {
@@ -39,6 +41,7 @@ const Dashboard = () => {
             <Route path="competitor" element={<Competitor />} />
             <Route path="attribution" element={<Attribution />} />
             <Route path="billing" element={<Billing />} />
+            <Route path="integrations" element={<Integrations />} />
           </Routes>
         </main>
       </div>

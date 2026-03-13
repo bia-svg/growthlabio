@@ -111,7 +111,7 @@ const DashSidebar = ({ optimizerCount }: DashSidebarProps) => {
 
       <div className="mx-3 my-3 h-px bg-dash-border" />
 
-      <nav className="px-2">
+      <nav className="px-2 flex flex-col gap-0.5">
         <button
           onClick={() => navigate("/dashboard/billing")}
           className={`w-full flex items-center gap-2.5 px-3 py-[7px] rounded-md text-[13.5px] transition-colors ${
@@ -126,6 +126,22 @@ const DashSidebar = ({ optimizerCount }: DashSidebarProps) => {
         </button>
       </nav>
 
+      <div className="mx-3 my-3 h-px bg-dash-border" />
+
+      <nav className="px-2">
+        <button
+          onClick={() => navigate("/dashboard/integrations")}
+          className={`w-full flex items-center gap-2.5 px-3 py-[7px] rounded-md text-[13.5px] transition-colors ${
+            isActive("/dashboard/integrations")
+              ? "bg-dash-active font-medium text-dash-text-primary"
+              : "text-dash-text-tertiary hover:bg-dash-hover"
+          }`}
+        >
+          <span className="text-[14px] w-4 text-center opacity-55">⊕</span>
+          <span className="flex-1 text-left">Integrations</span>
+        </button>
+      </nav>
+
       {/* Spacer */}
       <div className="flex-1" />
 
@@ -134,7 +150,7 @@ const DashSidebar = ({ optimizerCount }: DashSidebarProps) => {
         <div className="w-8 h-8 rounded-full bg-dash-text-primary text-white flex items-center justify-center text-[12px] font-bold">V</div>
         <div>
           <div className="text-[13px] font-medium text-dash-text-primary">Velaris Co.</div>
-          <div className="text-[11px] text-dash-text-tertiary">Growth Plan</div>
+          <div className="text-[11px] text-dash-text-tertiary">Professional Plan</div>
         </div>
       </div>
     </aside>

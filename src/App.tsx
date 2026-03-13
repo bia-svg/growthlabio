@@ -6,6 +6,10 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
+import Login from "./pages/Login.tsx";
+import Welcome from "./pages/Welcome.tsx";
+import Onboarding from "./pages/Onboarding.tsx";
+import FunnelWizard from "./pages/FunnelWizard.tsx";
 
 const queryClient = new QueryClient();
 
@@ -17,6 +21,10 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/welcome" element={<Welcome />} />
+          <Route path="/onboarding" element={<Onboarding />} />
+          <Route path="/funnel-wizard" element={<FunnelWizard />} />
           <Route path="/dashboard/*" element={<Dashboard />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
