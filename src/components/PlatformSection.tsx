@@ -17,7 +17,7 @@ const PlatformSection = () => (
         <h2 className="text-[clamp(32px,4vw,56px)] font-bold leading-[1.05] tracking-[-0.035em] text-foreground mb-3.5">
           Inteligência que amplifica<br />quem já é bom.
         </h2>
-        <p className="text-[17px] font-light text-gl-g400 leading-[1.75] max-w-[520px]">
+        <p className="text-lg font-light text-gl-g400 leading-[1.75] max-w-[520px]">
           GrowthLab é o copiloto para gestores de tráfego, times in-house, consultores e qualquer pessoa que trabalha com growth e mídia paga. Você no controle — com IA acelerando cada decisão.
         </p>
       </RevealUp>
@@ -37,8 +37,8 @@ const PlatformSection = () => (
               <div className="w-[34px] h-[34px] border border-border rounded-[7px] flex items-center justify-center text-sm mb-4 bg-background">
                 {f.ico}
               </div>
-              <h3 className="text-[15px] font-semibold tracking-tight text-foreground mb-[7px]">{f.title}</h3>
-              <p className="text-[13.5px] font-light text-gl-g400 leading-relaxed">{f.desc}</p>
+              <h3 className="text-base font-semibold tracking-tight text-foreground mb-2">{f.title}</h3>
+              <p className="text-[15px] font-light text-gl-g400 leading-relaxed">{f.desc}</p>
             </div>
           ))}
         </div>
