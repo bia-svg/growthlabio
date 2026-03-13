@@ -111,7 +111,7 @@ const HeroSection = ({ onOpenModal }: HeroSectionProps) => {
         </div>
         <h1 className="text-[clamp(48px,6.5vw,88px)] font-bold leading-[1.03] tracking-[-0.04em] text-foreground max-w-[860px] mx-auto mb-5">
           Seu copiloto de IA<br />
-          para <span className="text-gl-g300 font-light">growth</span><br />
+          para <span className="text-gl-g300">growth</span><br />
           e mídia paga.
         </h1>
         <p className="text-lg font-light text-gl-g400 max-w-[500px] mx-auto mb-9 leading-[1.7]">

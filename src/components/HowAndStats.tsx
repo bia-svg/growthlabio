@@ -47,7 +47,7 @@ const HowAndStats = () => (
         {stats.map((s, i) => (
           <div key={s.value} className={`p-9 px-7 ${i < 3 ? "lg:border-r" : ""} ${i < 2 ? "sm:border-r" : "sm:border-r-0"} border-b lg:border-b-0 border-border last:border-b-0`}>
             <div className="text-[52px] font-bold tracking-[-0.04em] text-foreground leading-none mb-1.5">{s.value}</div>
-            <div className="text-[13px] font-light text-gl-g400 leading-relaxed">{s.label}</div>
+            <div className="text-[15px] font-light text-gl-g400 leading-relaxed">{s.label}</div>
           </div>
         ))}
       </div>
