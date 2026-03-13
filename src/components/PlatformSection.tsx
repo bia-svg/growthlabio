@@ -37,8 +37,8 @@ const PlatformSection = () => (
               <div className="w-[34px] h-[34px] border border-border rounded-[7px] flex items-center justify-center text-sm mb-4 bg-background">
                 {f.ico}
               </div>
-              <h3 className="text-[15px] font-semibold tracking-tight text-foreground mb-[7px]">{f.title}</h3>
-              <p className="text-[13.5px] font-light text-gl-g400 leading-relaxed">{f.desc}</p>
+              <h3 className="text-base font-semibold tracking-tight text-foreground mb-2">{f.title}</h3>
+              <p className="text-[15px] font-light text-gl-g400 leading-relaxed">{f.desc}</p>
             </div>
           ))}
         </div>
