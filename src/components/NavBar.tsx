@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 interface NavBarProps {
   onOpenModal: () => void;
 }
@@ -12,6 +14,7 @@ const LogoMark = () => (
 );
 
 const NavBar = ({ onOpenModal }: NavBarProps) => {
+  const navigate = useNavigate();
   return (
     <nav className="fixed top-0 left-0 right-0 z-[200] h-[52px] flex items-center justify-between px-7 bg-background/90 backdrop-blur-[20px] backdrop-saturate-[160%] border-b border-border">
       <a href="#home" className="text-[15px] font-semibold tracking-tight text-foreground no-underline flex items-center gap-[7px]">
@@ -28,7 +31,7 @@ const NavBar = ({ onOpenModal }: NavBarProps) => {
         ))}
       </ul>
       <div className="flex gap-2 items-center">
-        <button onClick={onOpenModal} className="text-[13.5px] font-medium text-gl-g500 bg-transparent border border-border rounded-lg px-3.5 py-1.5 hover:bg-gl-g50 hover:border-gl-g200 hover:text-foreground transition-all">
+        <button onClick={() => navigate("/dashboard")} className="text-[13.5px] font-medium text-gl-g500 bg-transparent border border-border rounded-lg px-3.5 py-1.5 hover:bg-gl-g50 hover:border-gl-g200 hover:text-foreground transition-all">
           Login
         </button>
         <button onClick={onOpenModal} className="text-[13.5px] font-medium text-primary-foreground bg-primary border-none rounded-lg px-4 py-[7px] hover:bg-gl-g700 transition-colors">
