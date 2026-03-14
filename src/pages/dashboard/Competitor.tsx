@@ -6,7 +6,7 @@ const competitors = [
     color: "bg-[hsl(245,52%,60%)]",
     meta: "12 active ads · since 02/15",
     tags: ["Offer", "Video", "Social proof"],
-    insight: 'Running **3 new creatives** since Monday. Main angle: short video testimonials. Estimated high frequency — possible saturation.',
+    insight: 'Running **3 new creatives** since Monday. Main angle: short video testimonials. High frequency — possible saturation in 4–5 days.',
   },
   {
     name: "FluxoAds",
@@ -40,12 +40,12 @@ const Competitor = () => {
       <p className="text-[14px] text-dash-text-secondary mb-6">Monitoring via Meta Ad Library · updated 2h ago</p>
 
       {/* Weekly insight */}
-      <div className="bg-dash-blue-bg border border-[hsl(215,40%,85%)] rounded-lg px-5 py-3.5 text-[13.5px] text-dash-blue mb-8 leading-relaxed">
+      <div className="bg-dash-blue-bg border border-[hsl(215,40%,85%)] border-l-[3px] border-l-dash-blue rounded-lg px-5 py-3.5 text-[13.5px] text-dash-blue mb-8 leading-relaxed">
         This week: Competitor A reduced ad volume by 40%. Possible strategic pause or creative refresh.
       </div>
 
       {/* Grid */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-4 mb-8">
         {cards.map(c => (
           <div key={c.name} className="border border-dash-border rounded-lg p-5 hover:border-dash-text-tertiary transition-colors">
             <div className="flex items-center gap-3 mb-3">
@@ -65,13 +65,26 @@ const Competitor = () => {
               ))}
             </div>
             <div className="h-px bg-dash-border mb-3" />
-            <p className="text-[13px] text-dash-text-secondary leading-relaxed">{renderBold(c.insight)}</p>
+            <p className="text-[13px] text-dash-text-secondary leading-relaxed mb-2">{renderBold(c.insight)}</p>
+            <button className="text-[12px] text-dash-blue hover:underline">View ads →</button>
           </div>
         ))}
 
         {/* Add competitor */}
         <button className="border-2 border-dashed border-dash-border rounded-lg p-5 flex items-center justify-center hover:border-dash-text-tertiary hover:bg-dash-sidebar transition-colors min-h-[180px]">
           <span className="text-[14px] text-dash-text-tertiary">+ Add competitor</span>
+        </button>
+      </div>
+
+      {/* AI analysis panel */}
+      <div className="border border-dash-border rounded-lg p-5">
+        <div className="text-[11px] font-semibold uppercase tracking-[0.07em] text-dash-text-tertiary mb-3">AI Analysis</div>
+        <p className="text-[13.5px] text-dash-text-primary leading-relaxed mb-3">
+          <strong>Gap identified:</strong> None of your competitors are running testimonial-based ads targeting professionals 35–44. 
+          Your audience brief mentions this segment has a 2.3× higher CVR.
+        </p>
+        <button className="text-[12px] text-dash-blue hover:underline">
+          Use this insight in AI Agent →
         </button>
       </div>
     </div>

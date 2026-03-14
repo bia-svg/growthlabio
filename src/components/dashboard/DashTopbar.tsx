@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 
 interface DashTopbarProps {
   breadcrumb: string;
-  onNavigateAttribution?: () => void;
 }
 
 const DashTopbar = ({ breadcrumb }: DashTopbarProps) => {
@@ -15,7 +14,14 @@ const DashTopbar = ({ breadcrumb }: DashTopbarProps) => {
         <span className="mx-1.5">/</span>
         <span>{breadcrumb}</span>
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3">
+        <button className="flex items-center gap-1.5 text-[12px] text-dash-text-secondary border border-dash-border rounded-md px-2.5 py-1 hover:bg-dash-hover transition-colors">
+          <span className="text-[11px]">📅</span>
+          Last 30 days
+        </button>
+        <button className="flex items-center gap-1.5 text-[12px] text-dash-text-secondary border border-dash-border rounded-md px-2.5 py-1 hover:bg-dash-hover transition-colors">
+          ↓ Export
+        </button>
         <button
           onClick={() => navigate("/")}
           className="text-[12px] text-dash-text-tertiary hover:text-dash-text-primary transition-colors"
