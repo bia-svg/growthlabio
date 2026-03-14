@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { toast } from "sonner";
 
 interface Message {
   role: "bot" | "user" | "proposal" | "creative";
@@ -21,6 +22,7 @@ interface Message {
 interface SessionState {
   executed?: boolean;
   messages: Message[];
+  isAI?: boolean; // true = uses real OpenAI
 }
 
 const toolLabels: Record<string, string> = {
@@ -185,16 +187,107 @@ const initialSessions = [
 
 const availableToolKeys = Object.keys(toolLabels);
 
+const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-chat`;
+
+async function streamChat({
+  messages,
+  onDelta,
+  onDone,
+  onError,
+}: {
+  messages: { role: string; content: string }[];
+  onDelta: (text: string) => void;
+  onDone: () => void;
+  onError: (err: string) => void;
+}) {
+  try {
+    const resp = await fetch(CHAT_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+      },
+      body: JSON.stringify({ messages }),
+    });
+
+    if (!resp.ok) {
+      const data = await resp.json().catch(() => ({}));
+      onError(data.error || `Error ${resp.status}`);
+      return;
+    }
+
+    if (!resp.body) {
+      onError("No response stream");
+      return;
+    }
+
+    const reader = resp.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = "";
+    let streamDone = false;
+
+    while (!streamDone) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+
+      let newlineIndex: number;
+      while ((newlineIndex = buffer.indexOf("\n")) !== -1) {
+        let line = buffer.slice(0, newlineIndex);
+        buffer = buffer.slice(newlineIndex + 1);
+        if (line.endsWith("\r")) line = line.slice(0, -1);
+        if (line.startsWith(":") || line.trim() === "") continue;
+        if (!line.startsWith("data: ")) continue;
+        const jsonStr = line.slice(6).trim();
+        if (jsonStr === "[DONE]") { streamDone = true; break; }
+        try {
+          const parsed = JSON.parse(jsonStr);
+          const content = parsed.choices?.[0]?.delta?.content as string | undefined;
+          if (content) onDelta(content);
+        } catch {
+          buffer = line + "\n" + buffer;
+          break;
+        }
+      }
+    }
+
+    // flush remaining
+    if (buffer.trim()) {
+      for (let raw of buffer.split("\n")) {
+        if (!raw) continue;
+        if (raw.endsWith("\r")) raw = raw.slice(0, -1);
+        if (!raw.startsWith("data: ")) continue;
+        const jsonStr = raw.slice(6).trim();
+        if (jsonStr === "[DONE]") continue;
+        try {
+          const parsed = JSON.parse(jsonStr);
+          const content = parsed.choices?.[0]?.delta?.content as string | undefined;
+          if (content) onDelta(content);
+        } catch { /* ignore */ }
+      }
+    }
+
+    onDone();
+  } catch (e) {
+    onError(e instanceof Error ? e.message : "Connection error");
+  }
+}
+
 const AIAgent = () => {
   const [activeSession, setActiveSession] = useState(0);
   const [sessionStates, setSessionStates] = useState<Record<number, SessionState>>(
-    Object.fromEntries(initialSessions.map((s, i) => [i, { messages: [...s.messages] }]))
+    Object.fromEntries(initialSessions.map((s, i) => [i, { messages: [...s.messages], isAI: false }]))
+  );
+  const [sessionList, setSessionList] = useState(
+    initialSessions.map((s, i) => ({ id: i, title: s.title, preview: s.preview, time: s.time }))
   );
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
+  const assistantTextRef = useRef("");
 
   const currentMessages = sessionStates[activeSession]?.messages || [];
+  const isAISession = sessionStates[activeSession]?.isAI || false;
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -226,18 +319,9 @@ const AIAgent = () => {
     setSessionStates(prev => {
       const msgs = [...prev[activeSession].messages];
       const msg = msgs[msgIndex];
-      if (msg) {
-        msgs[msgIndex] = { ...msg, proposalActions: false };
-      }
-      msgs.push({
-        role: "bot",
-        text: "✓ Actions sent for execution via Meta API. Confirmation in ~2 min.",
-        tools: [],
-      });
-      return {
-        ...prev,
-        [activeSession]: { ...prev[activeSession], messages: msgs },
-      };
+      if (msg) msgs[msgIndex] = { ...msg, proposalActions: false };
+      msgs.push({ role: "bot", text: "✓ Actions sent for execution via Meta API. Confirmation in ~2 min.", tools: [] });
+      return { ...prev, [activeSession]: { ...prev[activeSession], messages: msgs } };
     });
   };
 
@@ -245,14 +329,9 @@ const AIAgent = () => {
     setSessionStates(prev => {
       const msgs = [...prev[activeSession].messages];
       const msg = msgs[msgIndex];
-      if (msg) {
-        msgs[msgIndex] = { ...msg, proposalActions: false };
-      }
+      if (msg) msgs[msgIndex] = { ...msg, proposalActions: false };
       msgs.push({ role: "bot", text: "Proposta descartada. Posso ajudar com outra coisa?" });
-      return {
-        ...prev,
-        [activeSession]: { ...prev[activeSession], messages: msgs },
-      };
+      return { ...prev, [activeSession]: { ...prev[activeSession], messages: msgs } };
     });
   };
 
@@ -260,29 +339,29 @@ const AIAgent = () => {
     setSessionStates(prev => {
       const msgs = [...prev[activeSession].messages];
       const msg = msgs[msgIndex];
-      if (msg?.creativeData) {
-        msgs[msgIndex] = { ...msg, creativeData: { ...msg.creativeData, launched: true } };
-      }
+      if (msg?.creativeData) msgs[msgIndex] = { ...msg, creativeData: { ...msg.creativeData, launched: true } };
       msgs.push({
         role: "bot",
         text: "✓ Ad submitted to Meta Ads Manager. Status: In Review.\nEstimated approval: 30 min – 2h.\nCampaign: Lookalike 1% Customers · Budget: R$400/day · Start: Immediately after approval.",
         tools: ["create_ad"],
       });
-      return {
-        ...prev,
-        [activeSession]: { ...prev[activeSession], messages: msgs },
-      };
+      return { ...prev, [activeSession]: { ...prev[activeSession], messages: msgs } };
     });
   };
 
   const handleNewConversation = () => {
-    const newId = Object.keys(sessionStates).length;
+    const newId = Math.max(...Object.keys(sessionStates).map(Number)) + 1;
     setSessionStates(prev => ({
       ...prev,
       [newId]: {
-        messages: [{ role: "bot", text: "Olá. Tenho acesso aos dados de Velaris Co. / Orbit. O que você quer analisar?" }],
+        messages: [{ role: "bot", text: "Olá! Sou o GrowthLab AI. Tenho acesso aos dados de Velaris Co. / Orbit. Como posso ajudar?" }],
+        isAI: true,
       },
     }));
+    setSessionList(prev => [
+      { id: newId, title: "New Conversation", preview: "AI-powered chat...", time: "Now" },
+      ...prev,
+    ]);
     setActiveSession(newId);
   };
 
@@ -290,16 +369,77 @@ const AIAgent = () => {
     if (!input.trim() || typing) return;
     const text = input.trim();
     setInput("");
-    addMessages([{ role: "user", text }]);
+
+    // Add user message
+    const userMsg: Message = { role: "user", text };
+    setSessionStates(prev => ({
+      ...prev,
+      [activeSession]: {
+        ...prev[activeSession],
+        messages: [...prev[activeSession].messages, userMsg],
+      },
+    }));
+
     setTyping(true);
-    setTimeout(() => {
-      addMessages([{
-        role: "bot",
-        text: "Analisando seus dados... Identifico que a principal oportunidade agora é otimizar o budget allocation entre os ad sets ativos. Quer que eu elabore uma proposta?",
-        tools: ["get_campaign_metrics"],
-      }]);
-      setTyping(false);
-    }, 1500);
+
+    if (isAISession) {
+      // Real AI streaming
+      const allMessages = [...currentMessages, userMsg]
+        .filter(m => m.role === "user" || m.role === "bot")
+        .map(m => ({ role: m.role === "user" ? "user" as const : "assistant" as const, content: m.text }));
+
+      assistantTextRef.current = "";
+
+      streamChat({
+        messages: allMessages,
+        onDelta: (chunk) => {
+          assistantTextRef.current += chunk;
+          const soFar = assistantTextRef.current;
+          setSessionStates(prev => {
+            const msgs = [...prev[activeSession].messages];
+            const last = msgs[msgs.length - 1];
+            if (last?.role === "bot" && last.tools?.includes("__streaming")) {
+              msgs[msgs.length - 1] = { ...last, text: soFar };
+            } else {
+              msgs.push({ role: "bot", text: soFar, tools: ["__streaming"] });
+            }
+            return { ...prev, [activeSession]: { ...prev[activeSession], messages: msgs } };
+          });
+        },
+        onDone: () => {
+          // Remove streaming marker
+          setSessionStates(prev => {
+            const msgs = [...prev[activeSession].messages];
+            const last = msgs[msgs.length - 1];
+            if (last?.role === "bot" && last.tools?.includes("__streaming")) {
+              msgs[msgs.length - 1] = { ...last, tools: [] };
+            }
+            return { ...prev, [activeSession]: { ...prev[activeSession], messages: msgs } };
+          });
+          setTyping(false);
+        },
+        onError: (err) => {
+          toast.error(err);
+          setTyping(false);
+        },
+      });
+    } else {
+      // Demo fallback
+      setTimeout(() => {
+        setSessionStates(prev => ({
+          ...prev,
+          [activeSession]: {
+            ...prev[activeSession],
+            messages: [...prev[activeSession].messages, {
+              role: "bot",
+              text: "Analisando seus dados... Identifico que a principal oportunidade agora é otimizar o budget allocation entre os ad sets ativos. Quer que eu elabore uma proposta?",
+              tools: ["get_campaign_metrics"],
+            }],
+          },
+        }));
+        setTyping(false);
+      }, 1500);
+    }
   };
 
   const renderCreativeCard = (msg: Message, msgIndex: number) => {
@@ -310,29 +450,22 @@ const AIAgent = () => {
           <div className="px-4 py-2.5 border-b border-dash-border">
             <span className="text-[13px] text-dash-text-primary leading-relaxed whitespace-pre-line">{msg.text}</span>
           </div>
-
-          {/* Creative preview */}
           <div className="p-4 space-y-3">
             <div className="bg-background border border-dash-border rounded-md p-4">
               <div className="text-[10px] font-semibold uppercase tracking-[0.07em] text-dash-text-tertiary mb-2">Ad Preview</div>
-
-              {/* Image placeholder */}
               <div className="w-full aspect-square bg-dash-active rounded-md flex items-center justify-center mb-3">
                 <div className="text-center">
                   <div className="text-[32px] mb-1">🎨</div>
                   <div className="text-[11px] text-dash-text-tertiary">{cd.format}</div>
                 </div>
               </div>
-
               <div className="text-[15px] font-semibold text-dash-text-primary leading-tight mb-1.5">{cd.headline}</div>
               <div className="text-[12.5px] text-dash-text-secondary leading-relaxed whitespace-pre-line mb-3">{cd.primaryText}</div>
-
               <div className="flex items-center justify-between bg-dash-hover border border-dash-border rounded-md px-3 py-2">
                 <div className="text-[12px] text-dash-text-secondary">velaris.com.br</div>
                 <div className="text-[12px] font-semibold text-dash-text-primary">{cd.cta}</div>
               </div>
             </div>
-
             <div className="grid grid-cols-3 gap-2 text-[11px]">
               <div>
                 <div className="text-dash-text-tertiary uppercase tracking-wide font-medium text-[9px] mb-0.5">Format</div>
@@ -347,32 +480,23 @@ const AIAgent = () => {
                 <div className="text-dash-text-secondary">{cd.placement}</div>
               </div>
             </div>
-
             {cd.launched ? (
               <div className="bg-dash-green-bg border border-[hsl(155,40%,85%)] rounded-md px-3 py-2 text-[12px] text-dash-green font-medium">
                 ✓ Launched — Submitted to Meta Ads Manager
               </div>
             ) : (
               <div className="flex gap-2">
-                <button onClick={() => handleLaunch(msgIndex)} className="text-[12px] font-medium bg-dash-text-primary text-white px-4 py-1.5 rounded-md hover:opacity-90 transition-opacity">
-                  Launch
-                </button>
-                <button className="text-[12px] text-dash-text-secondary border border-dash-border px-3 py-1.5 rounded-md hover:bg-dash-hover transition-colors">
-                  Regenerate
-                </button>
-                <button className="text-[12px] text-dash-text-tertiary px-3 py-1.5 hover:text-dash-text-secondary transition-colors">
-                  Edit Brief
-                </button>
+                <button onClick={() => handleLaunch(msgIndex)} className="text-[12px] font-medium bg-dash-text-primary text-white px-4 py-1.5 rounded-md hover:opacity-90 transition-opacity">Launch</button>
+                <button className="text-[12px] text-dash-text-secondary border border-dash-border px-3 py-1.5 rounded-md hover:bg-dash-hover transition-colors">Regenerate</button>
+                <button className="text-[12px] text-dash-text-tertiary px-3 py-1.5 hover:text-dash-text-secondary transition-colors">Edit Brief</button>
               </div>
             )}
           </div>
         </div>
-        {msg.tools && msg.tools.length > 0 && (
+        {msg.tools && msg.tools.length > 0 && !msg.tools.includes("__streaming") && (
           <div className="flex gap-1 mt-1.5 flex-wrap">
             {msg.tools.map(t => (
-              <span key={t} className="text-[9px] font-medium px-1.5 py-0.5 rounded bg-dash-active text-dash-text-tertiary">
-                {toolLabels[t] || t}
-              </span>
+              <span key={t} className="text-[9px] font-medium px-1.5 py-0.5 rounded bg-dash-active text-dash-text-tertiary">{toolLabels[t] || t}</span>
             ))}
           </div>
         )}
@@ -392,15 +516,20 @@ const AIAgent = () => {
             <div className="text-[10px] font-semibold uppercase tracking-[0.07em] text-dash-text-tertiary">Conversations</div>
           </div>
           <div className="flex-1 overflow-auto">
-            {initialSessions.map((s, i) => (
+            {sessionList.map((s) => (
               <button
                 key={s.id}
-                onClick={() => setActiveSession(i)}
+                onClick={() => setActiveSession(s.id)}
                 className={`w-full text-left px-3 py-2.5 transition-colors ${
-                  activeSession === i ? "bg-dash-active" : "hover:bg-dash-hover"
+                  activeSession === s.id ? "bg-dash-active" : "hover:bg-dash-hover"
                 }`}
               >
-                <div className="text-[13px] font-medium text-dash-text-primary truncate">{s.title}</div>
+                <div className="flex items-center gap-1.5">
+                  <div className="text-[13px] font-medium text-dash-text-primary truncate">{s.title}</div>
+                  {sessionStates[s.id]?.isAI && (
+                    <span className="text-[8px] font-bold px-1 py-0.5 rounded bg-dash-green-bg text-dash-green shrink-0">AI</span>
+                  )}
+                </div>
                 <div className="text-[11px] text-dash-text-tertiary truncate">{s.preview}</div>
                 <div className="text-[10px] text-dash-text-tertiary mt-0.5">{s.time}</div>
               </button>
@@ -443,24 +572,16 @@ const AIAgent = () => {
                       <div className="text-[13px] text-dash-text-primary whitespace-pre-line leading-relaxed mb-3">{msg.text}</div>
                       {msg.proposalActions && (
                         <div className="flex gap-2">
-                          <button onClick={() => handleExecute(i)} className="text-[12px] font-medium bg-dash-text-primary text-white px-3.5 py-1.5 rounded-md hover:opacity-90 transition-opacity">
-                            ✓ Execute
-                          </button>
-                          <button onClick={() => handleDismiss(i)} className="text-[12px] text-dash-text-secondary border border-dash-border px-3.5 py-1.5 rounded-md hover:bg-dash-hover transition-colors">
-                            Dismiss
-                          </button>
-                          <button className="text-[12px] text-dash-text-tertiary px-3.5 py-1.5 hover:text-dash-text-secondary transition-colors">
-                            View Details
-                          </button>
+                          <button onClick={() => handleExecute(i)} className="text-[12px] font-medium bg-dash-text-primary text-white px-3.5 py-1.5 rounded-md hover:opacity-90 transition-opacity">✓ Execute</button>
+                          <button onClick={() => handleDismiss(i)} className="text-[12px] text-dash-text-secondary border border-dash-border px-3.5 py-1.5 rounded-md hover:bg-dash-hover transition-colors">Dismiss</button>
+                          <button className="text-[12px] text-dash-text-tertiary px-3.5 py-1.5 hover:text-dash-text-secondary transition-colors">View Details</button>
                         </div>
                       )}
                     </div>
-                    {msg.tools && msg.tools.length > 0 && (
+                    {msg.tools && msg.tools.length > 0 && !msg.tools.includes("__streaming") && (
                       <div className="flex gap-1 mt-1.5 flex-wrap">
                         {msg.tools.map(t => (
-                          <span key={t} className="text-[9px] font-medium px-1.5 py-0.5 rounded bg-dash-active text-dash-text-tertiary">
-                            {toolLabels[t] || t}
-                          </span>
+                          <span key={t} className="text-[9px] font-medium px-1.5 py-0.5 rounded bg-dash-active text-dash-text-tertiary">{toolLabels[t] || t}</span>
                         ))}
                       </div>
                     )}
@@ -484,12 +605,10 @@ const AIAgent = () => {
                       <span className="whitespace-pre-line">{msg.text}</span>
                     )}
                   </div>
-                  {msg.tools && msg.tools.length > 0 && (
+                  {msg.tools && msg.tools.length > 0 && !msg.tools.includes("__streaming") && (
                     <div className="flex gap-1 mt-1.5 flex-wrap">
                       {msg.tools.map(t => (
-                        <span key={t} className="text-[9px] font-medium px-1.5 py-0.5 rounded bg-dash-active text-dash-text-tertiary">
-                          {toolLabels[t] || t}
-                        </span>
+                        <span key={t} className="text-[9px] font-medium px-1.5 py-0.5 rounded bg-dash-active text-dash-text-tertiary">{toolLabels[t] || t}</span>
                       ))}
                     </div>
                   )}
@@ -531,7 +650,8 @@ const AIAgent = () => {
             />
             <button
               onClick={handleSend}
-              className="w-8 h-8 bg-dash-text-primary text-white rounded-md flex items-center justify-center text-[13px] hover:opacity-90 transition-opacity"
+              disabled={typing}
+              className="w-8 h-8 bg-dash-text-primary text-white rounded-md flex items-center justify-center text-[13px] hover:opacity-90 transition-opacity disabled:opacity-50"
             >
               ↑
             </button>
