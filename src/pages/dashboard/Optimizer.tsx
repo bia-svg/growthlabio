@@ -12,6 +12,7 @@ interface OptItem {
   title: string;
   desc: string;
   stats: string;
+  trigger: string;
 }
 
 const initialItems: OptItem[] = [
@@ -20,9 +21,10 @@ const initialItems: OptItem[] = [
     urgency: "Urgent",
     urgencyColor: "red",
     impact: "+R$2,800/wk",
-    title: "Pause 'Annual Campaign v3' — saturated creative",
+    title: "Pause 'Orbit v3' — saturated creative",
     desc: "Frequency at 4.8 for 5 consecutive days. CTR dropped 31% WoW. Every dollar spent here performs 2.3× below account average.",
-    stats: "Freq: 4.8 · CTR: 1.2% · Spend: R$5,100/wk",
+    stats: "Freq: 4.8 · CTR: 1.2% · Spend: R$5,100/wk · Days at saturation: 5",
+    trigger: "Frequency > 3.5 for 3+ days → NEW_CREATIVE alert",
   },
   {
     id: 2,
@@ -32,6 +34,7 @@ const initialItems: OptItem[] = [
     title: "Scale budget on Lookalike 1% — ROAS consistently above target",
     desc: "5.1× ROAS for 12 consecutive days. Current budget is limiting reach. Estimated scale potential: 85%.",
     stats: "ROAS: 5.1× · Freq: 2.1 · Current budget: R$400/day",
+    trigger: "ROAS > target × 1.3 + budget > 85% spent → INCREASE_BUDGET alert",
   },
   {
     id: 3,
@@ -40,7 +43,8 @@ const initialItems: OptItem[] = [
     impact: "+R$600/wk",
     title: "Create creative variation for SaaS Interest BR",
     desc: "CTR flat at 2.1% for 8 days. A new creative angle can recover performance without pausing the campaign.",
-    stats: "CTR: 2.1% · Freq: 2.8 · Days without change: 8",
+    stats: "CTR: 2.1% · Freq: 2.8 · Days without creative change: 8",
+    trigger: "CTR fell >20% WoW → NEW_COPY alert",
   },
 ];
 
@@ -53,25 +57,18 @@ const urgencyStyles: Record<string, string> = {
 const Optimizer = ({ onCountChange }: OptimizerProps) => {
   const [items, setItems] = useState(initialItems);
   const [removing, setRemoving] = useState<number | null>(null);
+  const [showTriggers, setShowTriggers] = useState(false);
 
   useEffect(() => {
     onCountChange(items.length);
   }, [items, onCountChange]);
 
-  const handleApprove = (id: number) => {
+  const handleRemove = (id: number) => {
     setRemoving(id);
     setTimeout(() => {
       setItems(prev => prev.filter(i => i.id !== id));
       setRemoving(null);
-    }, 300);
-  };
-
-  const handleDismiss = (id: number) => {
-    setRemoving(id);
-    setTimeout(() => {
-      setItems(prev => prev.filter(i => i.id !== id));
-      setRemoving(null);
-    }, 300);
+    }, 250);
   };
 
   return (
@@ -81,7 +78,7 @@ const Optimizer = ({ onCountChange }: OptimizerProps) => {
         {items.length} action{items.length !== 1 ? "s" : ""} identified · sorted by estimated impact
       </p>
 
-      <div className="border border-dash-border rounded-lg overflow-hidden">
+      <div className="border border-dash-border rounded-lg overflow-hidden mb-6">
         <div className="px-5 py-3 border-b border-dash-border flex items-center justify-between">
           <span className="text-[11px] font-semibold uppercase tracking-[0.07em] text-dash-text-tertiary">Optimization Queue</span>
           <button className="text-[12px] text-dash-text-secondary hover:text-dash-text-primary transition-colors">⟳ Re-analyze</button>
@@ -97,7 +94,7 @@ const Optimizer = ({ onCountChange }: OptimizerProps) => {
           items.map((item, i) => (
             <div
               key={item.id}
-              className={`px-5 py-5 transition-all duration-300 ${
+              className={`px-5 py-5 transition-all duration-[250ms] ease-out ${
                 removing === item.id ? "opacity-0 max-h-0 py-0 overflow-hidden" : "max-h-[400px] opacity-100"
               } ${i < items.length - 1 && removing !== item.id ? "border-b border-dash-border" : ""}`}
             >
@@ -114,13 +111,13 @@ const Optimizer = ({ onCountChange }: OptimizerProps) => {
               <div className="text-[12px] text-dash-text-tertiary mb-4">{item.stats}</div>
               <div className="flex gap-2">
                 <button
-                  onClick={() => handleApprove(item.id)}
+                  onClick={() => handleRemove(item.id)}
                   className="text-[13px] font-medium bg-dash-text-primary text-white px-4 py-1.5 rounded-md hover:opacity-90 transition-opacity"
                 >
                   ✓ Approve
                 </button>
                 <button
-                  onClick={() => handleDismiss(item.id)}
+                  onClick={() => handleRemove(item.id)}
                   className="text-[13px] font-medium text-dash-text-secondary border border-dash-border px-4 py-1.5 rounded-md hover:bg-dash-hover transition-colors"
                 >
                   ✕ Dismiss
@@ -130,6 +127,24 @@ const Optimizer = ({ onCountChange }: OptimizerProps) => {
           ))
         )}
       </div>
+
+      {/* How this works — collapsible */}
+      <button
+        onClick={() => setShowTriggers(!showTriggers)}
+        className="flex items-center gap-2 text-[12px] text-dash-text-tertiary hover:text-dash-text-secondary transition-colors mb-2"
+      >
+        <span className={`transition-transform ${showTriggers ? "rotate-90" : ""}`}>▶</span>
+        How this works
+      </button>
+      {showTriggers && (
+        <div className="border border-dash-border rounded-lg p-4 text-[12px] text-dash-text-secondary leading-relaxed space-y-1">
+          <div><strong className="text-dash-text-primary">Freq &gt; 3.5 for 3+ days</strong> → NEW_CREATIVE alert</div>
+          <div><strong className="text-dash-text-primary">CTR fell &gt;20% WoW</strong> → NEW_COPY alert</div>
+          <div><strong className="text-dash-text-primary">CPA &gt; target × 1.5 for 3+ days</strong> → PAUSE_AD alert</div>
+          <div><strong className="text-dash-text-primary">ROAS &gt; target × 1.3 + budget &gt;85% spent</strong> → INCREASE_BUDGET alert</div>
+          <div><strong className="text-dash-text-primary">Budget &gt;85% spent by day 20</strong> → PACING alert</div>
+        </div>
+      )}
     </div>
   );
 };

@@ -91,7 +91,7 @@ const DashSidebar = ({ optimizerCount }: DashSidebarProps) => {
         <div className="text-[10px] font-semibold uppercase tracking-[0.07em] text-dash-text-tertiary mb-1">Active product</div>
         <div className="flex items-center gap-2">
           <span className="w-[6px] h-[6px] rounded-full bg-dash-green" />
-          <span className="text-[13px] font-medium text-dash-text-primary">Annual Plan</span>
+          <span className="text-[13px] font-medium text-dash-text-primary">Orbit</span>
         </div>
       </div>
 
@@ -122,7 +122,6 @@ const DashSidebar = ({ optimizerCount }: DashSidebarProps) => {
         >
           <span className="text-[14px] w-4 text-center opacity-55">⊡</span>
           <span className="flex-1 text-left">Billing</span>
-          <span className="text-[10px] font-bold px-[6px] py-[1px] rounded-full bg-dash-green text-white">NF</span>
         </button>
       </nav>
 
