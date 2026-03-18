@@ -124,6 +124,28 @@ const Performance = () => {
         </button>
       </div>
 
+      {/* Goal Tracker — above metrics */}
+      <div className="mb-6">
+        <div className="text-[11px] font-semibold uppercase tracking-[0.07em] text-[hsl(var(--dash-text-tertiary))] mb-3">{t("dashboard.performance.goalTracker")}</div>
+        <div className="flex gap-3">
+          <div className="flex items-center gap-2 border border-[hsl(var(--dash-border))] rounded-lg px-4 py-2.5">
+            <span className="w-2.5 h-2.5 rounded-full bg-[hsl(var(--dash-green))]" />
+            <span className="text-[13px] font-medium text-[hsl(var(--dash-text-primary))]">ROAS 3.8×</span>
+            <span className="text-[11px] text-[hsl(var(--dash-green))] font-medium">{t("dashboard.performance.onTrack")}</span>
+          </div>
+          <div className="flex items-center gap-2 border border-[hsl(var(--dash-border))] rounded-lg px-4 py-2.5">
+            <span className="w-2.5 h-2.5 rounded-full bg-[hsl(var(--dash-amber))]" />
+            <span className="text-[13px] font-medium text-[hsl(var(--dash-text-primary))]">CPL R$72</span>
+            <span className="text-[11px] text-[hsl(var(--dash-amber))] font-medium">{t("dashboard.performance.atRisk")}</span>
+          </div>
+          <div className="flex items-center gap-2 border border-[hsl(var(--dash-border))] rounded-lg px-4 py-2.5">
+            <span className="w-2.5 h-2.5 rounded-full bg-[hsl(var(--dash-red))]" />
+            <span className="text-[13px] font-medium text-[hsl(var(--dash-text-primary))]">Frequency 3.9</span>
+            <span className="text-[11px] text-[hsl(var(--dash-red))] font-medium">{t("dashboard.performance.offTrack")}</span>
+          </div>
+        </div>
+      </div>
+
       {/* KPI Row — from user's top 3 metrics */}
       <div className="grid grid-cols-3 border border-[hsl(var(--dash-border))] rounded-lg overflow-hidden mb-8">
         {kpis.map((kpi, i) => (
@@ -241,50 +263,6 @@ const Performance = () => {
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Tempo de Retorno (Payback) */}
-      <div className="mb-8">
-        <div className="text-[11px] font-semibold uppercase tracking-[0.07em] text-[hsl(var(--dash-text-tertiary))] mb-3">{lang === "pt" ? "Tempo de Retorno" : "Payback Time"}</div>
-        <div className="grid grid-cols-3 border border-[hsl(var(--dash-border))] rounded-lg overflow-hidden">
-          <div className="p-5 border-r border-[hsl(var(--dash-border))]">
-            <div className="text-[11px] font-semibold uppercase tracking-[0.05em] text-[hsl(var(--dash-text-tertiary))] mb-1">{lang === "pt" ? "Investimento Total" : "Total Investment"}</div>
-            <div className="text-[26px] font-bold tracking-[-0.04em] text-[hsl(var(--dash-text-primary))]">R$14,200</div>
-            <div className="text-[12px] text-[hsl(var(--dash-text-tertiary))] mt-0.5">{lang === "pt" ? "gastos com ads este mês" : "ad spend this month"}</div>
-          </div>
-          <div className="p-5 border-r border-[hsl(var(--dash-border))]">
-            <div className="text-[11px] font-semibold uppercase tracking-[0.05em] text-[hsl(var(--dash-text-tertiary))] mb-1">{lang === "pt" ? "Seu investimento volta em" : "Your investment returns in"}</div>
-            <div className="text-[26px] font-bold tracking-[-0.04em] text-[hsl(var(--dash-green))]">2.7 {lang === "pt" ? "meses" : "months"}</div>
-            <div className="text-[12px] text-[hsl(var(--dash-green))] mt-0.5">{lang === "pt" ? "↓ 0.4 meses vs mês anterior" : "↓ 0.4 months vs prior"}</div>
-          </div>
-          <div className="p-5">
-            <div className="text-[11px] font-semibold uppercase tracking-[0.05em] text-[hsl(var(--dash-text-tertiary))] mb-1">{lang === "pt" ? "Receita Recorrente / mês" : "Monthly Recurring Revenue"}</div>
-            <div className="text-[26px] font-bold tracking-[-0.04em] text-[hsl(var(--dash-text-primary))]">R$5,202</div>
-            <div className="text-[12px] text-[hsl(var(--dash-text-tertiary))] mt-0.5">{lang === "pt" ? "baseado em 10× parcelas" : "based on 10× installments"}</div>
-          </div>
-        </div>
-      </div>
-
-      {/* Goal Tracker */}
-      <div className="mb-8">
-        <div className="text-[11px] font-semibold uppercase tracking-[0.07em] text-[hsl(var(--dash-text-tertiary))] mb-3">{t("dashboard.performance.goalTracker")}</div>
-        <div className="flex gap-3">
-          <div className="flex items-center gap-2 border border-[hsl(var(--dash-border))] rounded-lg px-4 py-2.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-[hsl(var(--dash-green))]" />
-            <span className="text-[13px] font-medium text-[hsl(var(--dash-text-primary))]">ROAS 3.8×</span>
-            <span className="text-[11px] text-[hsl(var(--dash-green))] font-medium">{t("dashboard.performance.onTrack")}</span>
-          </div>
-          <div className="flex items-center gap-2 border border-[hsl(var(--dash-border))] rounded-lg px-4 py-2.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-[hsl(var(--dash-amber))]" />
-            <span className="text-[13px] font-medium text-[hsl(var(--dash-text-primary))]">CPL R$72</span>
-            <span className="text-[11px] text-[hsl(var(--dash-amber))] font-medium">{t("dashboard.performance.atRisk")}</span>
-          </div>
-          <div className="flex items-center gap-2 border border-[hsl(var(--dash-border))] rounded-lg px-4 py-2.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-[hsl(var(--dash-red))]" />
-            <span className="text-[13px] font-medium text-[hsl(var(--dash-text-primary))]">Frequency 3.9</span>
-            <span className="text-[11px] text-[hsl(var(--dash-red))] font-medium">{t("dashboard.performance.offTrack")}</span>
           </div>
         </div>
       </div>
