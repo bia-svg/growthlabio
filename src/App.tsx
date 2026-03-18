@@ -10,7 +10,7 @@ import Login from "./pages/Login.tsx";
 import Signup from "./pages/Signup.tsx";
 import Welcome from "./pages/Welcome.tsx";
 import Onboarding from "./pages/Onboarding.tsx";
-import FunnelWizard from "./pages/FunnelWizard.tsx";
+
 
 const queryClient = new QueryClient();
 
