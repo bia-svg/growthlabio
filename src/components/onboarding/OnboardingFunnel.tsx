@@ -1,11 +1,11 @@
 import { useState, useCallback } from "react";
-import { GripVertical, X, Lightbulb, Plus } from "lucide-react";
+import { GripVertical, X, Lightbulb, Plus, Check } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import type { IntegrationData } from "./OnboardingIntegrations";
 
 interface Props {
   integrationData: IntegrationData | null;
-  onContinue: (funnel: string[]) => void;
+  onContinue: (funnel: string[], topMetrics: string[]) => void;
   onBack: () => void;
 }
 
@@ -13,6 +13,19 @@ const allBlocks = [
   "Ad Spend", "Impressions", "Clicks", "Visitors", "Sessions",
   "Leads", "Opportunities", "Meetings", "Checkout started",
   "Purchases", "Revenue", "LTV", "CAC", "ROAS",
+];
+
+const availableMetrics = [
+  { id: "roas", label: "ROAS", desc: "Return on ad spend" },
+  { id: "cpl", label: "CPL", desc: "Cost per lead" },
+  { id: "cac", label: "CAC", desc: "Customer acquisition cost" },
+  { id: "cpa", label: "CPA", desc: "Cost per acquisition" },
+  { id: "ctr", label: "CTR", desc: "Click-through rate" },
+  { id: "frequency", label: "Frequency", desc: "Avg. impressions per user" },
+  { id: "conversion_rate", label: "Conv. Rate", desc: "Visitor-to-customer %" },
+  { id: "aov", label: "AOV", desc: "Average order value" },
+  { id: "ltv", label: "LTV", desc: "Customer lifetime value" },
+  { id: "monthly_roas", label: "Monthly ROAS", desc: "ROAS by installment" },
 ];
 
 const getSuggestedFunnel = (data: IntegrationData | null): string[] => {
@@ -29,6 +42,7 @@ const OnboardingFunnel = ({ integrationData, onContinue, onBack }: Props) => {
   const { t } = useTranslation();
   const suggested = getSuggestedFunnel(integrationData);
   const [funnel, setFunnel] = useState<string[]>(suggested);
+  const [topMetrics, setTopMetrics] = useState<string[]>(["roas", "cpl", "frequency"]);
   const [dragIdx, setDragIdx] = useState<number | null>(null);
   const [dragOverIdx, setDragOverIdx] = useState<number | null>(null);
   const [showAiTip, setShowAiTip] = useState(true);
@@ -37,6 +51,14 @@ const OnboardingFunnel = ({ integrationData, onContinue, onBack }: Props) => {
 
   const removeBlock = (idx: number) => setFunnel((p) => p.filter((_, i) => i !== idx));
   const addBlock = (name: string) => setFunnel((p) => [...p, name]);
+
+  const toggleMetric = (id: string) => {
+    setTopMetrics((prev) => {
+      if (prev.includes(id)) return prev.filter((m) => m !== id);
+      if (prev.length >= 3) return prev;
+      return [...prev, id];
+    });
+  };
 
   const handleDragStart = (idx: number) => setDragIdx(idx);
   const handleDragOver = useCallback((e: React.DragEvent, idx: number) => {
@@ -56,6 +78,13 @@ const OnboardingFunnel = ({ integrationData, onContinue, onBack }: Props) => {
   }, [dragIdx]);
 
   const hasGap = integrationData && !integrationData.leadsSource && funnel.includes("Purchases") && !funnel.includes("Leads");
+
+  const handleContinue = () => {
+    // Persist to localStorage for dashboard
+    localStorage.setItem("gl_funnel", JSON.stringify(funnel));
+    localStorage.setItem("gl_top_metrics", JSON.stringify(topMetrics));
+    onContinue(funnel, topMetrics);
+  };
 
   return (
     <div className="max-w-[720px] mx-auto px-6 py-10 dash-page-enter">
@@ -141,12 +170,58 @@ const OnboardingFunnel = ({ integrationData, onContinue, onBack }: Props) => {
         </div>
       )}
 
+      {/* Top 3 Metrics Picker */}
+      <div className="border border-[hsl(var(--dash-border))] rounded-xl p-6 mb-8">
+        <div className="flex items-center justify-between mb-1">
+          <div className="text-[11px] font-semibold uppercase tracking-wider text-[hsl(var(--dash-text-tertiary))]">
+            {t("onboarding.funnelScreen.metricsTitle")}
+          </div>
+          <span className={`text-[11px] font-semibold ${topMetrics.length === 3 ? "text-[hsl(var(--dash-green))]" : "text-[hsl(var(--dash-amber))]"}`}>
+            {topMetrics.length}/3
+          </span>
+        </div>
+        <p className="text-[13px] text-[hsl(var(--dash-text-tertiary))] mb-5">{t("onboarding.funnelScreen.metricsSubtitle")}</p>
+
+        <div className="grid grid-cols-2 gap-2">
+          {availableMetrics.map((metric) => {
+            const selected = topMetrics.includes(metric.id);
+            const disabled = !selected && topMetrics.length >= 3;
+            return (
+              <button
+                key={metric.id}
+                onClick={() => toggleMetric(metric.id)}
+                disabled={disabled}
+                className={`flex items-center gap-3 px-4 py-3 rounded-lg border text-left transition-all ${
+                  selected
+                    ? "border-primary bg-primary/5"
+                    : disabled
+                    ? "border-[hsl(var(--dash-border))] opacity-40 cursor-not-allowed"
+                    : "border-[hsl(var(--dash-border))] hover:bg-[hsl(var(--dash-sidebar))] hover:border-[hsl(var(--dash-text-tertiary))]"
+                }`}
+              >
+                <div className={`w-5 h-5 rounded-md border flex items-center justify-center shrink-0 transition-colors ${
+                  selected
+                    ? "bg-primary border-primary"
+                    : "border-[hsl(var(--dash-border))]"
+                }`}>
+                  {selected && <Check className="w-3 h-3 text-primary-foreground" />}
+                </div>
+                <div>
+                  <div className="text-[13px] font-semibold text-[hsl(var(--dash-text-primary))]">{metric.label}</div>
+                  <div className="text-[11px] text-[hsl(var(--dash-text-tertiary))]">{metric.desc}</div>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
       {/* Actions */}
       <div className="flex items-center justify-between pt-6 border-t border-[hsl(var(--dash-border))]">
         <button onClick={onBack} className="text-[13px] text-[hsl(var(--dash-text-tertiary))] hover:text-[hsl(var(--dash-text-secondary))]">{t("onboarding.funnelScreen.back")}</button>
         <button
-          onClick={() => onContinue(funnel)}
-          disabled={funnel.length < 3}
+          onClick={handleContinue}
+          disabled={funnel.length < 3 || topMetrics.length !== 3}
           className="h-[44px] px-6 bg-primary text-primary-foreground rounded-lg text-[14px] font-semibold hover:opacity-90 transition-opacity disabled:opacity-40"
         >
           {t("onboarding.funnelScreen.continue")}

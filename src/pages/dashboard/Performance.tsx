@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 const products = [
   { id: "orbit", label: "Orbit", active: true },
@@ -6,6 +7,38 @@ const products = [
   { id: "pulse", label: "Pulse" },
   { id: "core", label: "Core" },
 ];
+
+/* ─── Metric definitions with mock data ─── */
+const metricDefs: Record<string, { label: string; value: string; color?: "green" | "amber"; note: string; noteColor?: "green" | "amber" }> = {
+  roas:            { label: "Total ROAS",   value: "4.2×",   color: "green", note: "↑ target: 3.5×",  noteColor: "green" },
+  monthly_roas:    { label: "Monthly ROAS", value: "1.8×",   note: "12× installments" },
+  cpl:             { label: "CPL",          value: "R$89",   note: "↓ -12% vs prior", noteColor: "green" },
+  cac:             { label: "CAC",          value: "R$420",  note: "↓ -8% vs prior",  noteColor: "green" },
+  cpa:             { label: "CPA",          value: "R$210",  note: "target: R$250",   noteColor: "green" },
+  ctr:             { label: "CTR",          value: "2.4%",   note: "↑ +0.3% vs prior", noteColor: "green" },
+  frequency:       { label: "Frequency",    value: "4.1",    color: "amber", note: "↑ above 3.5",     noteColor: "amber" },
+  conversion_rate: { label: "Conv. Rate",   value: "5.1%",   note: "↑ +0.8% WoW",    noteColor: "green" },
+  aov:             { label: "AOV",          value: "R$3,657", note: "stable" },
+  ltv:             { label: "LTV",          value: "R$12,400", note: "↑ +6% vs prior", noteColor: "green" },
+};
+
+/* ─── Funnel stage mock data ─── */
+const funnelMockData: Record<string, { value: string; pct: string; width: string; highlight?: boolean }> = {
+  "Ad Spend":         { value: "R$18.4k", pct: "",      width: "100%" },
+  "Impressions":      { value: "284k",    pct: "",      width: "100%" },
+  "Clicks":           { value: "5.1k",    pct: "1.8%",  width: "62%" },
+  "Visitors":         { value: "3.2k",    pct: "62.7%", width: "48%" },
+  "Sessions":         { value: "4.8k",    pct: "94.1%", width: "52%" },
+  "Leads":            { value: "412",      pct: "12.9%", width: "30%", highlight: true },
+  "Opportunities":    { value: "185",      pct: "44.9%", width: "18%", highlight: true },
+  "Meetings":         { value: "92",       pct: "22.3%", width: "14%", highlight: true },
+  "Checkout started": { value: "156",      pct: "4.9%",  width: "20%" },
+  "Purchases":        { value: "21",       pct: "11.4%", width: "6%" },
+  "Revenue":          { value: "R$76.8k",  pct: "",      width: "45%" },
+  "LTV":              { value: "R$12.4k",  pct: "",      width: "35%" },
+  "CAC":              { value: "R$420",     pct: "",      width: "25%" },
+  "ROAS":             { value: "4.2×",      pct: "",      width: "40%" },
+};
 
 const topAds = [
   { name: "Lookalike — Social Proof v2", spend: "R$1,800", roas: "6.8×", ctr: "4.1%", freq: "1.8" },
@@ -23,17 +56,44 @@ const bottomAds = [
   { name: "Retargeting — Expired Offer", spend: "R$680", cpa: "R$340", ctr: "1.2%", freq: "3.2" },
 ];
 
+const defaultFunnel = ["Ad Spend", "Impressions", "Clicks", "Leads", "Purchases", "Revenue"];
+const defaultMetrics = ["roas", "cpl", "frequency"];
+
 const Performance = () => {
+  const { t } = useTranslation();
   const [activeProduct, setActiveProduct] = useState("orbit");
   const [showTimeSeries, setShowTimeSeries] = useState(false);
   const [timeSeriesView, setTimeSeriesView] = useState<"daily" | "weekly">("daily");
 
+  // Read user's choices from localStorage
+  const userFunnel = useMemo(() => {
+    try {
+      const stored = localStorage.getItem("gl_funnel");
+      if (stored) return JSON.parse(stored) as string[];
+    } catch { /* ignore */ }
+    return defaultFunnel;
+  }, []);
+
+  const userMetrics = useMemo(() => {
+    try {
+      const stored = localStorage.getItem("gl_top_metrics");
+      if (stored) {
+        const parsed = JSON.parse(stored) as string[];
+        if (parsed.length === 3) return parsed;
+      }
+    } catch { /* ignore */ }
+    return defaultMetrics;
+  }, []);
+
+  // Build KPI data from user's 3 chosen metrics
+  const kpis = userMetrics.map((id) => metricDefs[id] || { label: id.toUpperCase(), value: "—", note: "" });
+
   return (
     <div className="p-10 dash-page-enter">
       {/* Header */}
-      <div className="mb-1 text-[12px] text-dash-text-tertiary">Orbit · synced 3 min ago</div>
-      <h1 className="text-[30px] font-bold tracking-[-0.04em] text-dash-text-primary mb-1">Performance</h1>
-      <p className="text-[14px] text-dash-text-secondary mb-6">Period overview · Meta Ads + Shopify (Orbit)</p>
+      <div className="mb-1 text-[12px] text-dash-text-tertiary">{t("dashboard.performance.synced", { time: "3 min" })}</div>
+      <h1 className="text-[30px] font-bold tracking-[-0.04em] text-dash-text-primary mb-1">{t("dashboard.performance.title")}</h1>
+      <p className="text-[14px] text-dash-text-secondary mb-6">{t("dashboard.performance.subtitle")}</p>
 
       {/* Product selector */}
       <div className="flex items-center gap-1.5 mb-8">
@@ -52,30 +112,44 @@ const Performance = () => {
           </button>
         ))}
         <button className="text-[13px] text-dash-text-tertiary hover:text-dash-text-secondary px-3 py-1.5 border border-dashed border-dash-border rounded-md transition-colors">
-          + Add product
+          {t("dashboard.performance.addProduct")}
         </button>
       </div>
 
-      {/* KPI Row */}
-      <div className="grid grid-cols-4 border border-dash-border rounded-lg overflow-hidden mb-8">
-        <KPI label="Total ROAS" value="4.2×" color="green" note="↑ target: 3.5×" noteColor="green" />
-        <KPI label="Monthly ROAS" value="1.8×" note="12× installments" />
-        <KPI label="CPL" value="R$89" note="↓ -12% vs prior" noteColor="green" />
-        <KPI label="Frequency" value="4.1" color="amber" note="↑ above 3.5" noteColor="amber" last />
+      {/* KPI Row — from user's top 3 metrics */}
+      <div className="grid grid-cols-3 border border-dash-border rounded-lg overflow-hidden mb-8">
+        {kpis.map((kpi, i) => (
+          <KPI
+            key={i}
+            label={kpi.label}
+            value={kpi.value}
+            color={kpi.color}
+            note={kpi.note}
+            noteColor={kpi.noteColor}
+            last={i === kpis.length - 1}
+          />
+        ))}
       </div>
 
       {/* 2-col grid */}
       <div className="grid grid-cols-[1fr_320px] gap-6 mb-8">
-        {/* Funnel */}
+        {/* Funnel — from user's funnel stages */}
         <div className="border border-dash-border rounded-lg p-5">
-          <div className="text-[11px] font-semibold uppercase tracking-[0.07em] text-dash-text-tertiary mb-4">Conversion Funnel</div>
+          <div className="text-[11px] font-semibold uppercase tracking-[0.07em] text-dash-text-tertiary mb-4">{t("dashboard.performance.conversionFunnel")}</div>
           <div className="flex flex-col gap-2.5">
-            <FunnelRow label="Impressions" value="284k" pct="" width="100%" />
-            <FunnelRow label="Clicks" value="5.1k" pct="1.8%" width="62%" />
-            <FunnelRow label="LP Views" value="3.2k" pct="62.7%" width="48%" />
-            <FunnelRow label="Leads" value="412" pct="12.9%" width="30%" highlight />
-            <FunnelRow label="SQL" value="185" pct="44.9%" width="18%" highlight />
-            <FunnelRow label="Converted" value="21" pct="11.4%" width="6%" />
+            {userFunnel.map((stage) => {
+              const data = funnelMockData[stage] || { value: "—", pct: "", width: "20%" };
+              return (
+                <FunnelRow
+                  key={stage}
+                  label={stage}
+                  value={data.value}
+                  pct={data.pct}
+                  width={data.width}
+                  highlight={data.highlight}
+                />
+              );
+            })}
           </div>
         </div>
 
@@ -83,7 +157,7 @@ const Performance = () => {
         <div className="flex flex-col gap-4">
           {/* Spend chart */}
           <div className="border border-dash-border rounded-lg p-5">
-            <div className="text-[11px] font-semibold uppercase tracking-[0.07em] text-dash-text-tertiary mb-3">Spend — last 14 days</div>
+            <div className="text-[11px] font-semibold uppercase tracking-[0.07em] text-dash-text-tertiary mb-3">{t("dashboard.performance.spendLast14")}</div>
             <div className="flex items-end gap-[3px] h-[60px]">
               {[65,72,80,58,45,30,35,68,82,90,75,60,25,28].map((h, i) => (
                 <div
@@ -108,12 +182,12 @@ const Performance = () => {
       {/* Campaigns table */}
       <div className="border border-dash-border rounded-lg overflow-hidden mb-8">
         <div className="px-5 py-3 border-b border-dash-border">
-          <span className="text-[11px] font-semibold uppercase tracking-[0.07em] text-dash-text-tertiary">Active Campaigns</span>
+          <span className="text-[11px] font-semibold uppercase tracking-[0.07em] text-dash-text-tertiary">{t("dashboard.performance.activeCampaigns")}</span>
         </div>
         <table className="w-full text-left">
           <thead>
             <tr className="border-b border-dash-border">
-              {["Campaign", "Spend", "ROAS", "CPL", "Freq.", "CTR", "Status"].map(h => (
+              {[t("dashboard.performance.campaign"), "Spend", t("dashboard.performance.roas"), "CPL", t("dashboard.performance.freq"), t("dashboard.performance.ctr"), t("dashboard.performance.status")].map(h => (
                 <th key={h} className="px-5 py-2.5 text-[11.5px] font-semibold uppercase tracking-[0.05em] text-dash-text-tertiary">{h}</th>
               ))}
             </tr>
@@ -130,7 +204,7 @@ const Performance = () => {
       {/* Top / Bottom Ads */}
       <div className="grid grid-cols-2 gap-6 mb-8">
         <div>
-          <div className="text-[11px] font-semibold uppercase tracking-[0.07em] text-dash-text-tertiary mb-3">Top 5 by ROAS</div>
+          <div className="text-[11px] font-semibold uppercase tracking-[0.07em] text-dash-text-tertiary mb-3">{t("dashboard.performance.top5ROAS")}</div>
           <div className="flex flex-col gap-2">
             {topAds.map(ad => (
               <div key={ad.name} className="border border-dash-border rounded-lg p-3.5 flex items-center gap-3">
@@ -144,7 +218,7 @@ const Performance = () => {
           </div>
         </div>
         <div>
-          <div className="text-[11px] font-semibold uppercase tracking-[0.07em] text-dash-text-tertiary mb-3">Bottom 5 by CPA</div>
+          <div className="text-[11px] font-semibold uppercase tracking-[0.07em] text-dash-text-tertiary mb-3">{t("dashboard.performance.bottom5CPA")}</div>
           <div className="flex flex-col gap-2">
             {bottomAds.map(ad => (
               <div key={ad.name} className="border border-dash-border rounded-lg p-3.5 flex items-center gap-3">
@@ -161,19 +235,19 @@ const Performance = () => {
 
       {/* Projected Payback */}
       <div className="mb-8">
-        <div className="text-[11px] font-semibold uppercase tracking-[0.07em] text-dash-text-tertiary mb-3">Projected Payback</div>
+        <div className="text-[11px] font-semibold uppercase tracking-[0.07em] text-dash-text-tertiary mb-3">{t("dashboard.performance.projectedPayback")}</div>
         <div className="grid grid-cols-3 border border-dash-border rounded-lg overflow-hidden">
           <div className="p-5 border-r border-dash-border">
-            <div className="text-[11px] font-semibold uppercase tracking-[0.05em] text-dash-text-tertiary mb-1">Confirmed Revenue</div>
+            <div className="text-[11px] font-semibold uppercase tracking-[0.05em] text-dash-text-tertiary mb-1">{t("dashboard.performance.confirmedRevenue")}</div>
             <div className="text-[26px] font-bold tracking-[-0.04em] text-dash-text-primary">R$76,800</div>
           </div>
           <div className="p-5 border-r border-dash-border">
-            <div className="text-[11px] font-semibold uppercase tracking-[0.05em] text-dash-text-tertiary mb-1">Total Projection</div>
+            <div className="text-[11px] font-semibold uppercase tracking-[0.05em] text-dash-text-tertiary mb-1">{t("dashboard.performance.totalProjection")}</div>
             <div className="text-[26px] font-bold tracking-[-0.04em] text-dash-green">R$124,200</div>
             <div className="text-[12px] text-dash-green mt-0.5">+R$4,200 above target</div>
           </div>
           <div className="p-5">
-            <div className="text-[11px] font-semibold uppercase tracking-[0.05em] text-dash-text-tertiary mb-1">Monthly Target</div>
+            <div className="text-[11px] font-semibold uppercase tracking-[0.05em] text-dash-text-tertiary mb-1">{t("dashboard.performance.monthlyTarget")}</div>
             <div className="text-[26px] font-bold tracking-[-0.04em] text-dash-text-primary">R$120,000</div>
           </div>
         </div>
@@ -181,22 +255,22 @@ const Performance = () => {
 
       {/* Goal Tracker */}
       <div className="mb-8">
-        <div className="text-[11px] font-semibold uppercase tracking-[0.07em] text-dash-text-tertiary mb-3">Goal Tracker</div>
+        <div className="text-[11px] font-semibold uppercase tracking-[0.07em] text-dash-text-tertiary mb-3">{t("dashboard.performance.goalTracker")}</div>
         <div className="flex gap-3">
           <div className="flex items-center gap-2 border border-dash-border rounded-lg px-4 py-2.5">
             <span className="w-2.5 h-2.5 rounded-full bg-dash-green" />
             <span className="text-[13px] font-medium text-dash-text-primary">ROAS 4.2×</span>
-            <span className="text-[11px] text-dash-green font-medium">On track</span>
+            <span className="text-[11px] text-dash-green font-medium">{t("dashboard.performance.onTrack")}</span>
           </div>
           <div className="flex items-center gap-2 border border-dash-border rounded-lg px-4 py-2.5">
             <span className="w-2.5 h-2.5 rounded-full bg-dash-amber" />
             <span className="text-[13px] font-medium text-dash-text-primary">CPL R$89</span>
-            <span className="text-[11px] text-dash-amber font-medium">At risk</span>
+            <span className="text-[11px] text-dash-amber font-medium">{t("dashboard.performance.atRisk")}</span>
           </div>
           <div className="flex items-center gap-2 border border-dash-border rounded-lg px-4 py-2.5">
             <span className="w-2.5 h-2.5 rounded-full bg-dash-red" />
             <span className="text-[13px] font-medium text-dash-text-primary">Frequency 4.1</span>
-            <span className="text-[11px] text-dash-red font-medium">Off track</span>
+            <span className="text-[11px] text-dash-red font-medium">{t("dashboard.performance.offTrack")}</span>
           </div>
         </div>
       </div>
@@ -208,7 +282,7 @@ const Performance = () => {
           className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.07em] text-dash-text-tertiary mb-3 hover:text-dash-text-secondary transition-colors"
         >
           <span className={`transition-transform ${showTimeSeries ? "rotate-90" : ""}`}>▶</span>
-          Spend vs Revenue — Time Series
+          {t("dashboard.performance.spendVsRevenue")}
         </button>
         {showTimeSeries && (
           <div className="border border-dash-border rounded-lg p-5">
@@ -217,17 +291,16 @@ const Performance = () => {
                 onClick={() => setTimeSeriesView("daily")}
                 className={`text-[11px] font-medium px-2.5 py-1 rounded ${timeSeriesView === "daily" ? "bg-dash-text-primary text-white" : "text-dash-text-tertiary border border-dash-border"}`}
               >
-                Daily
+                {t("dashboard.performance.daily")}
               </button>
               <button
                 onClick={() => setTimeSeriesView("weekly")}
                 className={`text-[11px] font-medium px-2.5 py-1 rounded ${timeSeriesView === "weekly" ? "bg-dash-text-primary text-white" : "text-dash-text-tertiary border border-dash-border"}`}
               >
-                Weekly
+                {t("dashboard.performance.weekly")}
               </button>
             </div>
             <div className="h-[160px] flex items-end gap-1 relative">
-              {/* Spend bars */}
               {(timeSeriesView === "daily"
                 ? [40,45,55,48,42,20,22,50,60,65,55,48,18,20,52,58,62,50,45,22,25,55,65,70,60,52,20,22]
                 : [45,50,60,55]
@@ -239,8 +312,8 @@ const Performance = () => {
               ))}
             </div>
             <div className="flex gap-4 mt-3 text-[11px] text-dash-text-tertiary">
-              <div className="flex items-center gap-1.5"><span className="w-2.5 h-1.5 bg-dash-text-primary rounded-sm" /> Spend</div>
-              <div className="flex items-center gap-1.5"><span className="w-2.5 h-1.5 bg-dash-green rounded-sm opacity-60" /> Revenue</div>
+              <div className="flex items-center gap-1.5"><span className="w-2.5 h-1.5 bg-dash-text-primary rounded-sm" /> {t("dashboard.performance.spend")}</div>
+              <div className="flex items-center gap-1.5"><span className="w-2.5 h-1.5 bg-dash-green rounded-sm opacity-60" /> {t("dashboard.performance.revenue")}</div>
             </div>
           </div>
         )}
@@ -248,13 +321,13 @@ const Performance = () => {
 
       {/* AI Weekly Brief */}
       <div className="bg-dash-lime-bg border-l-[3px] border-dash-lime rounded-lg p-5">
-        <div className="text-[10px] font-bold uppercase tracking-[0.07em] text-dash-lime mb-3">Weekly Brief — AI Analysis</div>
+        <div className="text-[10px] font-bold uppercase tracking-[0.07em] text-dash-lime mb-3">{t("dashboard.performance.weeklyBrief")}</div>
         <div className="text-[13.5px] text-dash-text-primary leading-relaxed space-y-2">
-          <p><strong>What worked:</strong> Lookalike 1% maintained 5.1× ROAS with low frequency (2.1). Remarketing 30d delivered best CPL at R$51.</p>
-          <p><strong>What underperformed:</strong> Orbit v3 hit frequency ceiling (4.8) with CTR dropping 31% WoW. Creative fatigue confirmed.</p>
-          <p><strong>Winning angle:</strong> Social proof with numeric results (e.g., "4× faster growth") outperformed generic CTAs by 2.3×.</p>
+          <p><strong>{t("dashboard.performance.whatWorked")}</strong> Lookalike 1% maintained 5.1× ROAS with low frequency (2.1). Remarketing 30d delivered best CPL at R$51.</p>
+          <p><strong>{t("dashboard.performance.whatUnderperformed")}</strong> Orbit v3 hit frequency ceiling (4.8) with CTR dropping 31% WoW. Creative fatigue confirmed.</p>
+          <p><strong>{t("dashboard.performance.winningAngle")}</strong> Social proof with numeric results (e.g., "4× faster growth") outperformed generic CTAs by 2.3×.</p>
           <div className="mt-3 pt-3 border-t border-[hsl(80,40%,80%)]">
-            <div className="text-[12px] font-semibold text-dash-text-primary mb-1.5">Next week — 3 actions:</div>
+            <div className="text-[12px] font-semibold text-dash-text-primary mb-1.5">{t("dashboard.performance.nextWeek")}</div>
             <ol className="list-decimal list-inside text-[12.5px] text-dash-text-secondary space-y-0.5">
               <li>Pause Orbit v3 and reallocate R$340/day to Lookalike 1%</li>
               <li>Launch 2 new creatives for SaaS Interest BR (video testimonial format)</li>
@@ -286,11 +359,11 @@ const KPI = ({ label, value, color, note, noteColor, last }: {
 
 const FunnelRow = ({ label, value, pct, width, highlight }: { label: string; value: string; pct: string; width: string; highlight?: boolean }) => (
   <div className="flex items-center gap-2">
-    <div className="w-[90px] text-right text-[12px] text-dash-text-secondary shrink-0">{label}</div>
+    <div className="w-[110px] text-right text-[12px] text-dash-text-secondary shrink-0">{label}</div>
     <div className="flex-1 h-5 bg-dash-active rounded overflow-hidden">
       <div className={`h-full rounded ${highlight ? "bg-dash-amber" : "bg-dash-text-primary"}`} style={{ width }} />
     </div>
-    <div className="w-[50px] text-[12px] text-dash-text-secondary shrink-0">{value}</div>
+    <div className="w-[60px] text-[12px] text-dash-text-secondary shrink-0">{value}</div>
     <div className={`w-[40px] text-[11px] shrink-0 ${highlight ? "text-dash-amber font-medium" : "text-dash-text-tertiary"}`}>{pct}</div>
   </div>
 );
