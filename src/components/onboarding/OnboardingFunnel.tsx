@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import { GripVertical, X, Lightbulb, Plus } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import type { IntegrationData } from "./OnboardingIntegrations";
 
 interface Props {
@@ -25,6 +26,7 @@ const getSuggestedFunnel = (data: IntegrationData | null): string[] => {
 };
 
 const OnboardingFunnel = ({ integrationData, onContinue, onBack }: Props) => {
+  const { t } = useTranslation();
   const suggested = getSuggestedFunnel(integrationData);
   const [funnel, setFunnel] = useState<string[]>(suggested);
   const [dragIdx, setDragIdx] = useState<number | null>(null);
@@ -57,19 +59,19 @@ const OnboardingFunnel = ({ integrationData, onContinue, onBack }: Props) => {
 
   return (
     <div className="max-w-[720px] mx-auto px-6 py-10 dash-page-enter">
-      <h2 className="text-[28px] font-bold tracking-[-0.03em] text-[hsl(var(--dash-text-primary))] mb-2">Build your funnel</h2>
-      <p className="text-[14px] text-[hsl(var(--dash-text-tertiary))] mb-8">Drag and organize the stages that represent how your ad spend turns into revenue.</p>
+      <h2 className="text-[28px] font-bold tracking-[-0.03em] text-[hsl(var(--dash-text-primary))] mb-2">{t("onboarding.funnelScreen.title")}</h2>
+      <p className="text-[14px] text-[hsl(var(--dash-text-tertiary))] mb-8">{t("onboarding.funnelScreen.subtitle")}</p>
 
       {/* AI suggestion */}
       {showAiTip && (
         <div className="flex items-start gap-3 bg-[hsl(var(--dash-blue-bg))] border border-[hsl(var(--dash-blue))]/20 rounded-lg px-4 py-3 mb-6">
           <Lightbulb className="w-4 h-4 text-[hsl(var(--dash-blue))] mt-0.5 shrink-0" />
           <div className="flex-1">
-            <p className="text-[13px] font-medium text-[hsl(var(--dash-blue))] mb-1">AI suggestion for your funnel</p>
+            <p className="text-[13px] font-medium text-[hsl(var(--dash-blue))] mb-1">{t("onboarding.funnelScreen.aiSuggestion")}</p>
             <p className="text-[12px] text-[hsl(var(--dash-blue))]/80">
               {hasGap
-                ? "We noticed you connected media and revenue, but haven't connected a lead source yet. Want to add one?"
-                : `We built the funnel ${suggested.join(" → ")} based on your integrations. Customize as you wish.`}
+                ? t("onboarding.funnelScreen.aiGap")
+                : t("onboarding.funnelScreen.aiFunnelSuggestion", { funnel: suggested.join(" → ") })}
             </p>
           </div>
           <button onClick={() => setShowAiTip(false)} className="text-[hsl(var(--dash-blue))]/50 hover:text-[hsl(var(--dash-blue))]">
@@ -80,7 +82,7 @@ const OnboardingFunnel = ({ integrationData, onContinue, onBack }: Props) => {
 
       {/* Funnel area */}
       <div className="border border-[hsl(var(--dash-border))] rounded-xl p-6 mb-6 min-h-[200px]">
-        <div className="text-[11px] font-semibold uppercase tracking-wider text-[hsl(var(--dash-text-tertiary))] mb-4">Your funnel ({funnel.length} stages)</div>
+        <div className="text-[11px] font-semibold uppercase tracking-wider text-[hsl(var(--dash-text-tertiary))] mb-4">{t("onboarding.funnelScreen.yourFunnel")} ({funnel.length} {t("onboarding.funnelScreen.stages")})</div>
         <div className="flex flex-col gap-1">
           {funnel.map((block, idx) => (
             <div key={block}>
@@ -116,14 +118,14 @@ const OnboardingFunnel = ({ integrationData, onContinue, onBack }: Props) => {
         </div>
 
         {funnel.length < 3 && (
-          <p className="text-[12px] text-[hsl(var(--dash-amber))] mt-3">Minimum of 3 stages required</p>
+          <p className="text-[12px] text-[hsl(var(--dash-amber))] mt-3">{t("onboarding.funnelScreen.minStages")}</p>
         )}
       </div>
 
       {/* Available blocks */}
       {available.length > 0 && (
         <div className="mb-8">
-          <div className="text-[12px] font-medium text-[hsl(var(--dash-text-tertiary))] mb-3">Available blocks — click to add</div>
+          <div className="text-[12px] font-medium text-[hsl(var(--dash-text-tertiary))] mb-3">{t("onboarding.funnelScreen.availableBlocks")}</div>
           <div className="flex flex-wrap gap-2">
             {available.map((b) => (
               <button
@@ -141,13 +143,13 @@ const OnboardingFunnel = ({ integrationData, onContinue, onBack }: Props) => {
 
       {/* Actions */}
       <div className="flex items-center justify-between pt-6 border-t border-[hsl(var(--dash-border))]">
-        <button onClick={onBack} className="text-[13px] text-[hsl(var(--dash-text-tertiary))] hover:text-[hsl(var(--dash-text-secondary))]">← Back</button>
+        <button onClick={onBack} className="text-[13px] text-[hsl(var(--dash-text-tertiary))] hover:text-[hsl(var(--dash-text-secondary))]">{t("onboarding.funnelScreen.back")}</button>
         <button
           onClick={() => onContinue(funnel)}
           disabled={funnel.length < 3}
           className="h-[44px] px-6 bg-primary text-primary-foreground rounded-lg text-[14px] font-semibold hover:opacity-90 transition-opacity disabled:opacity-40"
         >
-          Continue →
+          {t("onboarding.funnelScreen.continue")}
         </button>
       </div>
     </div>

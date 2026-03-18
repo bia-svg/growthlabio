@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Send, Sparkles, Loader2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 type Msg = { role: "user" | "assistant"; content: string };
 
@@ -10,13 +11,6 @@ const stepContextMap: Record<number, string> = {
   1: "Integrations screen — connecting data sources (ads, site, leads, revenue).",
   2: "Funnel builder — organizing conversion funnel stages with drag-and-drop.",
   3: "Data validation — reviewing connection health and data quality.",
-};
-
-const stepGreetings: Record<number, string> = {
-  0: "Hey! 👋 I'm GrowthLab AI. I can help you set up your operation. Tell me: what type of business do you run?",
-  1: "Let's connect your data sources. Tell me which tools you use for ads, analytics, and sales — I'll guide you!",
-  2: "Time to build your funnel! Tell me how your sales journey works and I'll suggest the best structure.",
-  3: "Almost there! I'm here if you have questions about data quality or want to adjust anything.",
 };
 
 async function streamChat({
@@ -88,8 +82,12 @@ interface Props {
 }
 
 const OnboardingChat = ({ currentStep }: Props) => {
+  const { t } = useTranslation();
+
+  const getGreeting = (step: number) => t(`onboarding.chat.greetings.${step}`);
+
   const [messages, setMessages] = useState<Msg[]>([
-    { role: "assistant", content: stepGreetings[0] },
+    { role: "assistant", content: getGreeting(0) },
   ]);
   const [input, setInput] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
@@ -99,7 +97,7 @@ const OnboardingChat = ({ currentStep }: Props) => {
   useEffect(() => {
     if (currentStep !== prevStep.current) {
       prevStep.current = currentStep;
-      const greeting = stepGreetings[currentStep];
+      const greeting = getGreeting(currentStep);
       if (greeting) {
         setMessages((prev) => [...prev, { role: "assistant", content: greeting }]);
       }
@@ -152,8 +150,8 @@ const OnboardingChat = ({ currentStep }: Props) => {
           <Sparkles className="w-3.5 h-3.5 text-primary-foreground" />
         </div>
         <div>
-          <div className="text-[13px] font-semibold text-[hsl(var(--dash-text-primary))]">GrowthLab AI</div>
-          <div className="text-[11px] text-[hsl(var(--dash-text-tertiary))]">Setup assistant</div>
+          <div className="text-[13px] font-semibold text-[hsl(var(--dash-text-primary))]">{t("onboarding.chat.title")}</div>
+          <div className="text-[11px] text-[hsl(var(--dash-text-tertiary))]">{t("onboarding.chat.subtitle")}</div>
         </div>
       </div>
 
@@ -171,7 +169,7 @@ const OnboardingChat = ({ currentStep }: Props) => {
               {msg.content || (
                 <span className="flex items-center gap-1 text-[hsl(var(--dash-text-tertiary))]">
                   <Loader2 className="w-3 h-3 animate-spin" />
-                  Thinking…
+                  {t("onboarding.chat.thinking")}
                 </span>
               )}
             </div>
@@ -183,19 +181,19 @@ const OnboardingChat = ({ currentStep }: Props) => {
       <div className="px-4 pb-2 flex flex-wrap gap-1.5">
         {currentStep === 1 && (
           <>
-            <QuickBtn onClick={(t) => { setInput(t); }} label="Which integrations are essential?" />
-            <QuickBtn onClick={(t) => { setInput(t); }} label="I sell via WhatsApp, do I need a site?" />
+            <QuickBtn onClick={(txt) => { setInput(txt); }} label={t("onboarding.chat.quickSuggestions.integrations1")} />
+            <QuickBtn onClick={(txt) => { setInput(txt); }} label={t("onboarding.chat.quickSuggestions.integrations2")} />
           </>
         )}
         {currentStep === 2 && (
           <>
-            <QuickBtn onClick={(t) => { setInput(t); }} label="Best funnel for e-commerce?" />
-            <QuickBtn onClick={(t) => { setInput(t); }} label="Do I need a leads stage?" />
+            <QuickBtn onClick={(txt) => { setInput(txt); }} label={t("onboarding.chat.quickSuggestions.funnel1")} />
+            <QuickBtn onClick={(txt) => { setInput(txt); }} label={t("onboarding.chat.quickSuggestions.funnel2")} />
           </>
         )}
         {currentStep === 3 && (
           <>
-            <QuickBtn onClick={(t) => { setInput(t); }} label="Can I finish without connecting leads?" />
+            <QuickBtn onClick={(txt) => { setInput(txt); }} label={t("onboarding.chat.quickSuggestions.validation1")} />
           </>
         )}
       </div>
@@ -207,7 +205,7 @@ const OnboardingChat = ({ currentStep }: Props) => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && send()}
-            placeholder="Ask anything about setup…"
+            placeholder={t("onboarding.chat.placeholder")}
             className="flex-1 bg-transparent text-[13px] text-[hsl(var(--dash-text-primary))] placeholder:text-[hsl(var(--dash-text-tertiary))] outline-none"
             disabled={isStreaming}
           />

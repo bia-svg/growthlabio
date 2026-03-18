@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import OnboardingWelcome from "@/components/onboarding/OnboardingWelcome";
 import OnboardingIntegrations from "@/components/onboarding/OnboardingIntegrations";
 import OnboardingFunnel from "@/components/onboarding/OnboardingFunnel";
@@ -6,9 +7,15 @@ import OnboardingDataCheck from "@/components/onboarding/OnboardingDataCheck";
 import OnboardingChat from "@/components/onboarding/OnboardingChat";
 import type { IntegrationData } from "@/components/onboarding/OnboardingIntegrations";
 
-const stepLabels = ["Welcome", "Integrations", "Funnel", "Validation"];
-
 const Onboarding = () => {
+  const { t } = useTranslation();
+  const stepLabels = [
+    t("onboarding.steps.welcome"),
+    t("onboarding.steps.integrations"),
+    t("onboarding.steps.funnel"),
+    t("onboarding.steps.validation"),
+  ];
+
   const [step, setStep] = useState(0);
   const [integrationData, setIntegrationData] = useState<IntegrationData | null>(null);
   const [funnel, setFunnel] = useState<string[]>([]);
@@ -46,7 +53,7 @@ const Onboarding = () => {
         )}
 
         <span className="text-[12px] text-[hsl(var(--dash-text-tertiary))]">
-          Need help? <button className="text-[hsl(var(--dash-blue))] hover:underline">Talk to us →</button>
+          {t("onboarding.needHelp")} <button className="text-[hsl(var(--dash-blue))] hover:underline">{t("onboarding.talkToUs")}</button>
         </span>
       </div>
 
