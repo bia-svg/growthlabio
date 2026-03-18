@@ -67,7 +67,12 @@ const Onboarding = () => {
           </div>
         )}
 
-        <div />
+        <button
+          onClick={handleSkip}
+          className="text-[12px] text-[hsl(var(--dash-text-tertiary))] hover:text-[hsl(var(--dash-text-secondary))] transition-colors whitespace-nowrap"
+        >
+          {lang === "pt" ? "Pular → ver dashboard" : "Skip → explore dashboard"}
+        </button>
       </div>
 
       {/* Content */}
