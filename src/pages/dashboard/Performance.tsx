@@ -124,23 +124,22 @@ const Performance = () => {
         </button>
       </div>
 
-      {/* Goal Tracker — aligned with KPI grid */}
-      <div className="mb-6">
-        <div className="text-[11px] font-semibold uppercase tracking-[0.07em] text-[hsl(var(--dash-text-tertiary))] mb-3">{t("dashboard.performance.goalTracker")}</div>
+      {/* Goal Tracker — only metric name + status semaphore */}
+      <div className="mb-3">
         <div className="grid grid-cols-3 border border-[hsl(var(--dash-border))] rounded-lg overflow-hidden">
-          <div className="flex items-center gap-2.5 px-5 py-3 border-r border-[hsl(var(--dash-border))]">
-            <span className="w-2.5 h-2.5 rounded-full bg-[hsl(var(--dash-green))] shrink-0" />
-            <span className="text-[13px] font-medium text-[hsl(var(--dash-text-primary))]">ROAS 3.8×</span>
+          <div className="flex items-center gap-2.5 px-5 py-2 border-r border-[hsl(var(--dash-border))]">
+            <span className="w-2 h-2 rounded-full bg-[hsl(var(--dash-green))] shrink-0" />
+            <span className="text-[12px] font-medium text-[hsl(var(--dash-text-secondary))]">ROAS</span>
             <span className="text-[11px] text-[hsl(var(--dash-green))] font-medium ml-auto">{t("dashboard.performance.onTrack")}</span>
           </div>
-          <div className="flex items-center gap-2.5 px-5 py-3 border-r border-[hsl(var(--dash-border))]">
-            <span className="w-2.5 h-2.5 rounded-full bg-[hsl(var(--dash-amber))] shrink-0" />
-            <span className="text-[13px] font-medium text-[hsl(var(--dash-text-primary))]">CPL R$72</span>
+          <div className="flex items-center gap-2.5 px-5 py-2 border-r border-[hsl(var(--dash-border))]">
+            <span className="w-2 h-2 rounded-full bg-[hsl(var(--dash-amber))] shrink-0" />
+            <span className="text-[12px] font-medium text-[hsl(var(--dash-text-secondary))]">CPL</span>
             <span className="text-[11px] text-[hsl(var(--dash-amber))] font-medium ml-auto">{t("dashboard.performance.atRisk")}</span>
           </div>
-          <div className="flex items-center gap-2.5 px-5 py-3">
-            <span className="w-2.5 h-2.5 rounded-full bg-[hsl(var(--dash-red))] shrink-0" />
-            <span className="text-[13px] font-medium text-[hsl(var(--dash-text-primary))]">Frequency 3.9</span>
+          <div className="flex items-center gap-2.5 px-5 py-2">
+            <span className="w-2 h-2 rounded-full bg-[hsl(var(--dash-red))] shrink-0" />
+            <span className="text-[12px] font-medium text-[hsl(var(--dash-text-secondary))]">Frequency</span>
             <span className="text-[11px] text-[hsl(var(--dash-red))] font-medium ml-auto">{t("dashboard.performance.offTrack")}</span>
           </div>
         </div>
