@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import OnboardingWelcome from "@/components/onboarding/OnboardingWelcome";
 import OnboardingIntegrations from "@/components/onboarding/OnboardingIntegrations";
@@ -11,8 +12,14 @@ import type { IntegrationData } from "@/components/onboarding/OnboardingIntegrat
 import type { ProductMapping } from "@/components/onboarding/OnboardingProducts";
 
 const Onboarding = () => {
+  const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const lang = i18n.language?.startsWith("pt") ? "pt" : "en";
+
+  const handleSkip = () => {
+    localStorage.setItem("gl_onboarded", "1");
+    navigate("/dashboard");
+  };
 
   const stepLabels = [
     t("onboarding.steps.welcome"),
@@ -60,7 +67,12 @@ const Onboarding = () => {
           </div>
         )}
 
-        <div />
+        <button
+          onClick={handleSkip}
+          className="text-[12px] text-[hsl(var(--dash-text-tertiary))] hover:text-[hsl(var(--dash-text-secondary))] transition-colors whitespace-nowrap"
+        >
+          {lang === "pt" ? "Pular → ver dashboard" : "Skip → explore dashboard"}
+        </button>
       </div>
 
       {/* Content */}
