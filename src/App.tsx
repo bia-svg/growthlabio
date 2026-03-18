@@ -25,7 +25,7 @@ const App = () => (
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/welcome" element={<Welcome />} />
-          <Route path="/onboarding" element={<Onboarding />} />
+          <Route path="/integrations" element={<Onboarding />} />
           <Route path="/funnel-wizard" element={<FunnelWizard />} />
           <Route path="/dashboard/*" element={<Dashboard />} />
           <Route path="*" element={<NotFound />} />
