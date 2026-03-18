@@ -14,9 +14,10 @@ import { useLocation } from "react-router-dom";
 
 const breadcrumbMap: Record<string, string> = {
   "/dashboard": "Performance",
-  "/dashboard/agent": "AI Agent",
+  "/dashboard/agent": "AI Copilot",
   "/dashboard/optimizer": "Optimizer",
-  "/dashboard/competitor": "Competitor",
+  "/dashboard/competitor": "Competitors",
+  "/dashboard/goals": "Goals",
   "/dashboard/attribution": "Attribution",
   "/dashboard/billing": "Billing",
   "/dashboard/integrations": "Integrations",
