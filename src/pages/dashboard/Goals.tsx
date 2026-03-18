@@ -191,7 +191,9 @@ const Goals = () => {
           const delta = getDelta(goal);
 
           return (
-            <div key={goal.key} className="border border-dash-border rounded-xl p-5 bg-background">
+            <div key={goal.key} className={`border rounded-xl p-5 bg-background ${
+              !delta?.isGood && delta ? "border-[hsl(var(--dash-red))]/40" : "border-dash-border"
+            }`}>
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
                   <span className={`w-2.5 h-2.5 rounded-full ${status.color}`} />
@@ -200,8 +202,8 @@ const Goals = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   {delta && delta.pct > 0 && (
-                    <span className={`text-[12px] font-medium ${status.textColor}`}>
-                      {delta.isGood ? "↓" : "↑"} {delta.pct}% {delta.isGood ? (goal.direction === "down" ? "below" : "above") : (goal.direction === "down" ? "above" : "below")} target
+                    <span className={`text-[12px] font-semibold ${status.textColor}`}>
+                      {!delta.isGood ? "↑" : "↓"} {delta.pct}% {!delta.isGood ? (goal.direction === "down" ? "above" : "below") : (goal.direction === "down" ? "below" : "above")} target
                     </span>
                   )}
                   <span className={`text-[12px] font-medium px-2 py-0.5 rounded-full ${status.textColor} bg-muted`}>{status.label}</span>
@@ -211,7 +213,9 @@ const Goals = () => {
               <div className="flex items-end gap-8 mb-4">
                 <div>
                   <div className="text-[11px] text-dash-text-tertiary uppercase tracking-wider mb-1">Current</div>
-                  <div className="text-[20px] font-semibold text-dash-text-primary">
+                  <div className={`text-[20px] font-semibold ${
+                    delta && !delta.isGood ? status.textColor : "text-dash-text-primary"
+                  }`}>
                     {formatValue(goal.current, goal.unit)}
                   </div>
                 </div>
@@ -243,12 +247,37 @@ const Goals = () => {
                 </div>
               </div>
 
-              <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
-                <div
-                  className={`h-full rounded-full transition-all duration-500 ${goal.target !== null ? status.color : "bg-muted-foreground/20"}`}
-                  style={{ width: `${progress}%` }}
-                />
-              </div>
+              {/* Visual bar — for "down" off-track, show how far current exceeds target */}
+              {goal.target !== null && delta && !delta.isGood && goal.direction === "down" ? (
+                <div className="relative w-full h-2 bg-muted rounded-full overflow-hidden">
+                  {/* Target position marker */}
+                  <div
+                    className="absolute top-0 h-full border-r-2 border-dashed border-[hsl(var(--dash-text-tertiary))]"
+                    style={{ left: `${Math.min(95, (goal.target / goal.current) * 100)}%` }}
+                  />
+                  {/* Red bar showing current overshooting target */}
+                  <div
+                    className={`h-full rounded-full transition-all duration-500 ${status.color}`}
+                    style={{ width: "100%" }}
+                  />
+                </div>
+              ) : (
+                <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
+                  <div
+                    className={`h-full rounded-full transition-all duration-500 ${goal.target !== null ? status.color : "bg-muted-foreground/20"}`}
+                    style={{ width: `${progress}%` }}
+                  />
+                </div>
+              )}
+              {goal.target !== null && delta && !delta.isGood && goal.direction === "down" && (
+                <div className="flex items-center justify-between mt-1.5">
+                  <span className="text-[10px] text-dash-text-tertiary">0</span>
+                  <span className="text-[10px] text-dash-text-tertiary" style={{ position: "relative", left: `${(goal.target / goal.current) * 50 - 50}%` }}>
+                    target: {formatValue(goal.target, goal.unit)}
+                  </span>
+                  <span className={`text-[10px] font-medium ${status.textColor}`}>{formatValue(goal.current, goal.unit)}</span>
+                </div>
+              )}
             </div>
           );
         })}
