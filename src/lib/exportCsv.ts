@@ -17,10 +17,10 @@ export const downloadCsv = (filename: string, headers: string[], rows: string[][
 export const exportCampaigns = () => {
   const headers = ["Campaign", "Spend", "ROAS", "CPL", "Frequency", "CTR", "Status"];
   const rows = [
-    ["Lookalike 1% Customers", "R$4,200", "5.1×", "R$74", "2.1", "3.4%", "Healthy"],
-    ["SaaS Interest BR", "R$6,800", "4.0×", "R$92", "2.8", "2.1%", "Good"],
-    ["Orbit v3", "R$5,100", "3.2×", "R$118", "4.8", "1.2%", "Saturated"],
-    ["Remarketing 30d", "R$2,300", "6.2×", "R$51", "1.9", "4.8%", "Healthy"],
+    ["Lookalike 1% Clientes", "R$3,600", "4.8×", "R$62", "1.9", "3.2%", "Healthy"],
+    ["Interesse — Educação BR", "R$5,200", "3.6×", "R$78", "2.5", "2.3%", "Good"],
+    ["Fictício v2", "R$3,800", "2.9×", "R$105", "4.8", "1.1%", "Saturated"],
+    ["Remarketing 30d", "R$1,600", "5.6×", "R$45", "1.7", "4.5%", "Healthy"],
   ];
 
   const date = new Date().toISOString().slice(0, 10);
