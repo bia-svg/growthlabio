@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import RevealUp from "./RevealUp";
 
 interface CTASectionProps {
@@ -17,10 +18,11 @@ const CTASection = ({ onOpenModal }: CTASectionProps) => (
         <button onClick={onOpenModal} className="text-[15px] font-medium text-primary-foreground bg-primary rounded-lg px-6 py-3 hover:bg-gl-g700 transition-colors">
           Agendar demo
         </button>
-        <a href="#pricing" className="text-[15px] font-medium text-gl-g500 border border-border rounded-lg px-6 py-3 hover:bg-gl-g50 hover:border-gl-g200 hover:text-foreground transition-all no-underline">
-          Ver preços
-        </a>
+        <Link to="/signup" className="text-[15px] font-medium text-gl-g500 border border-border rounded-lg px-6 py-3 hover:bg-gl-g50 hover:border-gl-g200 hover:text-foreground transition-all no-underline">
+          Iniciar trial gratuito
+        </Link>
       </div>
+      <p className="text-[12.5px] text-gl-g300 mt-3.5">Sem cartão de crédito. Acesso imediato.</p>
     </div>
   </RevealUp>
 );
