@@ -22,7 +22,7 @@ const NavBar = ({ onOpenModal }: NavBarProps) => {
         GrowthLab
       </a>
       <ul className="hidden md:flex gap-6 list-none">
-        {[["Home", "#home"], ["A Plataforma", "#plataforma"], ["Preços", "#pricing"]].map(([label, href]) => (
+        {[["Home", "#home"], ["A Plataforma", "#plataforma"]].map(([label, href]) => (
           <li key={label}>
             <a href={href} className="text-sm text-gl-g400 no-underline hover:text-foreground transition-colors">
               {label}
