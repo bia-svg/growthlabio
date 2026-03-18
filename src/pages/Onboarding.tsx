@@ -2,22 +2,28 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import OnboardingWelcome from "@/components/onboarding/OnboardingWelcome";
 import OnboardingIntegrations from "@/components/onboarding/OnboardingIntegrations";
+import OnboardingProducts from "@/components/onboarding/OnboardingProducts";
 import OnboardingFunnel from "@/components/onboarding/OnboardingFunnel";
 import OnboardingDataCheck from "@/components/onboarding/OnboardingDataCheck";
 import OnboardingChat from "@/components/onboarding/OnboardingChat";
 import type { IntegrationData } from "@/components/onboarding/OnboardingIntegrations";
+import type { ProductMapping } from "@/components/onboarding/OnboardingProducts";
 
 const Onboarding = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language?.startsWith("pt") ? "pt" : "en";
+
   const stepLabels = [
     t("onboarding.steps.welcome"),
     t("onboarding.steps.integrations"),
+    lang === "pt" ? "Produtos" : "Products",
     t("onboarding.steps.funnel"),
     t("onboarding.steps.validation"),
   ];
 
   const [step, setStep] = useState(0);
   const [integrationData, setIntegrationData] = useState<IntegrationData | null>(null);
+  const [products, setProducts] = useState<ProductMapping[]>([]);
   const [funnel, setFunnel] = useState<string[]>([]);
   const [showChat, setShowChat] = useState(false);
 
@@ -79,17 +85,24 @@ const Onboarding = () => {
             />
           )}
           {step === 2 && (
-            <OnboardingFunnel
+            <OnboardingProducts
               integrationData={integrationData}
-              onContinue={(f, _metrics) => { setFunnel(f); setStep(3); }}
+              onContinue={(prods) => { setProducts(prods); setStep(3); }}
               onBack={() => setStep(1)}
             />
           )}
           {step === 3 && (
+            <OnboardingFunnel
+              integrationData={integrationData}
+              onContinue={(f, _metrics) => { setFunnel(f); setStep(4); }}
+              onBack={() => setStep(2)}
+            />
+          )}
+          {step === 4 && (
             <OnboardingDataCheck
               integrationData={integrationData}
               funnel={funnel}
-              onBack={() => setStep(2)}
+              onBack={() => setStep(3)}
             />
           )}
         </div>
