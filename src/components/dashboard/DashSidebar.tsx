@@ -1,14 +1,15 @@
 import { useLocation, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const navItems = [
-  { label: "Performance", path: "/dashboard", icon: "◎" },
-  { label: "AI Agent", path: "/dashboard/agent", icon: "◈" },
-  { label: "Optimizer", path: "/dashboard/optimizer", icon: "⚡", badge: 3, badgeColor: "red" as const },
+  { labelKey: "dashboard.sidebar.performance", path: "/dashboard", icon: "◎" },
+  { labelKey: "dashboard.sidebar.aiAgent", path: "/dashboard/agent", icon: "◈" },
+  { labelKey: "dashboard.sidebar.optimizer", path: "/dashboard/optimizer", icon: "⚡", badge: 3, badgeColor: "red" as const },
 ];
 
 const intelItems = [
-  { label: "Competitor", path: "/dashboard/competitor", icon: "⊙" },
-  { label: "Attribution", path: "/dashboard/attribution", icon: "⊞", badge: "!", badgeColor: "amber" as const },
+  { labelKey: "dashboard.sidebar.competitor", path: "/dashboard/competitor", icon: "⊙" },
+  { labelKey: "dashboard.sidebar.attribution", path: "/dashboard/attribution", icon: "⊞", badge: "!", badgeColor: "amber" as const },
 ];
 
 const badgeColors = {
@@ -24,13 +25,14 @@ interface DashSidebarProps {
 const DashSidebar = ({ optimizerCount }: DashSidebarProps) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
   const current = location.pathname;
 
   const isActive = (path: string) => current === path;
 
   const NavItem = ({ item }: { item: typeof navItems[0] }) => {
     const active = isActive(item.path);
-    const count = item.label === "Optimizer" ? optimizerCount : item.badge;
+    const count = item.labelKey === "dashboard.sidebar.optimizer" ? optimizerCount : item.badge;
     return (
       <button
         onClick={() => navigate(item.path)}
@@ -41,7 +43,7 @@ const DashSidebar = ({ optimizerCount }: DashSidebarProps) => {
         }`}
       >
         <span className="text-[14px] w-4 text-center opacity-55">{item.icon}</span>
-        <span className="flex-1 text-left">{item.label}</span>
+        <span className="flex-1 text-left">{t(item.labelKey)}</span>
         {count !== undefined && Number(count) > 0 && (
           <span className={`text-[10px] font-bold px-[6px] py-[1px] rounded-full ${badgeColors[item.badgeColor || "red"]}`}>
             {count}
@@ -63,7 +65,7 @@ const DashSidebar = ({ optimizerCount }: DashSidebarProps) => {
         }`}
       >
         <span className="text-[14px] w-4 text-center opacity-55">{item.icon}</span>
-        <span className="flex-1 text-left">{item.label}</span>
+        <span className="flex-1 text-left">{t(item.labelKey)}</span>
         {item.badge && (
           <span className={`text-[10px] font-bold px-[6px] py-[1px] rounded-full ${badgeColors[item.badgeColor || "amber"]}`}>
             {item.badge}
@@ -71,6 +73,12 @@ const DashSidebar = ({ optimizerCount }: DashSidebarProps) => {
         )}
       </button>
     );
+  };
+
+  const toggleLang = () => {
+    const newLang = i18n.language === "pt" ? "en" : "pt";
+    i18n.changeLanguage(newLang);
+    localStorage.setItem("gl_language", newLang);
   };
 
   return (
@@ -88,7 +96,7 @@ const DashSidebar = ({ optimizerCount }: DashSidebarProps) => {
 
       {/* Active product */}
       <div className="mx-3 mb-4 p-3 border border-dash-border rounded-lg bg-background">
-        <div className="text-[10px] font-semibold uppercase tracking-[0.07em] text-dash-text-tertiary mb-1">Active product</div>
+        <div className="text-[10px] font-semibold uppercase tracking-[0.07em] text-dash-text-tertiary mb-1">{t("dashboard.sidebar.activeProduct")}</div>
         <div className="flex items-center gap-2">
           <span className="w-[6px] h-[6px] rounded-full bg-dash-green" />
           <span className="text-[13px] font-medium text-dash-text-primary">Orbit</span>
@@ -103,7 +111,7 @@ const DashSidebar = ({ optimizerCount }: DashSidebarProps) => {
       <div className="mx-3 my-3 h-px bg-dash-border" />
 
       <div className="px-3 mb-1.5">
-        <span className="text-[10px] font-semibold uppercase tracking-[0.07em] text-dash-text-tertiary">Intelligence</span>
+        <span className="text-[10px] font-semibold uppercase tracking-[0.07em] text-dash-text-tertiary">{t("dashboard.sidebar.intelligence")}</span>
       </div>
       <nav className="px-2 flex flex-col gap-0.5">
         {intelItems.map(item => <IntelItem key={item.path} item={item} />)}
@@ -121,7 +129,7 @@ const DashSidebar = ({ optimizerCount }: DashSidebarProps) => {
           }`}
         >
           <span className="text-[14px] w-4 text-center opacity-55">⊡</span>
-          <span className="flex-1 text-left">Billing</span>
+          <span className="flex-1 text-left">{t("dashboard.sidebar.billing")}</span>
         </button>
       </nav>
 
@@ -137,12 +145,22 @@ const DashSidebar = ({ optimizerCount }: DashSidebarProps) => {
           }`}
         >
           <span className="text-[14px] w-4 text-center opacity-55">⊕</span>
-          <span className="flex-1 text-left">Integrations</span>
+          <span className="flex-1 text-left">{t("dashboard.sidebar.integrations")}</span>
         </button>
       </nav>
 
       {/* Spacer */}
       <div className="flex-1" />
+
+      {/* Language toggle */}
+      <div className="px-3 pb-2">
+        <button
+          onClick={toggleLang}
+          className="w-full flex items-center gap-2 px-3 py-[7px] rounded-md text-[12px] text-dash-text-tertiary hover:bg-dash-hover transition-colors"
+        >
+          🌐 {i18n.language === "pt" ? "English" : "Português"}
+        </button>
+      </div>
 
       {/* Footer */}
       <div className="px-3 pb-4 pt-3 border-t border-dash-border flex items-center gap-2.5">

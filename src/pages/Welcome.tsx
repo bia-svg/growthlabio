@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Welcome = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <div className="h-screen w-full bg-background flex flex-col font-inter">
@@ -20,16 +22,16 @@ const Welcome = () => {
       <div className="flex-1 flex items-center justify-center">
         <div className="max-w-[480px] text-center">
           <h1 className="text-[32px] font-bold tracking-[-0.04em] text-dash-text-primary mb-3">
-            Welcome, Vini
+            {t("welcome.title")}
           </h1>
           <p className="text-[14px] text-dash-text-tertiary leading-relaxed mb-10">
-            Let's set up your GrowthLab. You'll see your first insights in under 10 minutes.
+            {t("welcome.subtitle")}
           </p>
           <button
             onClick={() => navigate("/onboarding")}
             className="w-full h-[44px] bg-dash-text-primary text-white rounded-md text-[15px] font-semibold hover:opacity-90 transition-opacity"
           >
-            Get started →
+            {t("welcome.cta")}
           </button>
         </div>
       </div>

@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import RevealUp from "./RevealUp";
 
 interface HeroSectionProps {
@@ -71,7 +72,6 @@ const WindowMock = () => (
       </div>
       {/* Main content */}
       <div className="p-5 flex flex-col gap-4">
-        {/* Topbar */}
         <div className="flex items-start justify-between">
           <div>
             <div className="text-[11px] text-[hsl(var(--dash-text-tertiary))]">Orbit · synced 3 min ago</div>
@@ -82,8 +82,6 @@ const WindowMock = () => (
             <div className="border border-[hsl(var(--dash-border))] rounded-md px-2.5 py-1 text-[11px] text-[hsl(var(--dash-text-secondary))]">Export</div>
           </div>
         </div>
-
-        {/* Product selector */}
         <div className="flex gap-1.5">
           {["Orbit", "Nexus", "Pulse", "Core"].map((p, i) => (
             <div
@@ -98,8 +96,6 @@ const WindowMock = () => (
             </div>
           ))}
         </div>
-
-        {/* KPI cards */}
         <div className="grid grid-cols-4 border border-[hsl(var(--dash-border))] rounded-lg overflow-hidden">
           {[
             { label: "Total ROAS", value: "4.2×", color: "hsl(var(--dash-green))", sub: "↑ target 3.5×" },
@@ -114,10 +110,7 @@ const WindowMock = () => (
             </div>
           ))}
         </div>
-
-        {/* Funnel + insights */}
         <div className="grid grid-cols-[1.8fr_1fr] gap-3">
-          {/* Funnel */}
           <div>
             <div className="text-[9px] font-semibold uppercase tracking-[0.07em] text-[hsl(var(--dash-text-tertiary))] mb-2">Conversion Funnel</div>
             <div className="flex flex-col gap-[4px]">
@@ -139,7 +132,6 @@ const WindowMock = () => (
               ))}
             </div>
           </div>
-          {/* Insights */}
           <div className="flex flex-col gap-2">
             <div className="bg-[hsl(var(--dash-green-bg))] border border-[hsl(155,40%,88%)] rounded-md px-2.5 py-2 text-[10px] text-[hsl(var(--dash-green))] leading-relaxed">
               ✦ Lookalike 1% at 5.1× ROAS — best performing ad set this period.
@@ -149,8 +141,6 @@ const WindowMock = () => (
             </div>
           </div>
         </div>
-
-        {/* Campaign table preview */}
         <div>
           <div className="text-[9px] font-semibold uppercase tracking-[0.07em] text-[hsl(var(--dash-text-tertiary))] mb-2">Active Campaigns</div>
           <div className="border border-[hsl(var(--dash-border))] rounded-lg overflow-hidden text-[10px]">
@@ -182,30 +172,31 @@ const WindowMock = () => (
 );
 
 const HeroSection = ({ onOpenModal }: HeroSectionProps) => {
+  const { t } = useTranslation();
   return (
     <section id="home" className="pt-[116px] pb-20 text-center">
       <div className="max-w-[1040px] mx-auto px-7">
         <div className="inline-flex items-center gap-1.5 border border-border rounded-full px-3.5 py-[5px] text-[12.5px] font-medium text-gl-g400 mb-7">
           <span className="w-1.5 h-1.5 bg-gl-green rounded-full animate-pulse-dot" />
-          AI Growth Copilot
+          {t("hero.badge")}
         </div>
         <h1 className="text-[clamp(48px,6.5vw,88px)] font-bold leading-[1.03] tracking-[-0.04em] text-foreground max-w-[860px] mx-auto mb-5">
-          Seu copiloto de IA<br />
-          para <span className="text-gl-g300">growth</span><br />
-          e mídia paga.
+          {t("hero.title1")}<br />
+          {t("hero.title2")} <span className="text-gl-g300">{t("hero.title3")}</span><br />
+          {t("hero.title4")}
         </h1>
         <p className="text-lg font-light text-gl-g400 max-w-[500px] mx-auto mb-9 leading-[1.7]">
-          Analisa sua conta, propõe otimizações e executa com a sua aprovação. Você decide. A IA acelera.
+          {t("hero.subtitle")}
         </p>
         <div className="flex items-center justify-center gap-2.5">
           <button onClick={onOpenModal} className="text-[15px] font-medium text-primary-foreground bg-primary rounded-lg px-6 py-3 hover:bg-gl-g700 transition-colors">
-            Agendar demo
+            {t("hero.cta")}
           </button>
           <a href="#plataforma" className="text-[15px] font-medium text-gl-g500 border border-border rounded-lg px-6 py-3 hover:bg-gl-g50 hover:border-gl-g200 hover:text-foreground transition-all no-underline">
-            Como funciona
+            {t("hero.howItWorks")}
           </a>
         </div>
-        <p className="text-[12.5px] text-gl-g300 mt-3.5">Sem compromisso. Acesso trial gratuito.</p>
+        <p className="text-[12.5px] text-gl-g300 mt-3.5">{t("hero.noCommitment")}</p>
         <RevealUp className="mt-16 perspective-[1200px]" delay={200}>
           <WindowMock />
         </RevealUp>

@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 interface DashTopbarProps {
   breadcrumb: string;
@@ -6,6 +8,7 @@ interface DashTopbarProps {
 
 const DashTopbar = ({ breadcrumb }: DashTopbarProps) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <div className="h-[44px] border-b border-dash-border flex items-center justify-between px-5 font-inter shrink-0">
@@ -17,16 +20,16 @@ const DashTopbar = ({ breadcrumb }: DashTopbarProps) => {
       <div className="flex items-center gap-3">
         <button className="flex items-center gap-1.5 text-[12px] text-dash-text-secondary border border-dash-border rounded-md px-2.5 py-1 hover:bg-dash-hover transition-colors">
           <span className="text-[11px]">📅</span>
-          Last 30 days
+          {t("dashboard.topbar.last30Days")}
         </button>
         <button className="flex items-center gap-1.5 text-[12px] text-dash-text-secondary border border-dash-border rounded-md px-2.5 py-1 hover:bg-dash-hover transition-colors">
-          ↓ Export
+          {t("dashboard.topbar.export")}
         </button>
         <button
           onClick={() => navigate("/")}
           className="text-[12px] text-dash-text-tertiary hover:text-dash-text-primary transition-colors"
         >
-          ← Back to site
+          {t("nav.backToSite")}
         </button>
       </div>
     </div>
