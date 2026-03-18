@@ -13,9 +13,6 @@ const managementItems: NavItem[] = [
   { labelKey: "dashboard.sidebar.performance", path: "/dashboard", icon: "◎" },
   { labelKey: "dashboard.sidebar.aiCopilot", path: "/dashboard/agent", icon: "◈" },
   { labelKey: "dashboard.sidebar.optimizer", path: "/dashboard/optimizer", icon: "⚡", badge: 3, badgeColor: "red" },
-];
-
-const strategyItems: NavItem[] = [
   { labelKey: "dashboard.sidebar.competitor", path: "/dashboard/competitor", icon: "⊙" },
   { labelKey: "dashboard.sidebar.goals", path: "/dashboard/goals", icon: "◉" },
 ];
@@ -106,16 +103,6 @@ const DashSidebar = ({ optimizerCount }: DashSidebarProps) => {
       <nav className="px-2 flex flex-col gap-0.5 mb-3">
         {managementItems.map(item => <SidebarItem key={item.path} item={item} />)}
       </nav>
-
-      <div className="mx-3 h-px bg-dash-border" />
-
-      {/* Strategy */}
-      <div className="mt-3">
-        <SectionLabel label={t("dashboard.sidebar.strategy")} />
-        <nav className="px-2 flex flex-col gap-0.5 mb-3">
-          {strategyItems.map(item => <SidebarItem key={item.path} item={item} />)}
-        </nav>
-      </div>
 
       <div className="mx-3 h-px bg-dash-border" />
 
