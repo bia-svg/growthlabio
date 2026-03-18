@@ -309,11 +309,15 @@
     },
     "sidebar": {
       "activeProduct": "Produto ativo",
-      "intelligence": "Inteligência",
+      "management": "Gestão",
+      "strategy": "Estratégia",
+      "yourBusiness": "Seu Negócio",
       "performance": "Performance",
+      "aiCopilot": "AI Copilot",
       "aiAgent": "AI Agent",
       "optimizer": "Optimizer",
-      "competitor": "Competitor",
+      "competitor": "Concorrentes",
+      "goals": "Metas",
       "attribution": "Attribution",
       "billing": "Billing",
       "integrations": "Integrações"

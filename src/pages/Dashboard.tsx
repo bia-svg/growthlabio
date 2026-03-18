@@ -41,6 +41,7 @@ const Dashboard = () => {
             <Route path="agent" element={<AIAgent />} />
             <Route path="optimizer" element={<Optimizer onCountChange={setOptimizerCount} />} />
             <Route path="competitor" element={<Competitor />} />
+            <Route path="goals" element={<Goals />} />
             <Route path="attribution" element={<Attribution />} />
             <Route path="billing" element={<Billing />} />
             <Route path="integrations" element={<Integrations />} />
