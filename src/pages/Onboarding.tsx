@@ -3,6 +3,7 @@ import OnboardingWelcome from "@/components/onboarding/OnboardingWelcome";
 import OnboardingIntegrations from "@/components/onboarding/OnboardingIntegrations";
 import OnboardingFunnel from "@/components/onboarding/OnboardingFunnel";
 import OnboardingDataCheck from "@/components/onboarding/OnboardingDataCheck";
+import OnboardingChat from "@/components/onboarding/OnboardingChat";
 import type { IntegrationData } from "@/components/onboarding/OnboardingIntegrations";
 
 const stepLabels = ["Boas-vindas", "Integrações", "Funil", "Verificação"];
@@ -11,11 +12,14 @@ const Onboarding = () => {
   const [step, setStep] = useState(0);
   const [integrationData, setIntegrationData] = useState<IntegrationData | null>(null);
   const [funnel, setFunnel] = useState<string[]>([]);
+  const [showChat, setShowChat] = useState(false);
+
+  const showSplitLayout = step > 0 || showChat;
 
   return (
-    <div className="min-h-screen bg-background font-inter">
+    <div className="min-h-screen bg-background font-inter flex flex-col">
       {/* Top bar */}
-      <div className="flex items-center justify-between px-7 py-4 border-b border-[hsl(var(--dash-border))]">
+      <div className="flex items-center justify-between px-7 py-4 border-b border-[hsl(var(--dash-border))] shrink-0">
         <a href="/" className="flex items-center gap-2 text-[15px] font-semibold tracking-tight text-[hsl(var(--dash-text-primary))] no-underline">
           <div className="w-6 h-6 bg-primary rounded-[5px] flex items-center justify-center">
             <svg viewBox="0 0 12 12" fill="none" className="w-3 h-3">
@@ -26,7 +30,6 @@ const Onboarding = () => {
           GrowthLab
         </a>
 
-        {/* Step indicator (hidden on welcome) */}
         {step > 0 && (
           <div className="flex items-center gap-1">
             {stepLabels.map((label, i) => (
@@ -49,28 +52,45 @@ const Onboarding = () => {
         </span>
       </div>
 
-      {/* Steps */}
-      {step === 0 && <OnboardingWelcome onStart={() => setStep(1)} />}
-      {step === 1 && (
-        <OnboardingIntegrations
-          onContinue={(data) => { setIntegrationData(data); setStep(2); }}
-          onBack={() => setStep(0)}
-        />
-      )}
-      {step === 2 && (
-        <OnboardingFunnel
-          integrationData={integrationData}
-          onContinue={(f) => { setFunnel(f); setStep(3); }}
-          onBack={() => setStep(1)}
-        />
-      )}
-      {step === 3 && (
-        <OnboardingDataCheck
-          integrationData={integrationData}
-          funnel={funnel}
-          onBack={() => setStep(2)}
-        />
-      )}
+      {/* Content */}
+      <div className="flex-1 flex overflow-hidden">
+        {/* Left: Setup steps */}
+        <div className={`flex-1 overflow-y-auto transition-all ${showSplitLayout && step > 0 ? "" : ""}`}>
+          {step === 0 && (
+            <OnboardingWelcome
+              onStart={() => { setStep(1); setShowChat(true); }}
+              onAiHelp={() => { setShowChat(true); }}
+            />
+          )}
+          {step === 1 && (
+            <OnboardingIntegrations
+              onContinue={(data) => { setIntegrationData(data); setStep(2); }}
+              onBack={() => setStep(0)}
+            />
+          )}
+          {step === 2 && (
+            <OnboardingFunnel
+              integrationData={integrationData}
+              onContinue={(f) => { setFunnel(f); setStep(3); }}
+              onBack={() => setStep(1)}
+            />
+          )}
+          {step === 3 && (
+            <OnboardingDataCheck
+              integrationData={integrationData}
+              funnel={funnel}
+              onBack={() => setStep(2)}
+            />
+          )}
+        </div>
+
+        {/* Right: AI Chat */}
+        {showChat && (
+          <div className="w-[380px] shrink-0 h-full">
+            <OnboardingChat currentStep={step} />
+          </div>
+        )}
+      </div>
     </div>
   );
 };

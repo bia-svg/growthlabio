@@ -2,9 +2,10 @@ import { Sparkles, ArrowRight, MessageCircle } from "lucide-react";
 
 interface Props {
   onStart: () => void;
+  onAiHelp?: () => void;
 }
 
-const OnboardingWelcome = ({ onStart }: Props) => (
+const OnboardingWelcome = ({ onStart, onAiHelp }: Props) => (
   <div className="min-h-[calc(100vh-65px)] flex items-center justify-center px-6">
     <div className="max-w-[560px] text-center dash-page-enter">
       {/* Icon */}
@@ -33,7 +34,10 @@ const OnboardingWelcome = ({ onStart }: Props) => (
           <ArrowRight className="w-4 h-4" />
         </button>
 
-        <button className="h-[40px] px-5 text-[13px] font-medium text-[hsl(var(--dash-text-secondary))] hover:text-[hsl(var(--dash-text-primary))] transition-colors flex items-center gap-2 rounded-lg hover:bg-[hsl(var(--dash-hover))]">
+        <button
+          onClick={onAiHelp}
+          className="h-[40px] px-5 text-[13px] font-medium text-[hsl(var(--dash-text-secondary))] hover:text-[hsl(var(--dash-text-primary))] transition-colors flex items-center gap-2 rounded-lg hover:bg-[hsl(var(--dash-hover))]"
+        >
           <MessageCircle className="w-4 h-4" />
           Quero ajuda da IA
         </button>
