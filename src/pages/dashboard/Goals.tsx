@@ -1,50 +1,84 @@
 import { useState, useMemo } from "react";
-import { useTranslation } from "react-i18next";
+
+const allMetrics = [
+  { key: "cpl", label: "CPL", unit: "R$", direction: "down" as const, description: "Cost per Lead" },
+  { key: "cac", label: "CAC", unit: "R$", direction: "down" as const, description: "Cost per Acquisition" },
+  { key: "roas", label: "ROAS", unit: "x", direction: "up" as const, description: "Return on Ad Spend" },
+  { key: "cpa", label: "CPA", unit: "R$", direction: "down" as const, description: "Cost per Action" },
+  { key: "ctr", label: "CTR", unit: "%", direction: "up" as const, description: "Click-Through Rate" },
+  { key: "cvr", label: "CVR", unit: "%", direction: "up" as const, description: "Conversion Rate" },
+  { key: "ltv", label: "LTV", unit: "R$", direction: "up" as const, description: "Lifetime Value" },
+  { key: "mrr", label: "MRR", unit: "R$", direction: "up" as const, description: "Monthly Recurring Revenue" },
+  { key: "arpu", label: "ARPU", unit: "R$", direction: "up" as const, description: "Avg Revenue per User" },
+  { key: "churn", label: "Churn", unit: "%", direction: "down" as const, description: "Churn Rate" },
+];
+
+const mockCurrentValues: Record<string, number> = {
+  cpl: 38.5, cac: 285, roas: 4.2, cpa: 52, ctr: 3.1, cvr: 2.8, ltv: 1200, mrr: 45000, arpu: 89, churn: 4.5,
+};
 
 interface MetricGoal {
   key: string;
   label: string;
   current: number;
-  target: number;
+  target: number | null;
   unit: string;
   direction: "up" | "down";
+  description: string;
 }
 
-const defaultGoals: MetricGoal[] = [
-  { key: "cpl", label: "CPL", current: 38.5, target: 30, unit: "R$", direction: "down" },
-  { key: "cac", label: "CAC", current: 285, target: 220, unit: "R$", direction: "down" },
-  { key: "roas", label: "ROAS", current: 4.2, target: 5.0, unit: "x", direction: "up" },
-];
-
 const Goals = () => {
-  const { t } = useTranslation();
-
   const savedMetrics = useMemo(() => {
     try {
       const raw = localStorage.getItem("gl_top_metrics");
-      return raw ? JSON.parse(raw) : null;
+      return raw ? JSON.parse(raw) as string[] : null;
     } catch { return null; }
   }, []);
 
-  const [goals, setGoals] = useState<MetricGoal[]>(() => {
-    if (savedMetrics && Array.isArray(savedMetrics)) {
-      return savedMetrics.map((m: string) => {
-        const existing = defaultGoals.find(g => g.key === m.toLowerCase());
-        if (existing) return existing;
-        return { key: m.toLowerCase(), label: m, current: 0, target: 0, unit: "", direction: "up" as const };
-      });
-    }
-    return defaultGoals;
+  const [selectedKeys, setSelectedKeys] = useState<string[]>(() => {
+    if (savedMetrics && Array.isArray(savedMetrics)) return savedMetrics.map(m => m.toLowerCase());
+    return ["cpl", "cac", "roas"];
   });
 
+  const [targets, setTargets] = useState<Record<string, number | null>>({});
   const [editing, setEditing] = useState<string | null>(null);
+  const [pickingMetrics, setPickingMetrics] = useState(false);
+  const [tempSelection, setTempSelection] = useState<string[]>([]);
 
-  const handleTargetChange = (key: string, value: string) => {
-    setGoals(prev => prev.map(g => g.key === key ? { ...g, target: parseFloat(value) || 0 } : g));
+  const goals: MetricGoal[] = selectedKeys.map(key => {
+    const meta = allMetrics.find(m => m.key === key) || { key, label: key.toUpperCase(), unit: "", direction: "up" as const, description: "" };
+    return {
+      ...meta,
+      current: mockCurrentValues[key] ?? 0,
+      target: targets[key] ?? null,
+    };
+  });
+
+  const handleTargetSave = (key: string, value: string) => {
+    const num = parseFloat(value);
+    setTargets(prev => ({ ...prev, [key]: isNaN(num) ? null : num }));
+    setEditing(null);
+  };
+
+  const openMetricPicker = () => {
+    setTempSelection([...selectedKeys]);
+    setPickingMetrics(true);
+  };
+
+  const toggleMetric = (key: string) => {
+    setTempSelection(prev =>
+      prev.includes(key) ? prev.filter(k => k !== key) : prev.length < 3 ? [...prev, key] : prev
+    );
+  };
+
+  const confirmMetrics = () => {
+    setSelectedKeys(tempSelection);
+    localStorage.setItem("gl_top_metrics", JSON.stringify(tempSelection));
+    setPickingMetrics(false);
   };
 
   const getProgress = (goal: MetricGoal) => {
-    if (goal.target === 0) return 0;
+    if (!goal.target || goal.target === 0) return 0;
     if (goal.direction === "down") {
       if (goal.current <= goal.target) return 100;
       const start = goal.target * 2;
@@ -54,19 +88,92 @@ const Goals = () => {
   };
 
   const getStatus = (goal: MetricGoal) => {
+    if (goal.target === null) return { color: "bg-muted-foreground/30", label: "No target" };
     const progress = getProgress(goal);
     if (progress >= 90) return { color: "bg-dash-green", label: "On track" };
     if (progress >= 60) return { color: "bg-dash-amber", label: "At risk" };
     return { color: "bg-dash-red", label: "Off track" };
   };
 
+  const formatValue = (value: number, unit: string) => {
+    if (unit === "R$") return `R$ ${value.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    if (unit === "%") return `${value}%`;
+    if (unit === "x") return `${value}x`;
+    return String(value);
+  };
+
   return (
     <div className="p-8 max-w-4xl">
-      <h1 className="text-[22px] font-semibold text-dash-text-primary mb-1">Goals</h1>
-      <p className="text-[14px] text-dash-text-tertiary mb-8">
-        Set targets for your top metrics. Progress is tracked automatically.
-      </p>
+      <div className="flex items-start justify-between mb-8">
+        <div>
+          <h1 className="text-[22px] font-semibold text-dash-text-primary mb-1">Goals</h1>
+          <p className="text-[14px] text-dash-text-tertiary">
+            Define targets for your key metrics. Click on a target value to edit it.
+          </p>
+        </div>
+        <button
+          onClick={openMetricPicker}
+          className="text-[13px] font-medium text-primary border border-primary/30 rounded-lg px-4 py-2 hover:bg-primary/5 transition-colors whitespace-nowrap"
+        >
+          Change main metrics
+        </button>
+      </div>
 
+      {/* Metric picker modal */}
+      {pickingMetrics && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+          <div className="bg-background border border-dash-border rounded-2xl p-6 w-full max-w-md shadow-xl">
+            <h2 className="text-[17px] font-semibold text-dash-text-primary mb-1">Choose 3 main metrics</h2>
+            <p className="text-[13px] text-dash-text-tertiary mb-5">These will be tracked on your dashboard and goals page.</p>
+
+            <div className="flex flex-col gap-2 mb-6">
+              {allMetrics.map(m => {
+                const selected = tempSelection.includes(m.key);
+                const disabled = !selected && tempSelection.length >= 3;
+                return (
+                  <button
+                    key={m.key}
+                    onClick={() => toggleMetric(m.key)}
+                    disabled={disabled}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-lg border transition-all text-left ${
+                      selected
+                        ? "border-primary bg-primary/5 text-dash-text-primary"
+                        : disabled
+                        ? "border-dash-border bg-muted/30 text-dash-text-tertiary opacity-50 cursor-not-allowed"
+                        : "border-dash-border hover:border-primary/40 text-dash-text-secondary"
+                    }`}
+                  >
+                    <span className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
+                      selected ? "border-primary bg-primary" : "border-dash-border"
+                    }`}>
+                      {selected && <span className="w-1.5 h-1.5 rounded-full bg-white" />}
+                    </span>
+                    <div>
+                      <span className="text-[14px] font-medium">{m.label}</span>
+                      <span className="text-[12px] text-dash-text-tertiary ml-2">{m.description}</span>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="flex gap-3 justify-end">
+              <button onClick={() => setPickingMetrics(false)} className="text-[13px] px-4 py-2 rounded-lg text-dash-text-secondary hover:bg-muted transition-colors">
+                Cancel
+              </button>
+              <button
+                onClick={confirmMetrics}
+                disabled={tempSelection.length !== 3}
+                className="text-[13px] font-medium px-5 py-2 rounded-lg bg-primary text-primary-foreground hover:opacity-90 transition-opacity disabled:opacity-40"
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Goals cards */}
       <div className="flex flex-col gap-4">
         {goals.map(goal => {
           const progress = getProgress(goal);
@@ -78,15 +185,16 @@ const Goals = () => {
                 <div className="flex items-center gap-3">
                   <span className={`w-2.5 h-2.5 rounded-full ${status.color}`} />
                   <span className="text-[16px] font-semibold text-dash-text-primary">{goal.label}</span>
-                  <span className="text-[12px] text-dash-text-tertiary px-2 py-0.5 bg-muted rounded-full">{status.label}</span>
+                  <span className="text-[12px] text-dash-text-tertiary ml-1">{goal.description}</span>
                 </div>
+                <span className="text-[12px] text-dash-text-tertiary px-2 py-0.5 bg-muted rounded-full">{status.label}</span>
               </div>
 
               <div className="flex items-end gap-8 mb-4">
                 <div>
                   <div className="text-[11px] text-dash-text-tertiary uppercase tracking-wider mb-1">Current</div>
                   <div className="text-[20px] font-semibold text-dash-text-primary">
-                    {goal.unit === "R$" ? `R$ ${goal.current.toFixed(2)}` : `${goal.current}${goal.unit}`}
+                    {formatValue(goal.current, goal.unit)}
                   </div>
                 </div>
                 <div>
@@ -94,30 +202,32 @@ const Goals = () => {
                   {editing === goal.key ? (
                     <input
                       type="number"
-                      value={goal.target}
-                      onChange={e => handleTargetChange(goal.key, e.target.value)}
-                      onBlur={() => setEditing(null)}
-                      onKeyDown={e => e.key === "Enter" && setEditing(null)}
+                      defaultValue={goal.target ?? ""}
+                      placeholder="Set target..."
+                      onBlur={e => handleTargetSave(goal.key, e.target.value)}
+                      onKeyDown={e => e.key === "Enter" && handleTargetSave(goal.key, (e.target as HTMLInputElement).value)}
                       autoFocus
-                      className="text-[20px] font-semibold text-dash-text-primary bg-transparent border-b-2 border-primary outline-none w-28"
+                      className="text-[20px] font-semibold text-dash-text-primary bg-transparent border-b-2 border-primary outline-none w-32 placeholder:text-dash-text-tertiary placeholder:text-[16px]"
                     />
                   ) : (
                     <button
                       onClick={() => setEditing(goal.key)}
-                      className="text-[20px] font-semibold text-dash-text-primary hover:text-primary transition-colors cursor-pointer"
+                      className={`text-[20px] font-semibold transition-colors cursor-pointer ${
+                        goal.target !== null ? "text-dash-text-primary hover:text-primary" : "text-primary/60 hover:text-primary"
+                      }`}
                     >
-                      {goal.unit === "R$" ? `R$ ${goal.target.toFixed(2)}` : `${goal.target}${goal.unit}`}
+                      {goal.target !== null ? formatValue(goal.target, goal.unit) : "Set target →"}
                     </button>
                   )}
                 </div>
-                <div className="text-[13px] text-dash-text-tertiary">
+                <div className="text-[13px] text-dash-text-tertiary pb-1">
                   {goal.direction === "down" ? "↓ Lower is better" : "↑ Higher is better"}
                 </div>
               </div>
 
               <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
                 <div
-                  className={`h-full rounded-full transition-all duration-500 ${status.color}`}
+                  className={`h-full rounded-full transition-all duration-500 ${goal.target !== null ? status.color : "bg-muted-foreground/20"}`}
                   style={{ width: `${progress}%` }}
                 />
               </div>
