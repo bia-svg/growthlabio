@@ -13,9 +13,6 @@ const managementItems: NavItem[] = [
   { labelKey: "dashboard.sidebar.performance", path: "/dashboard", icon: "◎" },
   { labelKey: "dashboard.sidebar.aiCopilot", path: "/dashboard/agent", icon: "◈" },
   { labelKey: "dashboard.sidebar.optimizer", path: "/dashboard/optimizer", icon: "⚡", badge: 3, badgeColor: "red" },
-];
-
-const strategyItems: NavItem[] = [
   { labelKey: "dashboard.sidebar.competitor", path: "/dashboard/competitor", icon: "⊙" },
   { labelKey: "dashboard.sidebar.goals", path: "/dashboard/goals", icon: "◉" },
 ];
