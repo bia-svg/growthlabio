@@ -12,8 +12,14 @@ import type { IntegrationData } from "@/components/onboarding/OnboardingIntegrat
 import type { ProductMapping } from "@/components/onboarding/OnboardingProducts";
 
 const Onboarding = () => {
+  const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const lang = i18n.language?.startsWith("pt") ? "pt" : "en";
+
+  const handleSkip = () => {
+    localStorage.setItem("gl_onboarded", "1");
+    navigate("/dashboard");
+  };
 
   const stepLabels = [
     t("onboarding.steps.welcome"),
