@@ -80,9 +80,10 @@ const Goals = () => {
   const getProgress = (goal: MetricGoal) => {
     if (!goal.target || goal.target === 0) return 0;
     if (goal.direction === "down") {
+      // For "lower is better": 100% when current <= target, 0% when current >= 2x target
       if (goal.current <= goal.target) return 100;
-      const start = goal.target * 2;
-      return Math.max(0, Math.min(100, ((start - goal.current) / (start - goal.target)) * 100));
+      const ratio = goal.current / goal.target; // e.g. 38/20 = 1.9
+      return Math.max(0, Math.min(100, (2 - ratio) * 100)); // 1.9 → 10%
     }
     return Math.min(100, (goal.current / goal.target) * 100);
   };
