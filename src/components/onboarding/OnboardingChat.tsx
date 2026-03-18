@@ -79,9 +79,11 @@ async function streamChat({
 
 interface Props {
   currentStep: number;
+  onUserMessage?: () => void;
 }
 
-const OnboardingChat = ({ currentStep }: Props) => {
+const OnboardingChat = ({ currentStep, onUserMessage }: Props) => {
+  const firedRef = useRef(false);
   const { t } = useTranslation();
 
   const getGreeting = (step: number) => t(`onboarding.chat.greetings.${step}`);
