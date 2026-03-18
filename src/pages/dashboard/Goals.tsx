@@ -80,20 +80,29 @@ const Goals = () => {
   const getProgress = (goal: MetricGoal) => {
     if (!goal.target || goal.target === 0) return 0;
     if (goal.direction === "down") {
-      // For "lower is better": 100% when current <= target, 0% when current >= 2x target
       if (goal.current <= goal.target) return 100;
-      const ratio = goal.current / goal.target; // e.g. 38/20 = 1.9
-      return Math.max(0, Math.min(100, (2 - ratio) * 100)); // 1.9 → 10%
+      const ratio = goal.current / goal.target;
+      return Math.max(0, Math.min(100, (2 - ratio) * 100));
     }
     return Math.min(100, (goal.current / goal.target) * 100);
   };
 
+  const getDelta = (goal: MetricGoal) => {
+    if (goal.target === null || goal.target === 0) return null;
+    const pct = ((goal.current - goal.target) / goal.target) * 100;
+    if (goal.direction === "down") {
+      return { pct: Math.round(Math.abs(pct)), isGood: goal.current <= goal.target };
+    }
+    return { pct: Math.round(Math.abs(pct)), isGood: goal.current >= goal.target };
+  };
+
   const getStatus = (goal: MetricGoal) => {
-    if (goal.target === null) return { color: "bg-muted-foreground/30", label: "No target" };
-    const progress = getProgress(goal);
-    if (progress >= 90) return { color: "bg-dash-green", label: "On track" };
-    if (progress >= 60) return { color: "bg-dash-amber", label: "At risk" };
-    return { color: "bg-dash-red", label: "Off track" };
+    if (goal.target === null) return { color: "bg-muted-foreground/30", label: "No target", textColor: "text-[hsl(var(--dash-text-tertiary))]" };
+    const delta = getDelta(goal);
+    if (!delta) return { color: "bg-muted-foreground/30", label: "No target", textColor: "text-[hsl(var(--dash-text-tertiary))]" };
+    if (delta.isGood) return { color: "bg-[hsl(var(--dash-green))]", label: "On track", textColor: "text-[hsl(var(--dash-green))]" };
+    if (delta.pct <= 15) return { color: "bg-[hsl(var(--dash-amber))]", label: "At risk", textColor: "text-[hsl(var(--dash-amber))]" };
+    return { color: "bg-[hsl(var(--dash-red))]", label: "Off track", textColor: "text-[hsl(var(--dash-red))]" };
   };
 
   const formatValue = (value: number, unit: string) => {
@@ -179,6 +188,7 @@ const Goals = () => {
         {goals.map(goal => {
           const progress = getProgress(goal);
           const status = getStatus(goal);
+          const delta = getDelta(goal);
 
           return (
             <div key={goal.key} className="border border-dash-border rounded-xl p-5 bg-background">
@@ -188,7 +198,14 @@ const Goals = () => {
                   <span className="text-[16px] font-semibold text-dash-text-primary">{goal.label}</span>
                   <span className="text-[12px] text-dash-text-tertiary ml-1">{goal.description}</span>
                 </div>
-                <span className="text-[12px] text-dash-text-tertiary px-2 py-0.5 bg-muted rounded-full">{status.label}</span>
+                <div className="flex items-center gap-2">
+                  {delta && delta.pct > 0 && (
+                    <span className={`text-[12px] font-medium ${status.textColor}`}>
+                      {delta.isGood ? "↓" : "↑"} {delta.pct}% {delta.isGood ? (goal.direction === "down" ? "below" : "above") : (goal.direction === "down" ? "above" : "below")} target
+                    </span>
+                  )}
+                  <span className={`text-[12px] font-medium px-2 py-0.5 rounded-full ${status.textColor} bg-muted`}>{status.label}</span>
+                </div>
               </div>
 
               <div className="flex items-end gap-8 mb-4">
