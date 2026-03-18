@@ -26,12 +26,6 @@ const DashTopbar = ({ breadcrumb }: DashTopbarProps) => {
         >
           {t("dashboard.topbar.export")}
         </button>
-        <button
-          onClick={() => navigate("/")}
-          className="text-[12px] text-[hsl(var(--dash-text-tertiary))] hover:text-[hsl(var(--dash-text-primary))] transition-colors"
-        >
-          {t("nav.backToSite")}
-        </button>
       </div>
     </div>
   );
