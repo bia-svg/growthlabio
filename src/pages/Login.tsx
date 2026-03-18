@@ -170,7 +170,7 @@ const Login = () => {
 
           <p className="text-center text-[13px] text-dash-text-tertiary mt-6">
             {t("login.noAccount")}{" "}
-            <button onClick={() => navigate("/welcome")} className="text-dash-blue hover:underline">
+            <button onClick={() => navigate("/signup")} className="text-dash-blue hover:underline">
               {t("login.startTrial")}
             </button>
           </p>
