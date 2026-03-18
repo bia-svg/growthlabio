@@ -71,7 +71,7 @@ const Onboarding = () => {
           </div>
         )}
 
-        <div className="flex-1 overflow-y-auto">
+        <div className={`overflow-y-auto ${showChat ? "flex-1 basis-0 min-w-0" : "flex-1"}`}>
           {step === 0 && (
             <OnboardingWelcome
               onStart={() => { setStep(1); setShowChat(true); }}
