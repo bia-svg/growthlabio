@@ -9,14 +9,16 @@ import Optimizer from "@/pages/dashboard/Optimizer";
 import Competitor from "@/pages/dashboard/Competitor";
 import Attribution from "@/pages/dashboard/Attribution";
 import Billing from "@/pages/dashboard/Billing";
+import Goals from "@/pages/dashboard/Goals";
 import Integrations from "@/pages/dashboard/Integrations";
 import { useLocation } from "react-router-dom";
 
 const breadcrumbMap: Record<string, string> = {
   "/dashboard": "Performance",
-  "/dashboard/agent": "AI Agent",
+  "/dashboard/agent": "AI Copilot",
   "/dashboard/optimizer": "Optimizer",
-  "/dashboard/competitor": "Competitor",
+  "/dashboard/competitor": "Competitors",
+  "/dashboard/goals": "Goals",
   "/dashboard/attribution": "Attribution",
   "/dashboard/billing": "Billing",
   "/dashboard/integrations": "Integrations",
@@ -39,6 +41,7 @@ const Dashboard = () => {
             <Route path="agent" element={<AIAgent />} />
             <Route path="optimizer" element={<Optimizer onCountChange={setOptimizerCount} />} />
             <Route path="competitor" element={<Competitor />} />
+            <Route path="goals" element={<Goals />} />
             <Route path="attribution" element={<Attribution />} />
             <Route path="billing" element={<Billing />} />
             <Route path="integrations" element={<Integrations />} />
