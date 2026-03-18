@@ -239,6 +239,8 @@
       "yourFunnel": "Seu funil",
       "availableBlocks": "Blocos disponíveis — clique para adicionar",
       "minStages": "Mínimo de 3 etapas necessário",
+      "metricsTitle": "Suas 3 métricas principais",
+      "metricsSubtitle": "Escolha os 3 KPIs que quer ver no topo do seu dashboard. Você pode mudar depois.",
       "continue": "Continuar →",
       "back": "← Voltar"
     },

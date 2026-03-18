@@ -81,7 +81,7 @@ const Onboarding = () => {
           {step === 2 && (
             <OnboardingFunnel
               integrationData={integrationData}
-              onContinue={(f) => { setFunnel(f); setStep(3); }}
+              onContinue={(f, _metrics) => { setFunnel(f); setStep(3); }}
               onBack={() => setStep(1)}
             />
           )}
