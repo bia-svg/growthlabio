@@ -52,9 +52,7 @@ const Onboarding = () => {
           </div>
         )}
 
-        <span className="text-[12px] text-[hsl(var(--dash-text-tertiary))]">
-          {t("onboarding.needHelp")} <button className="text-[hsl(var(--dash-blue))] hover:underline">{t("onboarding.talkToUs")}</button>
-        </span>
+        <div />
       </div>
 
       {/* Content */}
