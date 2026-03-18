@@ -127,7 +127,7 @@ const Integrations = () => {
           <div className="text-[13px] text-dash-text-secondary">
             Traffic: <span className="text-dash-text-primary font-medium">Meta Ads</span> · Page: <span className="text-dash-text-primary font-medium">Meta Pixel</span> · Leads: <span className="text-dash-text-primary font-medium">Meta Pixel</span> · Sales: <span className="text-dash-text-primary font-medium">Shopify</span> · Sync: <span className="text-dash-text-primary font-medium">Every 2h</span>
           </div>
-          <button onClick={() => navigate("/funnel-wizard")} className="text-[12px] text-dash-blue hover:underline">Edit funnel config →</button>
+          <button onClick={() => navigate("/integrations")} className="text-[12px] text-dash-blue hover:underline">Edit funnel config →</button>
         </div>
       </div>
 
