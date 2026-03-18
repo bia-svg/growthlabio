@@ -5,7 +5,6 @@ import IntegrationsBar from "@/components/IntegrationsBar";
 import PlatformSection from "@/components/PlatformSection";
 import AgentSection from "@/components/AgentSection";
 import HowAndStats from "@/components/HowAndStats";
-import PricingSection from "@/components/PricingSection";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
 import DemoModal from "@/components/DemoModal";
@@ -23,7 +22,6 @@ const Index = () => {
       <PlatformSection />
       <AgentSection />
       <HowAndStats />
-      <PricingSection onOpenModal={openModal} />
       <CTASection onOpenModal={openModal} />
       <Footer />
       <DemoModal open={modalOpen} onClose={closeModal} />
