@@ -1,15 +1,29 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-const navItems = [
+interface NavItem {
+  labelKey: string;
+  path: string;
+  icon: string;
+  badge?: number | string;
+  badgeColor?: "red" | "amber" | "green";
+}
+
+const managementItems: NavItem[] = [
   { labelKey: "dashboard.sidebar.performance", path: "/dashboard", icon: "◎" },
-  { labelKey: "dashboard.sidebar.aiAgent", path: "/dashboard/agent", icon: "◈" },
-  { labelKey: "dashboard.sidebar.optimizer", path: "/dashboard/optimizer", icon: "⚡", badge: 3, badgeColor: "red" as const },
+  { labelKey: "dashboard.sidebar.aiCopilot", path: "/dashboard/agent", icon: "◈" },
+  { labelKey: "dashboard.sidebar.optimizer", path: "/dashboard/optimizer", icon: "⚡", badge: 3, badgeColor: "red" },
 ];
 
-const intelItems = [
+const strategyItems: NavItem[] = [
   { labelKey: "dashboard.sidebar.competitor", path: "/dashboard/competitor", icon: "⊙" },
-  { labelKey: "dashboard.sidebar.attribution", path: "/dashboard/attribution", icon: "⊞", badge: "!", badgeColor: "amber" as const },
+  { labelKey: "dashboard.sidebar.goals", path: "/dashboard/goals", icon: "◉" },
+];
+
+const businessItems: NavItem[] = [
+  { labelKey: "dashboard.sidebar.integrations", path: "/dashboard/integrations", icon: "⊕" },
+  { labelKey: "dashboard.sidebar.attribution", path: "/dashboard/attribution", icon: "⊞", badge: "!", badgeColor: "amber" },
+  { labelKey: "dashboard.sidebar.billing", path: "/dashboard/billing", icon: "⊡" },
 ];
 
 const badgeColors = {
@@ -30,7 +44,7 @@ const DashSidebar = ({ optimizerCount }: DashSidebarProps) => {
 
   const isActive = (path: string) => current === path;
 
-  const NavItem = ({ item }: { item: typeof navItems[0] }) => {
+  const SidebarItem = ({ item }: { item: NavItem }) => {
     const active = isActive(item.path);
     const count = item.labelKey === "dashboard.sidebar.optimizer" ? optimizerCount : item.badge;
     return (
@@ -44,7 +58,7 @@ const DashSidebar = ({ optimizerCount }: DashSidebarProps) => {
       >
         <span className="text-[14px] w-4 text-center opacity-55">{item.icon}</span>
         <span className="flex-1 text-left">{t(item.labelKey)}</span>
-        {count !== undefined && Number(count) > 0 && (
+        {count !== undefined && String(count).length > 0 && (
           <span className={`text-[10px] font-bold px-[6px] py-[1px] rounded-full ${badgeColors[item.badgeColor || "red"]}`}>
             {count}
           </span>
@@ -53,27 +67,11 @@ const DashSidebar = ({ optimizerCount }: DashSidebarProps) => {
     );
   };
 
-  const IntelItem = ({ item }: { item: typeof intelItems[0] }) => {
-    const active = isActive(item.path);
-    return (
-      <button
-        onClick={() => navigate(item.path)}
-        className={`w-full flex items-center gap-2.5 px-3 py-[7px] rounded-md text-[13.5px] transition-colors ${
-          active
-            ? "bg-dash-active font-medium text-dash-text-primary"
-            : "text-dash-text-secondary hover:bg-dash-hover"
-        }`}
-      >
-        <span className="text-[14px] w-4 text-center opacity-55">{item.icon}</span>
-        <span className="flex-1 text-left">{t(item.labelKey)}</span>
-        {item.badge && (
-          <span className={`text-[10px] font-bold px-[6px] py-[1px] rounded-full ${badgeColors[item.badgeColor || "amber"]}`}>
-            {item.badge}
-          </span>
-        )}
-      </button>
-    );
-  };
+  const SectionLabel = ({ label }: { label: string }) => (
+    <div className="px-3 mb-1.5">
+      <span className="text-[10px] font-semibold uppercase tracking-[0.07em] text-dash-text-tertiary">{label}</span>
+    </div>
+  );
 
   const toggleLang = () => {
     const newLang = i18n.language === "pt" ? "en" : "pt";
@@ -103,51 +101,31 @@ const DashSidebar = ({ optimizerCount }: DashSidebarProps) => {
         </div>
       </div>
 
-      {/* Nav */}
-      <nav className="px-2 flex flex-col gap-0.5">
-        {navItems.map(item => <NavItem key={item.path} item={item} />)}
+      {/* Management */}
+      <SectionLabel label={t("dashboard.sidebar.management")} />
+      <nav className="px-2 flex flex-col gap-0.5 mb-3">
+        {managementItems.map(item => <SidebarItem key={item.path} item={item} />)}
       </nav>
 
-      <div className="mx-3 my-3 h-px bg-dash-border" />
+      <div className="mx-3 h-px bg-dash-border" />
 
-      <div className="px-3 mb-1.5">
-        <span className="text-[10px] font-semibold uppercase tracking-[0.07em] text-dash-text-tertiary">{t("dashboard.sidebar.intelligence")}</span>
+      {/* Strategy */}
+      <div className="mt-3">
+        <SectionLabel label={t("dashboard.sidebar.strategy")} />
+        <nav className="px-2 flex flex-col gap-0.5 mb-3">
+          {strategyItems.map(item => <SidebarItem key={item.path} item={item} />)}
+        </nav>
       </div>
-      <nav className="px-2 flex flex-col gap-0.5">
-        {intelItems.map(item => <IntelItem key={item.path} item={item} />)}
-      </nav>
 
-      <div className="mx-3 my-3 h-px bg-dash-border" />
+      <div className="mx-3 h-px bg-dash-border" />
 
-      <nav className="px-2 flex flex-col gap-0.5">
-        <button
-          onClick={() => navigate("/dashboard/billing")}
-          className={`w-full flex items-center gap-2.5 px-3 py-[7px] rounded-md text-[13.5px] transition-colors ${
-            isActive("/dashboard/billing")
-              ? "bg-dash-active font-medium text-dash-text-primary"
-              : "text-dash-text-secondary hover:bg-dash-hover"
-          }`}
-        >
-          <span className="text-[14px] w-4 text-center opacity-55">⊡</span>
-          <span className="flex-1 text-left">{t("dashboard.sidebar.billing")}</span>
-        </button>
-      </nav>
-
-      <div className="mx-3 my-3 h-px bg-dash-border" />
-
-      <nav className="px-2">
-        <button
-          onClick={() => navigate("/dashboard/integrations")}
-          className={`w-full flex items-center gap-2.5 px-3 py-[7px] rounded-md text-[13.5px] transition-colors ${
-            isActive("/dashboard/integrations")
-              ? "bg-dash-active font-medium text-dash-text-primary"
-              : "text-dash-text-tertiary hover:bg-dash-hover"
-          }`}
-        >
-          <span className="text-[14px] w-4 text-center opacity-55">⊕</span>
-          <span className="flex-1 text-left">{t("dashboard.sidebar.integrations")}</span>
-        </button>
-      </nav>
+      {/* Your Business */}
+      <div className="mt-3">
+        <SectionLabel label={t("dashboard.sidebar.yourBusiness")} />
+        <nav className="px-2 flex flex-col gap-0.5">
+          {businessItems.map(item => <SidebarItem key={item.path} item={item} />)}
+        </nav>
+      </div>
 
       {/* Spacer */}
       <div className="flex-1" />
