@@ -6,15 +6,13 @@ import OnboardingDataCheck from "@/components/onboarding/OnboardingDataCheck";
 import OnboardingChat from "@/components/onboarding/OnboardingChat";
 import type { IntegrationData } from "@/components/onboarding/OnboardingIntegrations";
 
-const stepLabels = ["Boas-vindas", "Integrações", "Funil", "Verificação"];
+const stepLabels = ["Welcome", "Integrations", "Funnel", "Validation"];
 
 const Onboarding = () => {
   const [step, setStep] = useState(0);
   const [integrationData, setIntegrationData] = useState<IntegrationData | null>(null);
   const [funnel, setFunnel] = useState<string[]>([]);
   const [showChat, setShowChat] = useState(false);
-
-  const showSplitLayout = step > 0 || showChat;
 
   return (
     <div className="min-h-screen bg-background font-inter flex flex-col">
@@ -48,14 +46,21 @@ const Onboarding = () => {
         )}
 
         <span className="text-[12px] text-[hsl(var(--dash-text-tertiary))]">
-          Precisa de ajuda? <button className="text-[hsl(var(--dash-blue))] hover:underline">Fale conosco →</button>
+          Need help? <button className="text-[hsl(var(--dash-blue))] hover:underline">Talk to us →</button>
         </span>
       </div>
 
       {/* Content */}
       <div className="flex-1 flex overflow-hidden">
-        {/* Left: Setup steps */}
-        <div className={`flex-1 overflow-y-auto transition-all ${showSplitLayout && step > 0 ? "" : ""}`}>
+        {/* Left: AI Chat */}
+        {showChat && (
+          <div className="w-[380px] shrink-0 h-full">
+            <OnboardingChat currentStep={step} />
+          </div>
+        )}
+
+        {/* Right: Setup steps */}
+        <div className="flex-1 overflow-y-auto">
           {step === 0 && (
             <OnboardingWelcome
               onStart={() => { setStep(1); setShowChat(true); }}
@@ -83,13 +88,6 @@ const Onboarding = () => {
             />
           )}
         </div>
-
-        {/* Right: AI Chat */}
-        {showChat && (
-          <div className="w-[380px] shrink-0 h-full">
-            <OnboardingChat currentStep={step} />
-          </div>
-        )}
       </div>
     </div>
   );

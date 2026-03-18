@@ -36,24 +36,24 @@ const IntegrationCard = ({ name, desc, icon, status, comingSoon, onConnect, conn
     ) : status === "connected" ? (
       <span className="text-[12px] font-semibold text-[hsl(var(--dash-green))] bg-[hsl(var(--dash-green-bg))] px-3 py-1 rounded-full flex items-center gap-1.5">
         <Check className="w-3 h-3" />
-        {connectedDetail || "Conectado"}
+        {connectedDetail || "Connected"}
       </span>
     ) : status === "connecting" ? (
       <span className="text-[12px] font-medium text-[hsl(var(--dash-text-tertiary))] flex items-center gap-1.5">
         <Loader2 className="w-3 h-3 animate-spin" />
-        Conectando…
+        Connecting…
       </span>
     ) : status === "error" ? (
       <button onClick={onConnect} className="text-[12px] font-medium text-[hsl(var(--dash-red))] flex items-center gap-1.5 hover:underline">
         <AlertCircle className="w-3 h-3" />
-        Erro · Tentar novamente
+        Error · Retry
       </button>
     ) : (
       <button
         onClick={onConnect}
         className="text-[13px] font-medium bg-primary text-primary-foreground px-4 py-1.5 rounded-md hover:opacity-90 transition-opacity"
       >
-        Conectar
+        Connect
       </button>
     )}
   </div>
