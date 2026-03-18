@@ -78,18 +78,19 @@ const Onboarding = () => {
       {/* Content */}
       <div className="flex-1 flex overflow-hidden">
         {showChat && (
-          <div className="flex-1 basis-0 min-w-0 h-full">
-            <OnboardingChat currentStep={step} />
+          <div className={`h-full ${step === 0 ? "flex-1" : "flex-1 basis-0 min-w-0"}`}>
+            <OnboardingChat currentStep={step} onUserMessage={() => { if (step === 0) setStep(1); }} />
           </div>
         )}
 
-        <div className={`overflow-y-auto ${showChat ? "flex-1 basis-0 min-w-0" : "flex-1"}`}>
-          {step === 0 && (
-            <OnboardingWelcome
-              onStart={() => { setStep(1); setShowChat(true); }}
-              onAiHelp={() => { setShowChat(true); }}
-            />
-          )}
+        {!(step === 0 && showChat) && (
+          <div className={`overflow-y-auto ${showChat ? "flex-1 basis-0 min-w-0" : "flex-1"}`}>
+            {step === 0 && (
+              <OnboardingWelcome
+                onStart={() => { setStep(1); setShowChat(true); }}
+                onAiHelp={() => { setShowChat(true); }}
+              />
+            )}
           {step === 1 && (
             <OnboardingIntegrations
               onContinue={(data) => { setIntegrationData(data); setStep(2); }}
