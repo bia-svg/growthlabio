@@ -28,7 +28,7 @@ const Welcome = () => {
             {t("welcome.subtitle")}
           </p>
           <button
-            onClick={() => navigate("/onboarding")}
+            onClick={() => navigate("/integrations")}
             className="w-full h-[44px] bg-dash-text-primary text-white rounded-md text-[15px] font-semibold hover:opacity-90 transition-opacity"
           >
             {t("welcome.cta")}

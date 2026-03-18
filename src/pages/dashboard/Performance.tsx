@@ -116,7 +116,10 @@ const Performance = () => {
           {demoProduct.label}
           <span className="ml-1 text-[10px] opacity-70 uppercase tracking-wider">{lang === "pt" ? "exemplo" : "demo"}</span>
         </button>
-        <button className="text-[13px] text-[hsl(var(--dash-text-tertiary))] hover:text-[hsl(var(--dash-text-secondary))] px-3 py-1.5 border border-dashed border-[hsl(var(--dash-border))] rounded-md transition-colors">
+        <button
+          onClick={(e) => e.preventDefault()}
+          className="text-[13px] text-[hsl(var(--dash-text-tertiary))] hover:text-[hsl(var(--dash-text-secondary))] px-3 py-1.5 border border-dashed border-[hsl(var(--dash-border))] rounded-md transition-colors"
+        >
           {t("dashboard.performance.addProduct")}
         </button>
       </div>
