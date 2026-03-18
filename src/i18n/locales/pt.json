@@ -1,0 +1,463 @@
+{
+  "nav": {
+    "home": "Home",
+    "platform": "A Plataforma",
+    "login": "Login",
+    "bookDemo": "Agendar demo",
+    "backToSite": "← Voltar ao site"
+  },
+  "hero": {
+    "badge": "AI Growth Copilot",
+    "title1": "Seu copiloto de IA",
+    "title2": "para",
+    "title3": "growth",
+    "title4": "e mídia paga.",
+    "subtitle": "Analisa sua conta, propõe otimizações e executa com a sua aprovação. Você decide. A IA acelera.",
+    "cta": "Agendar demo",
+    "howItWorks": "Como funciona",
+    "noCommitment": "Sem compromisso. Acesso trial gratuito."
+  },
+  "integrations": {
+    "title": "Conecta com as plataformas que você já usa"
+  },
+  "platformSection": {
+    "label": "A Plataforma",
+    "title": "Inteligência que amplifica\nquem já é bom.",
+    "subtitle": "GrowthLab é o copiloto para gestores de tráfego, times in-house, consultores e qualquer pessoa que trabalha com growth e mídia paga. Você no controle — com IA acelerando cada decisão.",
+    "features": {
+      "performanceReport": {
+        "title": "Performance Report",
+        "desc": "Dashboard unificado por produto: Spend, ROAS, CPL e funil de impressão à conversão. Atualização a cada 5 minutos."
+      },
+      "aiInsights": {
+        "title": "AI Insights Semanal",
+        "desc": "Toda segunda-feira: análise de 7 dias, o que funcionou, o que não funcionou e 3 ações concretas para a semana."
+      },
+      "optimizationQueue": {
+        "title": "Optimization Queue",
+        "desc": "Detecção de saturação, CPA alto e oportunidade de escala. Proposta pronta, você aprova, executa via API."
+      },
+      "projectedPayback": {
+        "title": "Projected Payback",
+        "desc": "Projeção de receita antes das conversões fecharem — ROAS projetado em tempo real com CVR configurável por produto."
+      },
+      "competitorIntel": {
+        "title": "Competitor Intel",
+        "desc": "Monitora anúncios dos concorrentes via Meta Ad Library. IA aponta os ângulos que eles usam e você ainda não está explorando."
+      },
+      "goalTracker": {
+        "title": "Goal Tracker & Alertas",
+        "desc": "Semáforo de meta diário no Slack. Alertas de frequência, CTR e CPA antes de virarem problema irreversível."
+      }
+    }
+  },
+  "agent": {
+    "badge": "✦ AI Agent",
+    "title": "Gerencie\nconversando.",
+    "subtitle": "Converse com um copiloto que lê seus dados em tempo real, propõe mudanças com justificativa e executa com a sua aprovação. Estratégia e operação no mesmo lugar.",
+    "features": [
+      "Pergunta \"por que meu ROAS caiu?\" — recebe análise com os dados reais da conta",
+      "Pede para criar uma campanha nova — o agente conduz o processo com perguntas",
+      "Aprova ou rejeita ações propostas. Nada executa sem sua confirmação",
+      "Histórico salvo — o agente aprende o contexto da conta ao longo do tempo"
+    ]
+  },
+  "howAndStats": {
+    "howLabel": "Como funciona",
+    "howTitle": "Do zero ao insight em dias.",
+    "steps": {
+      "s1": { "title": "Conecta as fontes", "desc": "Meta Ads, CRMs, plataformas de cobranças. Dados fluindo no mesmo dia." },
+      "s2": { "title": "Configura o produto", "desc": "Define funil, ticket médio e metas. Faz upload de PDFs e brand guides — a IA lê e usa como contexto." },
+      "s3": { "title": "IA analisa e propõe", "desc": "Insights semanais automáticos. Fila de otimizações priorizadas por impacto. AI Agent disponível 24/7." },
+      "s4": { "title": "Você aprova. Executa.", "desc": "Nada muda sem a sua aprovação. Um clique executa via Meta Ads API com auditoria completa." }
+    },
+    "statsLabel": "Resultados",
+    "statsTitle": "O impacto no seu negócio.",
+    "stats": {
+      "s1": { "value": "80%", "label": "redução no tempo de análise manual" },
+      "s2": { "value": "3×", "label": "mais rápido no ciclo de otimização" },
+      "s3": { "value": "5×", "label": "mais produtos operados pelo mesmo time" },
+      "s4": { "value": "24/7", "label": "monitoramento com alertas em tempo real" }
+    }
+  },
+  "pricing": {
+    "label": "Preços",
+    "title": "Por produto. Sem letra miúda.",
+    "subtitle": "Mesmas funcionalidades em todos os planos — incluindo AI Agent. O preço varia pela escala de operação e pelo nível de suporte humano.",
+    "perMonth": "por mês",
+    "plans": {
+      "starter": {
+        "scope": "1 marca · até 2 produtos",
+        "desc": "Comece com foco. Uma marca, dados reais, IA operando desde o primeiro dia.",
+        "cta": "Começar →",
+        "features": [
+          "1 marca · até 2 produtos",
+          "Performance Report completo",
+          "Optimizer + Competitor Intel",
+          "Projected Payback + alertas",
+          "UTM Diagnostics",
+          "Billing automatizado"
+        ],
+        "aiFeature": "Chat conversacional",
+        "support": "Suporte: chat · SLA 48h"
+      },
+      "growth": {
+        "badge": "Mais popular",
+        "scope": "Até 3 marcas · até 5 produtos",
+        "desc": "Operação em escala com suporte humano. Ideal para gestores com múltiplos clientes.",
+        "cta": "Agendar demo →",
+        "features": [
+          "Até 3 marcas · até 5 produtos",
+          "Tudo do Starter",
+          "Bônus de performance calculado automaticamente",
+          "Geração de criativos com IA",
+          "Sessões de revisão mensais"
+        ],
+        "aiFeature": "Chat + execução via API",
+        "support": "Suporte humano · SLA 24h"
+      },
+      "scale": {
+        "scope": "Marcas e produtos ilimitados",
+        "desc": "Operação sem limite com especialista estratégico dedicado ao lado todo dia.",
+        "cta": "Falar com a gente →",
+        "features": [
+          "Marcas e produtos ilimitados",
+          "Tudo do Growth",
+          "White-label (domínio próprio)",
+          "Motor de experimentação A/B"
+        ],
+        "aiFeature": "Sessões ilimitadas + memória",
+        "support": "Especialista estratégico · SLA 4h"
+      }
+    },
+    "footer": "Todos os planos incluem trial gratuito com dados reais. Sem cartão de crédito para começar.",
+    "footerCta": "Dúvidas? Fale com o time →"
+  },
+  "cta": {
+    "title": "Pronto para operar\nem outro nível?",
+    "subtitle": "30 minutos de demo com dados reais. Sem slides, sem pitch.",
+    "bookDemo": "Agendar demo",
+    "startTrial": "Iniciar trial gratuito",
+    "noCreditCard": "Sem cartão de crédito. Acesso imediato."
+  },
+  "footer": {
+    "copyright": "© 2026 GrowthLab · AI Growth Copilot"
+  },
+  "demoModal": {
+    "label": "Acesso antecipado",
+    "title": "Agendar demo",
+    "subtitle": "30 minutos. Dados reais. Retorno em até 24h.",
+    "name": "Nome",
+    "namePlaceholder": "Seu nome",
+    "email": "E-mail",
+    "emailPlaceholder": "voce@empresa.com.br",
+    "phone": "WhatsApp",
+    "phonePlaceholder": "(11) 9 0000-0000",
+    "submit": "Quero uma demo →",
+    "disclaimer": "Sem compromisso. Sem spam.",
+    "validationError": "Preencha nome, e-mail e WhatsApp.",
+    "successTitle": "Recebemos!",
+    "successMessage": "Nosso time vai entrar em contato via WhatsApp em até 24h para confirmar o horário da sua demo."
+  },
+  "login": {
+    "title": "Bem-vindo de volta",
+    "subtitle": "Entre no seu workspace",
+    "email": "E-mail corporativo",
+    "emailPlaceholder": "voce@empresa.com",
+    "password": "Senha",
+    "passwordPlaceholder": "••••••••",
+    "forgotPassword": "Esqueceu a senha?",
+    "signIn": "Entrar",
+    "or": "ou",
+    "continueGoogle": "Continuar com Google",
+    "noAccount": "Não tem conta?",
+    "startTrial": "Comece seu trial gratuito →",
+    "fillAll": "Preencha todos os campos.",
+    "socialProof": {
+      "label": "Confiança de times de growth",
+      "quote": "\"Paramos de adivinhar e começamos a decidir. O GrowthLab transformou nossos dados em um plano de ação semanal.\"",
+      "author": "— Ana Lima, Growth Lead · Velaris Co."
+    }
+  },
+  "welcome": {
+    "title": "Bem-vindo, Vini",
+    "subtitle": "Vamos configurar seu GrowthLab. Você verá seus primeiros insights em menos de 10 minutos.",
+    "cta": "Começar →"
+  },
+  "onboarding": {
+    "needHelp": "Precisa de ajuda?",
+    "talkToUs": "Fale conosco →",
+    "steps": {
+      "welcome": "Boas-vindas",
+      "integrations": "Integrações",
+      "funnel": "Funil",
+      "validation": "Validação"
+    },
+    "welcomeScreen": {
+      "title": "Configure sua operação\nem minutos",
+      "subtitle": "Conecte suas fontes de dados, monte seu funil e veja como transformar investimento em mídia em receita com inteligência.",
+      "detail": "Vamos guiar você passo a passo para conectar suas contas e estruturar a visão do seu negócio.",
+      "startSetup": "Começar configuração",
+      "aiHelp": "Quero ajuda da IA",
+      "time": "~5 min de setup",
+      "noCode": "Sem código",
+      "secureData": "Dados seguros"
+    },
+    "integrationScreen": {
+      "progress": "Progresso das integrações",
+      "blocks": "blocos",
+      "title": "Conecte suas fontes de dados",
+      "subtitle": "Selecione e conecte as ferramentas que fazem parte da sua operação. Você pode configurar apenas o que já usa.",
+      "adAccounts": "Contas de anúncio",
+      "required": "Obrigatório",
+      "optional": "Opcional",
+      "configured": "Configurado",
+      "connected": "conectadas",
+      "siteTitle": "Onde acontecem as visitas e conversões?",
+      "siteOptions": {
+        "landing": "Tenho uma landing page / site",
+        "whatsapp": "WhatsApp é meu canal principal",
+        "checkout": "Uso uma página de checkout externa",
+        "none": "Não tenho página"
+      },
+      "leadsTitle": "Onde seus leads são capturados?",
+      "revenueTitle": "Onde a receita é registrada?",
+      "syncFrequency": "Frequência de sincronização",
+      "skipForNow": "Pular por agora",
+      "continue": "Continuar →",
+      "back": "← Voltar",
+      "aiTipWhatsapp": "Se você vende via WhatsApp, pode seguir sem landing page. Calcularemos o tráfego diretamente da plataforma de anúncios.",
+      "aiTipNoLeads": "Se você ainda não tem um CRM, podemos começar pela fonte de receita."
+    },
+    "funnelScreen": {
+      "title": "Monte seu funil",
+      "subtitle": "Arraste e organize as etapas que representam como seu investimento em mídia se transforma em receita.",
+      "aiSuggestion": "Sugestão da IA para seu funil",
+      "aiGap": "Notamos que você conectou mídia e receita, mas ainda não conectou uma fonte de leads. Quer adicionar uma?",
+      "aiFunnelSuggestion": "Montamos o funil {{funnel}} com base nas suas integrações. Personalize como quiser.",
+      "stages": "etapas",
+      "yourFunnel": "Seu funil",
+      "availableBlocks": "Blocos disponíveis — clique para adicionar",
+      "minStages": "Mínimo de 3 etapas necessário",
+      "continue": "Continuar →",
+      "back": "← Voltar"
+    },
+    "dataCheck": {
+      "title": "Revise a saúde dos seus dados",
+      "subtitle": "Antes de finalizar, verifique se cada etapa do funil está recebendo dados corretamente.",
+      "table": {
+        "stageSource": "Etapa / Fonte",
+        "tool": "Ferramenta",
+        "status": "Status",
+        "lastSync": "Última sinc.",
+        "quality": "Qualidade",
+        "action": "Ação"
+      },
+      "statuses": {
+        "connected": "Conectado",
+        "pending": "Pendente",
+        "noData": "Sem dados",
+        "error": "Erro",
+        "attention": "Atenção"
+      },
+      "stages": {
+        "adAccounts": "Contas de anúncio",
+        "landingPage": "Landing page / Site",
+        "leads": "Leads",
+        "purchases": "Compras / Receita"
+      },
+      "review": "Revisar",
+      "connect": "Conectar",
+      "insights": "Insights automáticos",
+      "yourFunnel": "Seu funil",
+      "continueLater": "Continuar depois",
+      "finishOnboarding": "Finalizar onboarding",
+      "finishing": "Finalizando…",
+      "readyTitle": "Sua operação está pronta",
+      "readySubtitle": "Agora vamos transformar seus dados em insights de negócio.",
+      "goToDashboard": "Ir para o dashboard →",
+      "insightAnalyze": "Você já pode analisar investimento em mídia, tráfego e compras.",
+      "insightNoLeads": "Seu funil não tem etapa de leads, mas isso pode ser normal para operações diretas de compra.",
+      "insightConnectLeads": "Conectar uma fonte de leads pode melhorar sua análise de conversão."
+    },
+    "chat": {
+      "title": "GrowthLab AI",
+      "subtitle": "Assistente de setup",
+      "placeholder": "Pergunte qualquer coisa sobre o setup…",
+      "thinking": "Pensando…",
+      "greetings": {
+        "0": "Olá! 👋 Sou o GrowthLab AI. Posso ajudar a configurar sua operação. Me conta: que tipo de negócio você tem?",
+        "1": "Vamos conectar suas fontes de dados. Me diz quais ferramentas você usa para anúncios, analytics e vendas — eu te guio!",
+        "2": "Hora de montar o funil! Me conta como funciona sua jornada de vendas e eu sugiro a melhor estrutura.",
+        "3": "Quase lá! Estou aqui se você tiver dúvidas sobre qualidade de dados ou quiser ajustar algo."
+      },
+      "quickSuggestions": {
+        "integrations1": "Quais integrações são essenciais?",
+        "integrations2": "Vendo por WhatsApp, preciso de site?",
+        "funnel1": "Melhor funil para e-commerce?",
+        "funnel2": "Preciso de uma etapa de leads?",
+        "validation1": "Posso finalizar sem conectar leads?"
+      }
+    }
+  },
+  "dashboard": {
+    "topbar": {
+      "last30Days": "Últimos 30 dias",
+      "export": "↓ Exportar"
+    },
+    "sidebar": {
+      "activeProduct": "Produto ativo",
+      "intelligence": "Inteligência",
+      "performance": "Performance",
+      "aiAgent": "AI Agent",
+      "optimizer": "Optimizer",
+      "competitor": "Competitor",
+      "attribution": "Attribution",
+      "billing": "Billing",
+      "integrations": "Integrações"
+    },
+    "alert": {
+      "partialAttribution": "Atribuição parcial: 34% das conversões sem fonte rastreável.",
+      "viewDiagnostics": "Ver diagnóstico →"
+    },
+    "performance": {
+      "synced": "sincronizado há {{time}}",
+      "title": "Performance",
+      "subtitle": "Visão geral do período · Meta Ads + Shopify (Orbit)",
+      "addProduct": "+ Adicionar produto",
+      "totalROAS": "ROAS Total",
+      "monthlyROAS": "ROAS Mensal",
+      "cpl": "CPL",
+      "frequency": "Frequência",
+      "conversionFunnel": "Funil de Conversão",
+      "spendLast14": "Investimento — últimos 14 dias",
+      "activeCampaigns": "Campanhas Ativas",
+      "top5ROAS": "Top 5 por ROAS",
+      "bottom5CPA": "Bottom 5 por CPA",
+      "projectedPayback": "Payback Projetado",
+      "confirmedRevenue": "Receita Confirmada",
+      "totalProjection": "Projeção Total",
+      "monthlyTarget": "Meta Mensal",
+      "goalTracker": "Acompanhamento de Metas",
+      "onTrack": "No caminho",
+      "atRisk": "Em risco",
+      "offTrack": "Fora da meta",
+      "spendVsRevenue": "Investimento vs Receita — Série Temporal",
+      "daily": "Diário",
+      "weekly": "Semanal",
+      "spend": "Investimento",
+      "revenue": "Receita",
+      "weeklyBrief": "Resumo Semanal — Análise IA",
+      "whatWorked": "O que funcionou:",
+      "whatUnderperformed": "O que teve baixo desempenho:",
+      "winningAngle": "Ângulo vencedor:",
+      "nextWeek": "Próxima semana — 3 ações:",
+      "campaign": "Campanha",
+      "roas": "ROAS",
+      "freq": "Freq.",
+      "ctr": "CTR",
+      "status": "Status"
+    },
+    "optimizer": {
+      "title": "Optimizer",
+      "actionsIdentified": "{{count}} ação identificada · ordenada por impacto estimado",
+      "actionsIdentified_plural": "{{count}} ações identificadas · ordenadas por impacto estimado",
+      "optimizationQueue": "Fila de Otimização",
+      "reAnalyze": "⟳ Re-analisar",
+      "allClear": "Tudo certo.",
+      "nextAnalysis": "Próxima análise em 6h.",
+      "approve": "✓ Aprovar",
+      "dismiss": "✕ Descartar",
+      "howThisWorks": "Como funciona"
+    },
+    "competitor": {
+      "title": "Inteligência Competitiva",
+      "subtitle": "Monitoramento via Meta Ad Library · atualizado há 2h",
+      "weeklyInsight": "Esta semana: Competidor A reduziu volume de anúncios em 40%. Possível pausa estratégica ou refresh criativo.",
+      "addCompetitor": "+ Adicionar competidor",
+      "viewAds": "Ver anúncios →",
+      "aiAnalysis": "Análise IA",
+      "gapIdentified": "Gap identificado:",
+      "useInsight": "Usar esse insight no AI Agent →"
+    },
+    "attribution": {
+      "title": "Atribuição",
+      "subtitle": "Diagnóstico de UTM tracking · Orbit",
+      "healthScore": "Health Score",
+      "healthDesc": "Gap crítico de atribuição. R$18.400 em investimento sem fonte rastreável neste mês.",
+      "detectedIssues": "Problemas Detectados",
+      "critical": "críticos",
+      "fixProgress": "{{done}} de {{total}} problemas resolvidos este mês",
+      "seeHistory": "Ver histórico →",
+      "sampleConversions": "Conversões de Exemplo — UTM Ausente",
+      "date": "Data",
+      "value": "Valor",
+      "detectedSource": "Fonte Detectada",
+      "utmStatus": "Status UTM"
+    },
+    "billing": {
+      "title": "Faturamento",
+      "subtitle": "Assinatura de março · Renovação automática em 1º de abril",
+      "currencyNote": "Moeda de faturamento: BRL · Para mudar para USD ou EUR, entre em contato com o suporte.",
+      "nextCharge": "Próxima Cobrança",
+      "downloadInvoice": "↓ Baixar última fatura",
+      "invoiceHistory": "Histórico de Faturas",
+      "downloadPdf": "↓ Baixar PDF completo da fatura",
+      "currentPlan": "Plano Atual",
+      "managePlan": "Gerenciar plano →",
+      "paymentMethod": "Método de Pagamento",
+      "updateCard": "Atualizar cartão →",
+      "fiscalData": "Dados Fiscais",
+      "edit": "Editar →",
+      "billingNote": "O faturamento é automático. Sua assinatura renova no dia 1º de cada mês. Para cancelar ou mudar de plano, vá em Gerenciar plano.",
+      "month": "Mês",
+      "plan": "Plano",
+      "amount": "Valor",
+      "nfe": "NF-e"
+    },
+    "integrations": {
+      "title": "Integrações",
+      "subtitle": "Fontes de dados conectadas · {{count}} ativas",
+      "adPlatforms": "Plataformas de Anúncio",
+      "revenueSources": "Fontes de Receita",
+      "connected": "✓ Conectado",
+      "reconnect": "Reconectar",
+      "disconnect": "Desconectar",
+      "comingSoon": "Em breve",
+      "notifyMe": "Avisar-me",
+      "connectBtn": "Conectar",
+      "disconnectConfirm": "Desconectar {{name}}? Os dados históricos serão preservados.",
+      "confirm": "Confirmar",
+      "cancel": "Cancelar",
+      "funnelConfig": "Configuração do Funil",
+      "editFunnel": "Editar config do funil →",
+      "manualUploads": "Uploads Manuais",
+      "dropFiles": "Arraste arquivos CSV ou XLSX aqui, ou",
+      "browse": "procurar",
+      "aiContextLibrary": "Biblioteca de Contexto IA",
+      "contextDesc": "Arquivos e URLs que o AI Agent usa para personalizar insights.",
+      "addFileUrl": "+ Adicionar arquivo ou URL",
+      "syncSettings": "Configurações de Sincronização",
+      "view": "Visualizar",
+      "delete": "Excluir"
+    },
+    "funnelWizard": {
+      "back": "← Voltar",
+      "step": "Etapa {{current}} de {{total}}",
+      "continue": "Continuar →",
+      "validationTitle": "Veja o que encontramos do mês passado",
+      "validationSubtitle": "Confirme se está correto antes de ativarmos seu dashboard.",
+      "activating": "Ativando...",
+      "activate": "Está correto — ativar dashboard",
+      "adjustConfig": "Ajustar configuração",
+      "successTitle": "Dashboard ativado.",
+      "successSubtitle": "Sincronizando seus dados. Primeiros insights prontos em alguns minutos.",
+      "goToDashboard": "Ir para o dashboard →"
+    }
+  },
+  "language": {
+    "label": "Idioma",
+    "en": "English",
+    "pt": "Português"
+  }
+}
