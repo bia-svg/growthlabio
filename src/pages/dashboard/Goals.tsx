@@ -80,20 +80,29 @@ const Goals = () => {
   const getProgress = (goal: MetricGoal) => {
     if (!goal.target || goal.target === 0) return 0;
     if (goal.direction === "down") {
-      // For "lower is better": 100% when current <= target, 0% when current >= 2x target
       if (goal.current <= goal.target) return 100;
-      const ratio = goal.current / goal.target; // e.g. 38/20 = 1.9
-      return Math.max(0, Math.min(100, (2 - ratio) * 100)); // 1.9 → 10%
+      const ratio = goal.current / goal.target;
+      return Math.max(0, Math.min(100, (2 - ratio) * 100));
     }
     return Math.min(100, (goal.current / goal.target) * 100);
   };
 
+  const getDelta = (goal: MetricGoal) => {
+    if (goal.target === null || goal.target === 0) return null;
+    const pct = ((goal.current - goal.target) / goal.target) * 100;
+    if (goal.direction === "down") {
+      return { pct: Math.round(Math.abs(pct)), isGood: goal.current <= goal.target };
+    }
+    return { pct: Math.round(Math.abs(pct)), isGood: goal.current >= goal.target };
+  };
+
   const getStatus = (goal: MetricGoal) => {
-    if (goal.target === null) return { color: "bg-muted-foreground/30", label: "No target" };
-    const progress = getProgress(goal);
-    if (progress >= 90) return { color: "bg-dash-green", label: "On track" };
-    if (progress >= 60) return { color: "bg-dash-amber", label: "At risk" };
-    return { color: "bg-dash-red", label: "Off track" };
+    if (goal.target === null) return { color: "bg-muted-foreground/30", label: "No target", textColor: "text-[hsl(var(--dash-text-tertiary))]" };
+    const delta = getDelta(goal);
+    if (!delta) return { color: "bg-muted-foreground/30", label: "No target", textColor: "text-[hsl(var(--dash-text-tertiary))]" };
+    if (delta.isGood) return { color: "bg-[hsl(var(--dash-green))]", label: "On track", textColor: "text-[hsl(var(--dash-green))]" };
+    if (delta.pct <= 15) return { color: "bg-[hsl(var(--dash-amber))]", label: "At risk", textColor: "text-[hsl(var(--dash-amber))]" };
+    return { color: "bg-[hsl(var(--dash-red))]", label: "Off track", textColor: "text-[hsl(var(--dash-red))]" };
   };
 
   const formatValue = (value: number, unit: string) => {
