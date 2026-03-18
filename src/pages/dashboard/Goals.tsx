@@ -188,6 +188,7 @@ const Goals = () => {
         {goals.map(goal => {
           const progress = getProgress(goal);
           const status = getStatus(goal);
+          const delta = getDelta(goal);
 
           return (
             <div key={goal.key} className="border border-dash-border rounded-xl p-5 bg-background">
@@ -197,7 +198,14 @@ const Goals = () => {
                   <span className="text-[16px] font-semibold text-dash-text-primary">{goal.label}</span>
                   <span className="text-[12px] text-dash-text-tertiary ml-1">{goal.description}</span>
                 </div>
-                <span className="text-[12px] text-dash-text-tertiary px-2 py-0.5 bg-muted rounded-full">{status.label}</span>
+                <div className="flex items-center gap-2">
+                  {delta && delta.pct > 0 && (
+                    <span className={`text-[12px] font-medium ${status.textColor}`}>
+                      {delta.isGood ? "↓" : "↑"} {delta.pct}% {delta.isGood ? (goal.direction === "down" ? "below" : "above") : (goal.direction === "down" ? "above" : "below")} target
+                    </span>
+                  )}
+                  <span className={`text-[12px] font-medium px-2 py-0.5 rounded-full ${status.textColor} bg-muted`}>{status.label}</span>
+                </div>
               </div>
 
               <div className="flex items-end gap-8 mb-4">
