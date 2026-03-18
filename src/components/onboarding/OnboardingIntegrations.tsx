@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Lightbulb, ChevronDown, ChevronUp } from "lucide-react";
+import { Lightbulb, ChevronDown, ChevronUp, Check } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import IntegrationCard, { type ConnectionStatus } from "./IntegrationCard";
+import SourceConfigPanel from "./SourceConfigPanel";
 
 interface Props {
   onContinue: (data: IntegrationData) => void;
@@ -63,16 +64,24 @@ const revenueOptions = [
 const syncOptions = ["Real-time", "Every hour", "Daily"];
 
 const OnboardingIntegrations = ({ onContinue, onBack }: Props) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language?.startsWith("pt") ? "pt" : "en";
+
   const [adStatuses, setAdStatuses] = useState<Record<string, ConnectionStatus>>({});
   const [siteType, setSiteType] = useState<string | null>(null);
   const [siteIntegrations, setSiteIntegrations] = useState<string[]>([]);
+  const [configuredSiteIntegrations, setConfiguredSiteIntegrations] = useState<Set<string>>(new Set());
   const [leadsSource, setLeadsSource] = useState<string | null>(null);
+  const [leadsConfigured, setLeadsConfigured] = useState(false);
   const [revenueSource, setRevenueSource] = useState<string | null>(null);
+  const [revenueConfigured, setRevenueConfigured] = useState(false);
   const [syncFreq, setSyncFreq] = useState("Every hour");
   const [expandedBlocks, setExpandedBlocks] = useState<Record<string, boolean>>({
     ads: true, site: true, leads: false, revenue: false,
   });
+
+  // Config panel state
+  const [configPanel, setConfigPanel] = useState<{ source: string; category: "site" | "leads" | "revenue" } | null>(null);
 
   const toggleBlock = (key: string) =>
     setExpandedBlocks((p) => ({ ...p, [key]: !p[key] }));
@@ -114,8 +123,71 @@ const OnboardingIntegrations = ({ onContinue, onBack }: Props) => {
     ? t("onboarding.integrationScreen.aiTipNoLeads")
     : null;
 
+  // Handle site integration click → open config
+  const handleSiteIntegrationClick = (name: string) => {
+    if (configuredSiteIntegrations.has(name)) {
+      // Already configured, allow reconfigure
+      setConfigPanel({ source: name, category: "site" });
+    } else {
+      setConfigPanel({ source: name, category: "site" });
+    }
+  };
+
+  // Handle leads click → open config
+  const handleLeadsClick = (name: string) => {
+    if (leadsSource === name && leadsConfigured) {
+      // Reconfigure
+      setConfigPanel({ source: name, category: "leads" });
+    } else {
+      setLeadsSource(name);
+      setLeadsConfigured(false);
+      setConfigPanel({ source: name, category: "leads" });
+    }
+  };
+
+  // Handle revenue click → open config
+  const handleRevenueClick = (name: string) => {
+    if (revenueSource === name && revenueConfigured) {
+      setConfigPanel({ source: name, category: "revenue" });
+    } else {
+      setRevenueSource(name);
+      setRevenueConfigured(false);
+      setConfigPanel({ source: name, category: "revenue" });
+    }
+  };
+
+  // Config panel save handlers
+  const handleConfigSave = (config: Record<string, string>) => {
+    if (!configPanel) return;
+
+    if (configPanel.category === "site") {
+      if (!siteIntegrations.includes(configPanel.source)) {
+        setSiteIntegrations((p) => [...p, configPanel.source]);
+      }
+      setConfiguredSiteIntegrations((prev) => new Set(prev).add(configPanel.source));
+    } else if (configPanel.category === "leads") {
+      setLeadsSource(configPanel.source);
+      setLeadsConfigured(true);
+    } else if (configPanel.category === "revenue") {
+      setRevenueSource(configPanel.source);
+      setRevenueConfigured(true);
+    }
+
+    setConfigPanel(null);
+  };
+
   return (
     <div className="max-w-[720px] mx-auto px-6 py-10 dash-page-enter">
+      {/* Config Panel Modal */}
+      {configPanel && (
+        <SourceConfigPanel
+          source={configPanel.source}
+          category={configPanel.category}
+          onSave={handleConfigSave}
+          onClose={() => setConfigPanel(null)}
+        />
+      )}
+
       {/* Progress bar */}
       <div className="mb-8">
         <div className="flex items-center justify-between mb-2">
@@ -175,62 +247,131 @@ const OnboardingIntegrations = ({ onContinue, onBack }: Props) => {
         </div>
 
         {siteType && siteIntegrationOptions[siteType] && (
-          <div className="flex flex-wrap gap-2 mt-3">
-            {siteIntegrationOptions[siteType].map((opt) => (
-              <button
-                key={opt.name}
-                onClick={() => setSiteIntegrations((p) => p.includes(opt.name) ? p.filter((x) => x !== opt.name) : [...p, opt.name])}
-                className={`px-3 py-1.5 rounded-full text-[12px] font-medium border transition-colors ${
-                  siteIntegrations.includes(opt.name)
-                    ? "border-primary bg-primary text-primary-foreground"
-                    : "border-[hsl(var(--dash-border))] text-[hsl(var(--dash-text-secondary))] hover:border-[hsl(var(--dash-text-tertiary))]"
-                }`}
-              >
-                {opt.name}
-              </button>
-            ))}
+          <div className="flex flex-col gap-2 mt-3">
+            <p className="text-[12px] text-[hsl(var(--dash-text-tertiary))] mb-1">
+              {lang === "pt" ? "Clique para configurar cada integração:" : "Click to configure each integration:"}
+            </p>
+            {siteIntegrationOptions[siteType].map((opt) => {
+              const isConfigured = configuredSiteIntegrations.has(opt.name);
+              return (
+                <button
+                  key={opt.name}
+                  onClick={() => handleSiteIntegrationClick(opt.name)}
+                  className={`flex items-center justify-between px-4 py-3 rounded-lg border text-[13px] font-medium transition-colors ${
+                    isConfigured
+                      ? "border-[hsl(var(--dash-green))]/40 bg-[hsl(var(--dash-green-bg))]"
+                      : "border-[hsl(var(--dash-border))] text-[hsl(var(--dash-text-secondary))] hover:bg-[hsl(var(--dash-sidebar))] hover:border-[hsl(var(--dash-text-tertiary))]"
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-7 h-7 rounded-md bg-[hsl(var(--dash-sidebar))] border border-[hsl(var(--dash-border))] flex items-center justify-center text-[10px] font-bold text-[hsl(var(--dash-text-tertiary))]">
+                      {opt.icon}
+                    </div>
+                    <span className={isConfigured ? "text-[hsl(var(--dash-text-primary))]" : ""}>{opt.name}</span>
+                  </div>
+                  {isConfigured ? (
+                    <span className="flex items-center gap-1 text-[11px] text-[hsl(var(--dash-green))] font-semibold">
+                      <Check className="w-3.5 h-3.5" />
+                      {lang === "pt" ? "Configurado" : "Configured"}
+                    </span>
+                  ) : (
+                    <span className="text-[11px] text-[hsl(var(--dash-blue))] font-medium">
+                      {lang === "pt" ? "Configurar →" : "Configure →"}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
           </div>
         )}
       </Section>
 
       {/* Block 3: Leads */}
-      <Section title={t("onboarding.integrationScreen.leadsTitle")} expanded={expandedBlocks.leads} onToggle={() => toggleBlock("leads")} optional optionalLabel={t("onboarding.integrationScreen.optional")} badge={leadsSource ? t("onboarding.integrationScreen.configured") : undefined} configuredLabel={t("onboarding.integrationScreen.configured")}>
-        <div className="flex flex-wrap gap-2">
-          {leadsOptions.map((opt) => (
-            <button
-              key={opt.name}
-              onClick={() => setLeadsSource(leadsSource === opt.name ? null : opt.name)}
-              className={`px-3.5 py-2 rounded-lg border text-[13px] font-medium transition-colors ${
-                leadsSource === opt.name
-                  ? "border-primary bg-primary text-primary-foreground"
-                  : "border-[hsl(var(--dash-border))] text-[hsl(var(--dash-text-secondary))] hover:bg-[hsl(var(--dash-sidebar))]"
-              }`}
-            >
-              {opt.name}
-            </button>
-          ))}
+      <Section title={t("onboarding.integrationScreen.leadsTitle")} expanded={expandedBlocks.leads} onToggle={() => toggleBlock("leads")} optional optionalLabel={t("onboarding.integrationScreen.optional")} badge={leadsConfigured ? t("onboarding.integrationScreen.configured") : undefined} configuredLabel={t("onboarding.integrationScreen.configured")}>
+        <p className="text-[12px] text-[hsl(var(--dash-text-tertiary))] mb-3">
+          {lang === "pt" ? "Selecione onde seus leads são capturados:" : "Select where your leads are captured:"}
+        </p>
+        <div className="flex flex-col gap-2">
+          {leadsOptions.map((opt) => {
+            const isSelected = leadsSource === opt.name;
+            const isConfigured = isSelected && leadsConfigured;
+            return (
+              <button
+                key={opt.name}
+                onClick={() => handleLeadsClick(opt.name)}
+                className={`flex items-center justify-between px-4 py-3 rounded-lg border text-[13px] font-medium transition-colors ${
+                  isConfigured
+                    ? "border-[hsl(var(--dash-green))]/40 bg-[hsl(var(--dash-green-bg))]"
+                    : isSelected
+                    ? "border-primary bg-primary/5 text-[hsl(var(--dash-text-primary))]"
+                    : "border-[hsl(var(--dash-border))] text-[hsl(var(--dash-text-secondary))] hover:bg-[hsl(var(--dash-sidebar))] hover:border-[hsl(var(--dash-text-tertiary))]"
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-7 h-7 rounded-md bg-[hsl(var(--dash-sidebar))] border border-[hsl(var(--dash-border))] flex items-center justify-center text-[10px] font-bold text-[hsl(var(--dash-text-tertiary))]">
+                    {opt.icon}
+                  </div>
+                  <span className={isConfigured ? "text-[hsl(var(--dash-text-primary))]" : ""}>{opt.name}</span>
+                </div>
+                {isConfigured ? (
+                  <span className="flex items-center gap-1 text-[11px] text-[hsl(var(--dash-green))] font-semibold">
+                    <Check className="w-3.5 h-3.5" />
+                    {lang === "pt" ? "Conectado" : "Connected"}
+                  </span>
+                ) : (
+                  <span className="text-[11px] text-[hsl(var(--dash-blue))] font-medium">
+                    {lang === "pt" ? "Configurar →" : "Configure →"}
+                  </span>
+                )}
+              </button>
+            );
+          })}
         </div>
       </Section>
 
       {/* Block 4: Revenue */}
-      <Section title={t("onboarding.integrationScreen.revenueTitle")} expanded={expandedBlocks.revenue} onToggle={() => toggleBlock("revenue")} badge={revenueSource ? t("onboarding.integrationScreen.configured") : undefined} configuredLabel={t("onboarding.integrationScreen.configured")}>
-        <div className="flex flex-wrap gap-2 mb-5">
-          {revenueOptions.map((opt) => (
-            <button
-              key={opt.name}
-              onClick={() => setRevenueSource(revenueSource === opt.name ? null : opt.name)}
-              className={`px-3.5 py-2 rounded-lg border text-[13px] font-medium transition-colors ${
-                revenueSource === opt.name
-                  ? "border-primary bg-primary text-primary-foreground"
-                  : "border-[hsl(var(--dash-border))] text-[hsl(var(--dash-text-secondary))] hover:bg-[hsl(var(--dash-sidebar))]"
-              }`}
-            >
-              {opt.name}
-            </button>
-          ))}
+      <Section title={t("onboarding.integrationScreen.revenueTitle")} expanded={expandedBlocks.revenue} onToggle={() => toggleBlock("revenue")} badge={revenueConfigured ? t("onboarding.integrationScreen.configured") : undefined} configuredLabel={t("onboarding.integrationScreen.configured")}>
+        <p className="text-[12px] text-[hsl(var(--dash-text-tertiary))] mb-3">
+          {lang === "pt" ? "Selecione onde é gravado o revenue:" : "Select where revenue is recorded:"}
+        </p>
+        <div className="flex flex-col gap-2 mb-5">
+          {revenueOptions.map((opt) => {
+            const isSelected = revenueSource === opt.name;
+            const isConfigured = isSelected && revenueConfigured;
+            return (
+              <button
+                key={opt.name}
+                onClick={() => handleRevenueClick(opt.name)}
+                className={`flex items-center justify-between px-4 py-3 rounded-lg border text-[13px] font-medium transition-colors ${
+                  isConfigured
+                    ? "border-[hsl(var(--dash-green))]/40 bg-[hsl(var(--dash-green-bg))]"
+                    : isSelected
+                    ? "border-primary bg-primary/5 text-[hsl(var(--dash-text-primary))]"
+                    : "border-[hsl(var(--dash-border))] text-[hsl(var(--dash-text-secondary))] hover:bg-[hsl(var(--dash-sidebar))] hover:border-[hsl(var(--dash-text-tertiary))]"
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-7 h-7 rounded-md bg-[hsl(var(--dash-sidebar))] border border-[hsl(var(--dash-border))] flex items-center justify-center text-[10px] font-bold text-[hsl(var(--dash-text-tertiary))]">
+                    {opt.icon}
+                  </div>
+                  <span className={isConfigured ? "text-[hsl(var(--dash-text-primary))]" : ""}>{opt.name}</span>
+                </div>
+                {isConfigured ? (
+                  <span className="flex items-center gap-1 text-[11px] text-[hsl(var(--dash-green))] font-semibold">
+                    <Check className="w-3.5 h-3.5" />
+                    {lang === "pt" ? "Conectado" : "Connected"}
+                  </span>
+                ) : (
+                  <span className="text-[11px] text-[hsl(var(--dash-blue))] font-medium">
+                    {lang === "pt" ? "Configurar →" : "Configure →"}
+                  </span>
+                )}
+              </button>
+            );
+          })}
         </div>
 
-        {revenueSource && (
+        {revenueConfigured && (
           <div className="border-t border-[hsl(var(--dash-border))] pt-4">
             <label className="text-[12px] font-medium text-[hsl(var(--dash-text-tertiary))] mb-2 block">{t("onboarding.integrationScreen.syncFrequency")}</label>
             <div className="flex gap-2">
