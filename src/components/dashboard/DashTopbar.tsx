@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import DateRangeFilter from "./DateRangeFilter";
+import { exportCampaigns } from "@/lib/exportCsv";
 
 interface DashTopbarProps {
   breadcrumb: string;
@@ -19,7 +20,10 @@ const DashTopbar = ({ breadcrumb }: DashTopbarProps) => {
       </div>
       <div className="flex items-center gap-3">
         <DateRangeFilter />
-        <button className="flex items-center gap-1.5 text-[12px] text-[hsl(var(--dash-text-secondary))] border border-[hsl(var(--dash-border))] rounded-md px-2.5 py-1 hover:bg-[hsl(var(--dash-hover))] transition-colors">
+        <button
+          onClick={exportCampaigns}
+          className="flex items-center gap-1.5 text-[12px] text-[hsl(var(--dash-text-secondary))] border border-[hsl(var(--dash-border))] rounded-md px-2.5 py-1 hover:bg-[hsl(var(--dash-hover))] transition-colors"
+        >
           {t("dashboard.topbar.export")}
         </button>
         <button
