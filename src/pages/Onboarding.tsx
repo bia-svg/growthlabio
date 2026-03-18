@@ -124,7 +124,8 @@ const Onboarding = () => {
               onBack={() => setStep(4)}
             />
           )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );
