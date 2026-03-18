@@ -106,16 +106,6 @@ const DashSidebar = ({ optimizerCount }: DashSidebarProps) => {
 
       <div className="mx-3 h-px bg-dash-border" />
 
-      {/* Strategy */}
-      <div className="mt-3">
-        <SectionLabel label={t("dashboard.sidebar.strategy")} />
-        <nav className="px-2 flex flex-col gap-0.5 mb-3">
-          {strategyItems.map(item => <SidebarItem key={item.path} item={item} />)}
-        </nav>
-      </div>
-
-      <div className="mx-3 h-px bg-dash-border" />
-
       {/* Your Business */}
       <div className="mt-3">
         <SectionLabel label={t("dashboard.sidebar.yourBusiness")} />
