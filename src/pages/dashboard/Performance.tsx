@@ -245,22 +245,24 @@ const Performance = () => {
         </div>
       </div>
 
-      {/* Projected Payback */}
+      {/* Tempo de Retorno (Payback) */}
       <div className="mb-8">
-        <div className="text-[11px] font-semibold uppercase tracking-[0.07em] text-[hsl(var(--dash-text-tertiary))] mb-3">{t("dashboard.performance.projectedPayback")}</div>
+        <div className="text-[11px] font-semibold uppercase tracking-[0.07em] text-[hsl(var(--dash-text-tertiary))] mb-3">{lang === "pt" ? "Tempo de Retorno" : "Payback Time"}</div>
         <div className="grid grid-cols-3 border border-[hsl(var(--dash-border))] rounded-lg overflow-hidden">
           <div className="p-5 border-r border-[hsl(var(--dash-border))]">
-            <div className="text-[11px] font-semibold uppercase tracking-[0.05em] text-[hsl(var(--dash-text-tertiary))] mb-1">{t("dashboard.performance.confirmedRevenue")}</div>
-            <div className="text-[26px] font-bold tracking-[-0.04em] text-[hsl(var(--dash-text-primary))]">R$52,020</div>
+            <div className="text-[11px] font-semibold uppercase tracking-[0.05em] text-[hsl(var(--dash-text-tertiary))] mb-1">{lang === "pt" ? "Investimento Total" : "Total Investment"}</div>
+            <div className="text-[26px] font-bold tracking-[-0.04em] text-[hsl(var(--dash-text-primary))]">R$14,200</div>
+            <div className="text-[12px] text-[hsl(var(--dash-text-tertiary))] mt-0.5">{lang === "pt" ? "gastos com ads este mês" : "ad spend this month"}</div>
           </div>
           <div className="p-5 border-r border-[hsl(var(--dash-border))]">
-            <div className="text-[11px] font-semibold uppercase tracking-[0.05em] text-[hsl(var(--dash-text-tertiary))] mb-1">{t("dashboard.performance.totalProjection")}</div>
-            <div className="text-[26px] font-bold tracking-[-0.04em] text-[hsl(var(--dash-green))]">R$88,500</div>
-            <div className="text-[12px] text-[hsl(var(--dash-green))] mt-0.5">+R$3,500 {lang === "pt" ? "acima da meta" : "above target"}</div>
+            <div className="text-[11px] font-semibold uppercase tracking-[0.05em] text-[hsl(var(--dash-text-tertiary))] mb-1">{lang === "pt" ? "Seu investimento volta em" : "Your investment returns in"}</div>
+            <div className="text-[26px] font-bold tracking-[-0.04em] text-[hsl(var(--dash-green))]">2.7 {lang === "pt" ? "meses" : "months"}</div>
+            <div className="text-[12px] text-[hsl(var(--dash-green))] mt-0.5">{lang === "pt" ? "↓ 0.4 meses vs mês anterior" : "↓ 0.4 months vs prior"}</div>
           </div>
           <div className="p-5">
-            <div className="text-[11px] font-semibold uppercase tracking-[0.05em] text-[hsl(var(--dash-text-tertiary))] mb-1">{t("dashboard.performance.monthlyTarget")}</div>
-            <div className="text-[26px] font-bold tracking-[-0.04em] text-[hsl(var(--dash-text-primary))]">R$85,000</div>
+            <div className="text-[11px] font-semibold uppercase tracking-[0.05em] text-[hsl(var(--dash-text-tertiary))] mb-1">{lang === "pt" ? "Receita Recorrente / mês" : "Monthly Recurring Revenue"}</div>
+            <div className="text-[26px] font-bold tracking-[-0.04em] text-[hsl(var(--dash-text-primary))]">R$5,202</div>
+            <div className="text-[12px] text-[hsl(var(--dash-text-tertiary))] mt-0.5">{lang === "pt" ? "baseado em 10× parcelas" : "based on 10× installments"}</div>
           </div>
         </div>
       </div>
