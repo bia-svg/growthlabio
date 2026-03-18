@@ -2,9 +2,10 @@ import { Sparkles, ArrowRight, MessageCircle } from "lucide-react";
 
 interface Props {
   onStart: () => void;
+  onAiHelp?: () => void;
 }
 
-const OnboardingWelcome = ({ onStart }: Props) => (
+const OnboardingWelcome = ({ onStart, onAiHelp }: Props) => (
   <div className="min-h-[calc(100vh-65px)] flex items-center justify-center px-6">
     <div className="max-w-[560px] text-center dash-page-enter">
       {/* Icon */}
