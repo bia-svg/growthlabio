@@ -4,6 +4,7 @@ import OnboardingWelcome from "@/components/onboarding/OnboardingWelcome";
 import OnboardingIntegrations from "@/components/onboarding/OnboardingIntegrations";
 import OnboardingProducts from "@/components/onboarding/OnboardingProducts";
 import OnboardingFunnel from "@/components/onboarding/OnboardingFunnel";
+import OnboardingContext from "@/components/onboarding/OnboardingContext";
 import OnboardingDataCheck from "@/components/onboarding/OnboardingDataCheck";
 import OnboardingChat from "@/components/onboarding/OnboardingChat";
 import type { IntegrationData } from "@/components/onboarding/OnboardingIntegrations";
@@ -18,6 +19,7 @@ const Onboarding = () => {
     t("onboarding.steps.integrations"),
     lang === "pt" ? "Produtos" : "Products",
     t("onboarding.steps.funnel"),
+    lang === "pt" ? "Contexto IA" : "AI Context",
     t("onboarding.steps.validation"),
   ];
 
@@ -44,7 +46,7 @@ const Onboarding = () => {
         {step > 0 && (
           <div className="flex items-center gap-1">
             {stepLabels.map((label, i) => (
-              <div key={label} className="flex items-center">
+              <div key={`${label}-${i}`} className="flex items-center">
                 <div className={`px-3 py-1 rounded-full text-[11px] font-semibold transition-colors ${
                   i === step ? "bg-primary text-primary-foreground" :
                   i < step ? "bg-[hsl(var(--dash-green))] text-white" :
@@ -63,14 +65,12 @@ const Onboarding = () => {
 
       {/* Content */}
       <div className="flex-1 flex overflow-hidden">
-        {/* Left: AI Chat */}
         {showChat && (
           <div className="w-[380px] shrink-0 h-full">
             <OnboardingChat currentStep={step} />
           </div>
         )}
 
-        {/* Right: Setup steps */}
         <div className="flex-1 overflow-y-auto">
           {step === 0 && (
             <OnboardingWelcome
@@ -99,10 +99,16 @@ const Onboarding = () => {
             />
           )}
           {step === 4 && (
+            <OnboardingContext
+              onContinue={() => setStep(5)}
+              onBack={() => setStep(3)}
+            />
+          )}
+          {step === 5 && (
             <OnboardingDataCheck
               integrationData={integrationData}
               funnel={funnel}
-              onBack={() => setStep(3)}
+              onBack={() => setStep(4)}
             />
           )}
         </div>
