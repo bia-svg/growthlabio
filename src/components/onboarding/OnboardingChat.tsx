@@ -6,17 +6,17 @@ type Msg = { role: "user" | "assistant"; content: string };
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/onboarding-chat`;
 
 const stepContextMap: Record<number, string> = {
-  0: "Tela de boas-vindas. O usuário ainda não começou a configurar.",
-  1: "Tela de Integrações — conectando fontes de dados (anúncios, site, leads, receita).",
-  2: "Tela de Montagem do Funil — organizando etapas do funil de conversão com drag-and-drop.",
-  3: "Tela de Verificação de Dados — revisando saúde das conexões e dados.",
+  0: "Welcome screen. The user hasn't started configuring yet.",
+  1: "Integrations screen — connecting data sources (ads, site, leads, revenue).",
+  2: "Funnel builder — organizing conversion funnel stages with drag-and-drop.",
+  3: "Data validation — reviewing connection health and data quality.",
 };
 
 const stepGreetings: Record<number, string> = {
-  0: "Olá! 👋 Sou a IA da GrowthLab. Posso te ajudar a configurar sua operação. Me conta: qual é o seu tipo de negócio?",
-  1: "Agora vamos conectar suas fontes de dados. Me conta quais ferramentas você usa para anúncios, analytics e vendas que eu te guio!",
-  2: "Hora de montar seu funil! Me diz como funciona sua jornada de venda que eu sugiro a melhor estrutura.",
-  3: "Quase lá! Estou aqui se tiver dúvidas sobre a qualidade dos dados ou quiser ajustar algo.",
+  0: "Hey! 👋 I'm GrowthLab AI. I can help you set up your operation. Tell me: what type of business do you run?",
+  1: "Let's connect your data sources. Tell me which tools you use for ads, analytics, and sales — I'll guide you!",
+  2: "Time to build your funnel! Tell me how your sales journey works and I'll suggest the best structure.",
+  3: "Almost there! I'm here if you have questions about data quality or want to adjust anything.",
 };
 
 async function streamChat({
@@ -44,11 +44,11 @@ async function streamChat({
 
     if (!resp.ok) {
       const data = await resp.json().catch(() => ({}));
-      onError(data.error || `Erro ${resp.status}`);
+      onError(data.error || `Error ${resp.status}`);
       return;
     }
 
-    if (!resp.body) { onError("Sem resposta"); return; }
+    if (!resp.body) { onError("No response"); return; }
 
     const reader = resp.body.getReader();
     const decoder = new TextDecoder();
@@ -79,7 +79,7 @@ async function streamChat({
     }
     onDone();
   } catch (e) {
-    onError(e instanceof Error ? e.message : "Erro de conexão");
+    onError(e instanceof Error ? e.message : "Connection error");
   }
 }
 
@@ -96,7 +96,6 @@ const OnboardingChat = ({ currentStep }: Props) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const prevStep = useRef(currentStep);
 
-  // Update greeting when step changes
   useEffect(() => {
     if (currentStep !== prevStep.current) {
       prevStep.current = currentStep;
@@ -121,20 +120,7 @@ const OnboardingChat = ({ currentStep }: Props) => {
     setIsStreaming(true);
 
     let assistantText = "";
-    const upsert = (chunk: string) => {
-      assistantText += chunk;
-      setMessages((prev) => {
-        const last = prev[prev.length - 1];
-        if (last?.role === "assistant" && last === prev[prev.length - 1] && assistantText.startsWith(chunk.length > 0 ? "" : "")) {
-          return last.content === ""
-            ? [...prev.slice(0, -1), { role: "assistant" as const, content: assistantText }]
-            : [...prev.slice(0, -1), { role: "assistant" as const, content: assistantText }];
-        }
-        return [...prev, { role: "assistant" as const, content: assistantText }];
-      });
-    };
 
-    // Add empty assistant message first
     setMessages((prev) => [...prev, { role: "assistant", content: "" }]);
 
     await streamChat({
@@ -159,7 +145,7 @@ const OnboardingChat = ({ currentStep }: Props) => {
   };
 
   return (
-    <div className="flex flex-col h-full border-l border-[hsl(var(--dash-border))] bg-[hsl(var(--dash-sidebar))]">
+    <div className="flex flex-col h-full border-r border-[hsl(var(--dash-border))] bg-[hsl(var(--dash-sidebar))]">
       {/* Header */}
       <div className="px-5 py-4 border-b border-[hsl(var(--dash-border))] flex items-center gap-2.5">
         <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
@@ -167,7 +153,7 @@ const OnboardingChat = ({ currentStep }: Props) => {
         </div>
         <div>
           <div className="text-[13px] font-semibold text-[hsl(var(--dash-text-primary))]">GrowthLab AI</div>
-          <div className="text-[11px] text-[hsl(var(--dash-text-tertiary))]">Assistente de setup</div>
+          <div className="text-[11px] text-[hsl(var(--dash-text-tertiary))]">Setup assistant</div>
         </div>
       </div>
 
@@ -185,7 +171,7 @@ const OnboardingChat = ({ currentStep }: Props) => {
               {msg.content || (
                 <span className="flex items-center gap-1 text-[hsl(var(--dash-text-tertiary))]">
                   <Loader2 className="w-3 h-3 animate-spin" />
-                  Pensando…
+                  Thinking…
                 </span>
               )}
             </div>
@@ -197,19 +183,19 @@ const OnboardingChat = ({ currentStep }: Props) => {
       <div className="px-4 pb-2 flex flex-wrap gap-1.5">
         {currentStep === 1 && (
           <>
-            <QuickBtn onClick={(t) => { setInput(t); }} label="Quais integrações são essenciais?" />
-            <QuickBtn onClick={(t) => { setInput(t); }} label="Vendo pelo WhatsApp, preciso de site?" />
+            <QuickBtn onClick={(t) => { setInput(t); }} label="Which integrations are essential?" />
+            <QuickBtn onClick={(t) => { setInput(t); }} label="I sell via WhatsApp, do I need a site?" />
           </>
         )}
         {currentStep === 2 && (
           <>
-            <QuickBtn onClick={(t) => { setInput(t); }} label="Qual funil ideal para e-commerce?" />
-            <QuickBtn onClick={(t) => { setInput(t); }} label="Preciso da etapa de leads?" />
+            <QuickBtn onClick={(t) => { setInput(t); }} label="Best funnel for e-commerce?" />
+            <QuickBtn onClick={(t) => { setInput(t); }} label="Do I need a leads stage?" />
           </>
         )}
         {currentStep === 3 && (
           <>
-            <QuickBtn onClick={(t) => { setInput(t); }} label="Posso finalizar sem conectar leads?" />
+            <QuickBtn onClick={(t) => { setInput(t); }} label="Can I finish without connecting leads?" />
           </>
         )}
       </div>
@@ -221,7 +207,7 @@ const OnboardingChat = ({ currentStep }: Props) => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && send()}
-            placeholder="Pergunte algo sobre o setup…"
+            placeholder="Ask anything about setup…"
             className="flex-1 bg-transparent text-[13px] text-[hsl(var(--dash-text-primary))] placeholder:text-[hsl(var(--dash-text-tertiary))] outline-none"
             disabled={isStreaming}
           />

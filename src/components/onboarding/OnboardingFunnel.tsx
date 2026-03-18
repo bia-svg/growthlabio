@@ -9,18 +9,18 @@ interface Props {
 }
 
 const allBlocks = [
-  "Investimento", "Impressões", "Cliques", "Visitantes", "Sessões",
-  "Leads", "Oportunidades", "Reuniões", "Checkout iniciado",
-  "Compras", "Receita", "LTV", "CAC", "ROAS",
+  "Ad Spend", "Impressions", "Clicks", "Visitors", "Sessions",
+  "Leads", "Opportunities", "Meetings", "Checkout started",
+  "Purchases", "Revenue", "LTV", "CAC", "ROAS",
 ];
 
 const getSuggestedFunnel = (data: IntegrationData | null): string[] => {
-  if (!data) return ["Investimento", "Cliques", "Compras", "Receita"];
-  const funnel = ["Investimento"];
-  if (data.siteType === "landing") { funnel.push("Cliques", "Visitantes"); }
-  else { funnel.push("Cliques"); }
+  if (!data) return ["Ad Spend", "Clicks", "Purchases", "Revenue"];
+  const funnel = ["Ad Spend"];
+  if (data.siteType === "landing") { funnel.push("Clicks", "Visitors"); }
+  else { funnel.push("Clicks"); }
   if (data.leadsSource) funnel.push("Leads");
-  funnel.push("Compras", "Receita");
+  funnel.push("Purchases", "Revenue");
   return funnel;
 };
 
@@ -53,23 +53,23 @@ const OnboardingFunnel = ({ integrationData, onContinue, onBack }: Props) => {
     setDragOverIdx(null);
   }, [dragIdx]);
 
-  const hasGap = integrationData && !integrationData.leadsSource && funnel.includes("Compras") && !funnel.includes("Leads");
+  const hasGap = integrationData && !integrationData.leadsSource && funnel.includes("Purchases") && !funnel.includes("Leads");
 
   return (
     <div className="max-w-[720px] mx-auto px-6 py-10 dash-page-enter">
-      <h2 className="text-[28px] font-bold tracking-[-0.03em] text-[hsl(var(--dash-text-primary))] mb-2">Monte o funil do seu negócio</h2>
-      <p className="text-[14px] text-[hsl(var(--dash-text-tertiary))] mb-8">Arraste e organize as etapas que representam como seu investimento vira receita.</p>
+      <h2 className="text-[28px] font-bold tracking-[-0.03em] text-[hsl(var(--dash-text-primary))] mb-2">Build your funnel</h2>
+      <p className="text-[14px] text-[hsl(var(--dash-text-tertiary))] mb-8">Drag and organize the stages that represent how your ad spend turns into revenue.</p>
 
       {/* AI suggestion */}
       {showAiTip && (
         <div className="flex items-start gap-3 bg-[hsl(var(--dash-blue-bg))] border border-[hsl(var(--dash-blue))]/20 rounded-lg px-4 py-3 mb-6">
           <Lightbulb className="w-4 h-4 text-[hsl(var(--dash-blue))] mt-0.5 shrink-0" />
           <div className="flex-1">
-            <p className="text-[13px] font-medium text-[hsl(var(--dash-blue))] mb-1">Sugestão da IA para o seu funil</p>
+            <p className="text-[13px] font-medium text-[hsl(var(--dash-blue))] mb-1">AI suggestion for your funnel</p>
             <p className="text-[12px] text-[hsl(var(--dash-blue))]/80">
               {hasGap
-                ? "Percebemos que você conectou mídia e receita, mas ainda não conectou a origem dos leads. Deseja adicionar uma fonte de leads?"
-                : `Montamos o funil ${suggested.join(" → ")} com base nas suas integrações. Personalize como quiser.`}
+                ? "We noticed you connected media and revenue, but haven't connected a lead source yet. Want to add one?"
+                : `We built the funnel ${suggested.join(" → ")} based on your integrations. Customize as you wish.`}
             </p>
           </div>
           <button onClick={() => setShowAiTip(false)} className="text-[hsl(var(--dash-blue))]/50 hover:text-[hsl(var(--dash-blue))]">
@@ -80,7 +80,7 @@ const OnboardingFunnel = ({ integrationData, onContinue, onBack }: Props) => {
 
       {/* Funnel area */}
       <div className="border border-[hsl(var(--dash-border))] rounded-xl p-6 mb-6 min-h-[200px]">
-        <div className="text-[11px] font-semibold uppercase tracking-wider text-[hsl(var(--dash-text-tertiary))] mb-4">Seu funil ({funnel.length} etapas)</div>
+        <div className="text-[11px] font-semibold uppercase tracking-wider text-[hsl(var(--dash-text-tertiary))] mb-4">Your funnel ({funnel.length} stages)</div>
         <div className="flex flex-col gap-1">
           {funnel.map((block, idx) => (
             <div key={block}>
@@ -116,14 +116,14 @@ const OnboardingFunnel = ({ integrationData, onContinue, onBack }: Props) => {
         </div>
 
         {funnel.length < 3 && (
-          <p className="text-[12px] text-[hsl(var(--dash-amber))] mt-3">Mínimo de 3 etapas necessárias</p>
+          <p className="text-[12px] text-[hsl(var(--dash-amber))] mt-3">Minimum of 3 stages required</p>
         )}
       </div>
 
       {/* Available blocks */}
       {available.length > 0 && (
         <div className="mb-8">
-          <div className="text-[12px] font-medium text-[hsl(var(--dash-text-tertiary))] mb-3">Blocos disponíveis — clique para adicionar</div>
+          <div className="text-[12px] font-medium text-[hsl(var(--dash-text-tertiary))] mb-3">Available blocks — click to add</div>
           <div className="flex flex-wrap gap-2">
             {available.map((b) => (
               <button
@@ -141,13 +141,13 @@ const OnboardingFunnel = ({ integrationData, onContinue, onBack }: Props) => {
 
       {/* Actions */}
       <div className="flex items-center justify-between pt-6 border-t border-[hsl(var(--dash-border))]">
-        <button onClick={onBack} className="text-[13px] text-[hsl(var(--dash-text-tertiary))] hover:text-[hsl(var(--dash-text-secondary))]">← Voltar</button>
+        <button onClick={onBack} className="text-[13px] text-[hsl(var(--dash-text-tertiary))] hover:text-[hsl(var(--dash-text-secondary))]">← Back</button>
         <button
           onClick={() => onContinue(funnel)}
           disabled={funnel.length < 3}
           className="h-[44px] px-6 bg-primary text-primary-foreground rounded-lg text-[14px] font-semibold hover:opacity-90 transition-opacity disabled:opacity-40"
         >
-          Continuar →
+          Continue →
         </button>
       </div>
     </div>

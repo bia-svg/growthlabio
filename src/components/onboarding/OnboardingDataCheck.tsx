@@ -22,49 +22,45 @@ interface CheckRow {
 const buildRows = (data: IntegrationData | null, funnel: string[]): CheckRow[] => {
   const rows: CheckRow[] = [];
 
-  // Ad platforms
   if (data) {
     Object.entries(data.adPlatforms).forEach(([name, status]) => {
       if (status === "connected") {
-        rows.push({ stage: "Contas de anúncio", tool: name, status: "connected", lastSync: "há 2 min", quality: "OK" });
+        rows.push({ stage: "Ad accounts", tool: name, status: "connected", lastSync: "2 min ago", quality: "OK" });
       }
     });
   }
   if (rows.length === 0) {
-    rows.push({ stage: "Contas de anúncio", tool: "Nenhuma", status: "pending", lastSync: "—", quality: "—" });
+    rows.push({ stage: "Ad accounts", tool: "None", status: "pending", lastSync: "—", quality: "—" });
   }
 
-  // Site
   if (data?.siteType && data.siteType !== "none") {
-    const tools = data.siteIntegrations.length > 0 ? data.siteIntegrations.join(", ") : data.siteType === "whatsapp" ? "WhatsApp" : "Configurado";
-    rows.push({ stage: "Landing page / Site", tool: tools, status: "connected", lastSync: "há 5 min", quality: "OK" });
+    const tools = data.siteIntegrations.length > 0 ? data.siteIntegrations.join(", ") : data.siteType === "whatsapp" ? "WhatsApp" : "Configured";
+    rows.push({ stage: "Landing page / Site", tool: tools, status: "connected", lastSync: "5 min ago", quality: "OK" });
   } else {
-    rows.push({ stage: "Landing page / Site", tool: "—", status: "attention", lastSync: "—", quality: "Incompleto" });
+    rows.push({ stage: "Landing page / Site", tool: "—", status: "attention", lastSync: "—", quality: "Incomplete" });
   }
 
-  // Leads
   if (data?.leadsSource) {
-    rows.push({ stage: "Leads", tool: data.leadsSource, status: "connected", lastSync: "há 3 min", quality: "OK" });
+    rows.push({ stage: "Leads", tool: data.leadsSource, status: "connected", lastSync: "3 min ago", quality: "OK" });
   } else {
-    rows.push({ stage: "Leads", tool: "Nenhuma", status: "pending", lastSync: "—", quality: "Incompleto" });
+    rows.push({ stage: "Leads", tool: "None", status: "pending", lastSync: "—", quality: "Incomplete" });
   }
 
-  // Revenue
   if (data?.revenueSource) {
-    rows.push({ stage: "Compras / Receita", tool: data.revenueSource, status: "connected", lastSync: "há 1 min", quality: "OK" });
+    rows.push({ stage: "Purchases / Revenue", tool: data.revenueSource, status: "connected", lastSync: "1 min ago", quality: "OK" });
   } else {
-    rows.push({ stage: "Compras / Receita", tool: "Nenhuma", status: "pending", lastSync: "—", quality: "Incompleto" });
+    rows.push({ stage: "Purchases / Revenue", tool: "None", status: "pending", lastSync: "—", quality: "Incomplete" });
   }
 
   return rows;
 };
 
 const statusConfig: Record<RowStatus, { icon: React.ReactNode; label: string; color: string }> = {
-  connected: { icon: <Check className="w-3.5 h-3.5" />, label: "Conectado", color: "text-[hsl(var(--dash-green))] bg-[hsl(var(--dash-green-bg))]" },
-  pending: { icon: <Clock className="w-3.5 h-3.5" />, label: "Pendente", color: "text-[hsl(var(--dash-amber))] bg-[hsl(var(--dash-amber-bg))]" },
-  no_data: { icon: <XCircle className="w-3.5 h-3.5" />, label: "Sem dados", color: "text-[hsl(var(--dash-text-tertiary))] bg-[hsl(var(--dash-sidebar))]" },
-  error: { icon: <XCircle className="w-3.5 h-3.5" />, label: "Erro", color: "text-[hsl(var(--dash-red))] bg-[hsl(var(--dash-red-bg))]" },
-  attention: { icon: <AlertTriangle className="w-3.5 h-3.5" />, label: "Atenção", color: "text-[hsl(var(--dash-amber))] bg-[hsl(var(--dash-amber-bg))]" },
+  connected: { icon: <Check className="w-3.5 h-3.5" />, label: "Connected", color: "text-[hsl(var(--dash-green))] bg-[hsl(var(--dash-green-bg))]" },
+  pending: { icon: <Clock className="w-3.5 h-3.5" />, label: "Pending", color: "text-[hsl(var(--dash-amber))] bg-[hsl(var(--dash-amber-bg))]" },
+  no_data: { icon: <XCircle className="w-3.5 h-3.5" />, label: "No data", color: "text-[hsl(var(--dash-text-tertiary))] bg-[hsl(var(--dash-sidebar))]" },
+  error: { icon: <XCircle className="w-3.5 h-3.5" />, label: "Error", color: "text-[hsl(var(--dash-red))] bg-[hsl(var(--dash-red-bg))]" },
+  attention: { icon: <AlertTriangle className="w-3.5 h-3.5" />, label: "Attention", color: "text-[hsl(var(--dash-amber))] bg-[hsl(var(--dash-amber-bg))]" },
 };
 
 const OnboardingDataCheck = ({ integrationData, funnel, onBack }: Props) => {
@@ -77,9 +73,9 @@ const OnboardingDataCheck = ({ integrationData, funnel, onBack }: Props) => {
   const hasLeads = integrationData?.leadsSource != null;
 
   const insights: string[] = [];
-  if (connectedCount >= 2) insights.push("Você já consegue analisar investimento, tráfego e compra.");
-  if (!hasLeads) insights.push("Seu funil está sem etapa de leads, mas isso pode ser normal para operações diretas.");
-  if (!hasLeads && integrationData?.revenueSource) insights.push("Conectar a fonte de leads pode melhorar suas análises de conversão.");
+  if (connectedCount >= 2) insights.push("You can already analyze ad spend, traffic, and purchases.");
+  if (!hasLeads) insights.push("Your funnel has no lead stage, but this can be normal for direct-to-purchase operations.");
+  if (!hasLeads && integrationData?.revenueSource) insights.push("Connecting a lead source can improve your conversion analysis.");
 
   const handleFinish = () => {
     setFinishing(true);
@@ -97,10 +93,10 @@ const OnboardingDataCheck = ({ integrationData, funnel, onBack }: Props) => {
           <div className="w-16 h-16 rounded-2xl bg-[hsl(var(--dash-green-bg))] flex items-center justify-center mx-auto mb-6">
             <Sparkles className="w-7 h-7 text-[hsl(var(--dash-green))]" />
           </div>
-          <h2 className="text-[28px] font-bold tracking-[-0.03em] text-[hsl(var(--dash-text-primary))] mb-3">Sua operação está pronta para começar</h2>
-          <p className="text-[14px] text-[hsl(var(--dash-text-tertiary))] mb-8">Agora vamos transformar seus dados em visão de negócio.</p>
+          <h2 className="text-[28px] font-bold tracking-[-0.03em] text-[hsl(var(--dash-text-primary))] mb-3">Your operation is ready</h2>
+          <p className="text-[14px] text-[hsl(var(--dash-text-tertiary))] mb-8">Now let's turn your data into business insights.</p>
           <button onClick={() => navigate("/dashboard")} className="h-[48px] px-8 bg-primary text-primary-foreground rounded-lg text-[14px] font-semibold hover:opacity-90 transition-opacity">
-            Acessar dashboard →
+            Go to dashboard →
           </button>
         </div>
       </div>
@@ -109,20 +105,20 @@ const OnboardingDataCheck = ({ integrationData, funnel, onBack }: Props) => {
 
   return (
     <div className="max-w-[800px] mx-auto px-6 py-10 dash-page-enter">
-      <h2 className="text-[28px] font-bold tracking-[-0.03em] text-[hsl(var(--dash-text-primary))] mb-2">Revise a saúde dos seus dados</h2>
-      <p className="text-[14px] text-[hsl(var(--dash-text-tertiary))] mb-8">Antes de finalizar, confira se cada etapa do seu funil está recebendo dados corretamente.</p>
+      <h2 className="text-[28px] font-bold tracking-[-0.03em] text-[hsl(var(--dash-text-primary))] mb-2">Review your data health</h2>
+      <p className="text-[14px] text-[hsl(var(--dash-text-tertiary))] mb-8">Before finishing, check that each funnel stage is receiving data correctly.</p>
 
       {/* Data table */}
       <div className="border border-[hsl(var(--dash-border))] rounded-xl overflow-hidden mb-6">
         <table className="w-full text-left">
           <thead>
             <tr className="border-b border-[hsl(var(--dash-border))] bg-[hsl(var(--dash-sidebar))]">
-              <th className="px-5 py-3 text-[11px] font-semibold uppercase tracking-wider text-[hsl(var(--dash-text-tertiary))]">Etapa / Fonte</th>
-              <th className="px-5 py-3 text-[11px] font-semibold uppercase tracking-wider text-[hsl(var(--dash-text-tertiary))]">Ferramenta</th>
+              <th className="px-5 py-3 text-[11px] font-semibold uppercase tracking-wider text-[hsl(var(--dash-text-tertiary))]">Stage / Source</th>
+              <th className="px-5 py-3 text-[11px] font-semibold uppercase tracking-wider text-[hsl(var(--dash-text-tertiary))]">Tool</th>
               <th className="px-5 py-3 text-[11px] font-semibold uppercase tracking-wider text-[hsl(var(--dash-text-tertiary))]">Status</th>
-              <th className="px-5 py-3 text-[11px] font-semibold uppercase tracking-wider text-[hsl(var(--dash-text-tertiary))]">Última sync</th>
-              <th className="px-5 py-3 text-[11px] font-semibold uppercase tracking-wider text-[hsl(var(--dash-text-tertiary))]">Qualidade</th>
-              <th className="px-5 py-3 text-[11px] font-semibold uppercase tracking-wider text-[hsl(var(--dash-text-tertiary))]">Ação</th>
+              <th className="px-5 py-3 text-[11px] font-semibold uppercase tracking-wider text-[hsl(var(--dash-text-tertiary))]">Last sync</th>
+              <th className="px-5 py-3 text-[11px] font-semibold uppercase tracking-wider text-[hsl(var(--dash-text-tertiary))]">Quality</th>
+              <th className="px-5 py-3 text-[11px] font-semibold uppercase tracking-wider text-[hsl(var(--dash-text-tertiary))]">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -142,7 +138,7 @@ const OnboardingDataCheck = ({ integrationData, funnel, onBack }: Props) => {
                   <td className="px-5 py-3.5 text-[12px] text-[hsl(var(--dash-text-tertiary))]">{row.quality}</td>
                   <td className="px-5 py-3.5">
                     <button className="text-[12px] font-medium text-[hsl(var(--dash-blue))] hover:underline">
-                      {row.status === "connected" ? "Revisar" : "Conectar"}
+                      {row.status === "connected" ? "Review" : "Connect"}
                     </button>
                   </td>
                 </tr>
@@ -157,7 +153,7 @@ const OnboardingDataCheck = ({ integrationData, funnel, onBack }: Props) => {
         <div className="bg-[hsl(var(--dash-blue-bg))] border border-[hsl(var(--dash-blue))]/20 rounded-lg px-5 py-4 mb-8">
           <div className="flex items-center gap-2 mb-2">
             <Lightbulb className="w-4 h-4 text-[hsl(var(--dash-blue))]" />
-            <span className="text-[13px] font-semibold text-[hsl(var(--dash-blue))]">Insights automáticos</span>
+            <span className="text-[13px] font-semibold text-[hsl(var(--dash-blue))]">Automated insights</span>
           </div>
           <ul className="space-y-1.5">
             {insights.map((ins, i) => (
@@ -172,7 +168,7 @@ const OnboardingDataCheck = ({ integrationData, funnel, onBack }: Props) => {
 
       {/* Funnel preview */}
       <div className="mb-8">
-        <div className="text-[12px] font-medium text-[hsl(var(--dash-text-tertiary))] mb-3">Seu funil</div>
+        <div className="text-[12px] font-medium text-[hsl(var(--dash-text-tertiary))] mb-3">Your funnel</div>
         <div className="flex items-center gap-1.5 flex-wrap">
           {funnel.map((step, i) => (
             <div key={step} className="flex items-center gap-1.5">
@@ -185,15 +181,15 @@ const OnboardingDataCheck = ({ integrationData, funnel, onBack }: Props) => {
 
       {/* Actions */}
       <div className="flex items-center justify-between pt-6 border-t border-[hsl(var(--dash-border))]">
-        <button onClick={onBack} className="text-[13px] text-[hsl(var(--dash-text-tertiary))] hover:text-[hsl(var(--dash-text-secondary))]">← Voltar</button>
+        <button onClick={onBack} className="text-[13px] text-[hsl(var(--dash-text-tertiary))] hover:text-[hsl(var(--dash-text-secondary))]">← Back</button>
         <div className="flex items-center gap-3">
-          <button onClick={() => navigate("/dashboard")} className="text-[12px] text-[hsl(var(--dash-text-tertiary))] hover:text-[hsl(var(--dash-text-secondary))]">Continuar depois</button>
+          <button onClick={() => navigate("/dashboard")} className="text-[12px] text-[hsl(var(--dash-text-tertiary))] hover:text-[hsl(var(--dash-text-secondary))]">Continue later</button>
           <button
             onClick={handleFinish}
             disabled={finishing}
             className="h-[44px] px-6 bg-primary text-primary-foreground rounded-lg text-[14px] font-semibold hover:opacity-90 transition-opacity disabled:opacity-70 flex items-center gap-2"
           >
-            {finishing ? <><Loader2 className="w-4 h-4 animate-spin" /> Finalizando…</> : "Finalizar onboarding"}
+            {finishing ? <><Loader2 className="w-4 h-4 animate-spin" /> Finishing…</> : "Finish onboarding"}
           </button>
         </div>
       </div>
