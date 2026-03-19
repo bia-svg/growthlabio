@@ -2,16 +2,17 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const adPlatforms = [
-  { name: "Meta Ads", desc: "Facebook & Instagram · act_123456", connected: true, lastSync: "3 min ago" },
   { name: "Google Ads", desc: "Search, Display & YouTube", connected: false, comingSoon: true },
+  { name: "Meta Ads", desc: "Facebook & Instagram · act_123456", connected: true, lastSync: "3 min ago" },
   { name: "TikTok Ads", desc: "TikTok for Business", connected: false, comingSoon: true },
 ];
 
 const revenueSources = [
+  { name: "Stripe", desc: "Payment processing", connected: false },
   { name: "Shopify", desc: "velaris.myshopify.com", connected: true, lastSync: "8 min ago" },
   { name: "HubSpot", desc: "CRM contacts & deals", connected: false },
-  { name: "Sympla", desc: "Event tickets", connected: false },
   { name: "WooCommerce", desc: "WordPress store", connected: false, comingSoon: true },
+  { name: "Sympla", desc: "Event tickets", connected: false },
 ];
 
 const contextFiles = [

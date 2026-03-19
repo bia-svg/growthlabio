@@ -2,8 +2,8 @@ import { useTranslation } from "react-i18next";
 
 const integrations = [
   // Ads
-  { icon: "M", bg: "#1877F2", label: "Meta Ads" },
   { icon: "G", bg: "#4285F4", label: "Google Ads" },
+  { icon: "M", bg: "#1877F2", label: "Meta Ads" },
   { icon: "T", bg: "#000000", label: "TikTok Ads" },
   { icon: "in", bg: "#0A66C2", label: "LinkedIn Ads" },
   // Site / Tracking
@@ -12,14 +12,14 @@ const integrations = [
   { icon: "Px", bg: "#1877F2", label: "Meta Pixel" },
   // Leads
   { icon: "Hs", bg: "#FF7A59", label: "HubSpot" },
-  { icon: "Pd", bg: "#333333", label: "Pipedrive" },
   { icon: "RD", bg: "#00A85A", label: "RD Station" },
+  { icon: "Pd", bg: "#333333", label: "Pipedrive" },
   // Revenue
   { icon: "St", bg: "#635BFF", label: "Stripe" },
   { icon: "Sh", bg: "#96BF48", label: "Shopify" },
-  { icon: "Pg", bg: "#21C25E", label: "Pagar.me" },
-  { icon: "H", bg: "#FF3C00", label: "Hotmart" },
   { icon: "MP", bg: "#009EE3", label: "Mercado Pago" },
+  { icon: "H", bg: "#FF3C00", label: "Hotmart" },
+  { icon: "Pg", bg: "#21C25E", label: "Pagar.me" },
 ];
 
 const IntegrationsBar = () => {

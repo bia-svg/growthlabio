@@ -23,7 +23,7 @@ const Login = () => {
       setLoading(false);
       const isFirstLogin = !localStorage.getItem("gl_onboarded");
       if (isFirstLogin) {
-        navigate("/welcome");
+        navigate("/integrations");
       } else {
         navigate("/dashboard");
       }
@@ -36,7 +36,7 @@ const Login = () => {
       setLoading(false);
       const isFirstLogin = !localStorage.getItem("gl_onboarded");
       if (isFirstLogin) {
-        navigate("/welcome");
+        navigate("/integrations");
       } else {
         navigate("/dashboard");
       }

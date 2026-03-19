@@ -48,7 +48,7 @@ const Signup = () => {
       i18n.changeLanguage(selectedLang);
       const isFirstLogin = !localStorage.getItem("gl_onboarded");
       if (isFirstLogin) {
-        navigate("/welcome");
+        navigate("/integrations");
       } else {
         navigate("/dashboard");
       }

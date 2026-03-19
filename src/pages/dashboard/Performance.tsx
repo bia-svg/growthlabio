@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Info } from "lucide-react";
 
 /* ─── Demo product (trial / no integration) ─── */
-const demoProduct = { id: "ficticio", label: "Fictício" };
+const demoProduct = { id: "demo", labelPt: "Fictício", labelEn: "John Doe" };
 
 /* ─── Metric definitions with demo data ─── */
 const metricDefs: Record<string, { label: string; value: string; color?: "green" | "amber"; note: string; noteColor?: "green" | "amber" }> = {
@@ -97,7 +97,7 @@ const Performance = () => {
           <p className="text-[12px] text-[hsl(var(--dash-blue))]/80">
             {lang === "pt"
               ? "Você está vendo o produto \"Fictício\" com dados ilustrativos. Conecte suas integrações para ver seus dados reais."
-              : "You're viewing the \"Fictício\" product with illustrative data. Connect your integrations to see your real data."}
+              : "You're viewing the \"John Doe\" product with illustrative data. Connect your integrations to see your real data."}
           </p>
         </div>
       </div>
@@ -113,7 +113,7 @@ const Performance = () => {
           className="flex items-center gap-1.5 text-[13px] font-medium px-3 py-1.5 rounded-md border transition-colors bg-[hsl(var(--dash-text-primary))] text-white border-[hsl(var(--dash-text-primary))]"
         >
           <span className="w-1.5 h-1.5 rounded-full bg-white" />
-          {demoProduct.label}
+          {lang === "pt" ? demoProduct.labelPt : demoProduct.labelEn}
           <span className="ml-1 text-[10px] opacity-70 uppercase tracking-wider">{lang === "pt" ? "exemplo" : "demo"}</span>
         </button>
         <button
