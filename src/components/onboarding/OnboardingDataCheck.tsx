@@ -97,7 +97,7 @@ const OnboardingDataCheck = ({ integrationData, funnel, onBack }: Props) => {
           </div>
           <h2 className="text-[28px] font-bold tracking-[-0.03em] text-[hsl(var(--dash-text-primary))] mb-3">{t("onboarding.dataCheck.readyTitle")}</h2>
           <p className="text-[14px] text-[hsl(var(--dash-text-tertiary))] mb-8">{t("onboarding.dataCheck.readySubtitle")}</p>
-          <button onClick={() => navigate("/dashboard")} className="h-[48px] px-8 bg-primary text-primary-foreground rounded-lg text-[14px] font-semibold hover:opacity-90 transition-opacity">
+          <button onClick={() => navigate("/app")} className="h-[48px] px-8 bg-primary text-primary-foreground rounded-lg text-[14px] font-semibold hover:opacity-90 transition-opacity">
             {t("onboarding.dataCheck.goToDashboard")}
           </button>
         </div>
