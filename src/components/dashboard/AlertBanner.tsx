@@ -15,7 +15,7 @@ const AlertBanner = () => {
         <span>⚠</span>
         <span>{t("dashboard.alert.partialAttribution")}</span>
         <button
-          onClick={() => navigate("/dashboard/attribution")}
+          onClick={() => navigate("/app/attribution")}
           className="underline underline-offset-2 font-medium hover:text-dash-text-primary transition-colors ml-1"
         >
           {t("dashboard.alert.viewDiagnostics")}

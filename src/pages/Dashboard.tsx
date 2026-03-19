@@ -14,14 +14,14 @@ import Integrations from "@/pages/dashboard/Integrations";
 import { useLocation } from "react-router-dom";
 
 const breadcrumbMap: Record<string, string> = {
-  "/dashboard": "Performance",
-  "/dashboard/agent": "AI Copilot",
-  "/dashboard/optimizer": "Optimizer",
-  "/dashboard/competitor": "Competitors",
-  "/dashboard/goals": "Goals",
-  "/dashboard/attribution": "Attribution",
-  "/dashboard/billing": "Billing",
-  "/dashboard/integrations": "Integrations",
+  "/app": "Performance",
+  "/app/agent": "AI Copilot",
+  "/app/optimizer": "Optimizer",
+  "/app/competitor": "Competitors",
+  "/app/goals": "Goals",
+  "/app/attribution": "Attribution",
+  "/app/billing": "Billing",
+  "/app/integrations": "Integrations",
 };
 
 const Dashboard = () => {

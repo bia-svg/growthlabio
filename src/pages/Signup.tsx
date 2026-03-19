@@ -50,7 +50,7 @@ const Signup = () => {
       if (isFirstLogin) {
         navigate("/integrations");
       } else {
-        navigate("/dashboard");
+        navigate("/app");
       }
     }, 1200);
   };

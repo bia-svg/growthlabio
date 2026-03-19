@@ -185,7 +185,7 @@ const OnboardingDataCheck = ({ integrationData, funnel, onBack }: Props) => {
       <div className="flex items-center justify-between pt-6 border-t border-[hsl(var(--dash-border))]">
         <button onClick={onBack} className="text-[13px] text-[hsl(var(--dash-text-tertiary))] hover:text-[hsl(var(--dash-text-secondary))]">← Back</button>
         <div className="flex items-center gap-3">
-          <button onClick={() => navigate("/dashboard")} className="text-[12px] text-[hsl(var(--dash-text-tertiary))] hover:text-[hsl(var(--dash-text-secondary))]">{t("onboarding.dataCheck.continueLater")}</button>
+          <button onClick={() => navigate("/app")} className="text-[12px] text-[hsl(var(--dash-text-tertiary))] hover:text-[hsl(var(--dash-text-secondary))]">{t("onboarding.dataCheck.continueLater")}</button>
           <button
             onClick={handleFinish}
             disabled={finishing}

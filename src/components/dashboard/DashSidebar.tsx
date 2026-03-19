@@ -10,17 +10,17 @@ interface NavItem {
 }
 
 const managementItems: NavItem[] = [
-  { labelKey: "dashboard.sidebar.performance", path: "/dashboard", icon: "◎" },
-  { labelKey: "dashboard.sidebar.aiCopilot", path: "/dashboard/agent", icon: "◈" },
-  { labelKey: "dashboard.sidebar.optimizer", path: "/dashboard/optimizer", icon: "⚡", badge: 3, badgeColor: "red" },
-  { labelKey: "dashboard.sidebar.competitor", path: "/dashboard/competitor", icon: "⊙" },
-  { labelKey: "dashboard.sidebar.goals", path: "/dashboard/goals", icon: "◉" },
+  { labelKey: "dashboard.sidebar.performance", path: "/app", icon: "◎" },
+  { labelKey: "dashboard.sidebar.aiCopilot", path: "/app/agent", icon: "◈" },
+  { labelKey: "dashboard.sidebar.optimizer", path: "/app/optimizer", icon: "⚡", badge: 3, badgeColor: "red" },
+  { labelKey: "dashboard.sidebar.competitor", path: "/app/competitor", icon: "⊙" },
+  { labelKey: "dashboard.sidebar.goals", path: "/app/goals", icon: "◉" },
 ];
 
 const businessItems: NavItem[] = [
-  { labelKey: "dashboard.sidebar.integrations", path: "/dashboard/integrations", icon: "⊕" },
-  { labelKey: "dashboard.sidebar.attribution", path: "/dashboard/attribution", icon: "⊞", badge: "!", badgeColor: "amber" },
-  { labelKey: "dashboard.sidebar.billing", path: "/dashboard/billing", icon: "⊡" },
+  { labelKey: "dashboard.sidebar.integrations", path: "/app/integrations", icon: "⊕" },
+  { labelKey: "dashboard.sidebar.attribution", path: "/app/attribution", icon: "⊞", badge: "!", badgeColor: "amber" },
+  { labelKey: "dashboard.sidebar.billing", path: "/app/billing", icon: "⊡" },
 ];
 
 const badgeColors = {
