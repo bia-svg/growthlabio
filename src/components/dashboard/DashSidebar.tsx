@@ -117,14 +117,29 @@ const DashSidebar = ({ optimizerCount }: DashSidebarProps) => {
       {/* Spacer */}
       <div className="flex-1" />
 
-      {/* Language toggle */}
+      {/* Language selector */}
       <div className="px-3 pb-2">
-        <button
-          onClick={toggleLang}
-          className="w-full flex items-center gap-2 px-3 py-[7px] rounded-md text-[12px] text-dash-text-tertiary hover:bg-dash-hover transition-colors"
-        >
-          🌐 {i18n.language === "pt" ? "English" : "Português"}
-        </button>
+        <div className="text-[10px] font-semibold uppercase tracking-[0.07em] text-dash-text-tertiary px-3 mb-1">
+          {i18n.language === "pt" ? "Mudar de Idioma" : "Change Language"}
+        </div>
+        <div className="flex flex-col gap-0.5">
+          <button
+            onClick={() => { i18n.changeLanguage("pt"); localStorage.setItem("gl_language", "pt"); }}
+            className={`w-full flex items-center gap-2 px-3 py-[7px] rounded-md text-[12px] transition-colors ${
+              i18n.language === "pt" ? "bg-dash-active font-medium text-dash-text-primary" : "text-dash-text-secondary hover:bg-dash-hover"
+            }`}
+          >
+            🇧🇷 Português
+          </button>
+          <button
+            onClick={() => { i18n.changeLanguage("en"); localStorage.setItem("gl_language", "en"); }}
+            className={`w-full flex items-center gap-2 px-3 py-[7px] rounded-md text-[12px] transition-colors ${
+              i18n.language === "en" ? "bg-dash-active font-medium text-dash-text-primary" : "text-dash-text-secondary hover:bg-dash-hover"
+            }`}
+          >
+            🇺🇸 English
+          </button>
+        </div>
       </div>
 
       {/* Footer */}
