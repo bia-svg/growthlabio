@@ -97,7 +97,7 @@ const Performance = () => {
           <p className="text-[12px] text-[hsl(var(--dash-blue))]/80">
             {lang === "pt"
               ? "Você está vendo o produto \"Fictício\" com dados ilustrativos. Conecte suas integrações para ver seus dados reais."
-              : "You're viewing the \"Fictício\" product with illustrative data. Connect your integrations to see your real data."}
+              : "You're viewing the \"John Doe\" product with illustrative data. Connect your integrations to see your real data."}
           </p>
         </div>
       </div>
