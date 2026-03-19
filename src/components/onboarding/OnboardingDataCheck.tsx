@@ -97,7 +97,7 @@ const OnboardingDataCheck = ({ integrationData, funnel, onBack }: Props) => {
           </div>
           <h2 className="text-[28px] font-bold tracking-[-0.03em] text-[hsl(var(--dash-text-primary))] mb-3">{t("onboarding.dataCheck.readyTitle")}</h2>
           <p className="text-[14px] text-[hsl(var(--dash-text-tertiary))] mb-8">{t("onboarding.dataCheck.readySubtitle")}</p>
-          <button onClick={() => navigate("/dashboard")} className="h-[48px] px-8 bg-primary text-primary-foreground rounded-lg text-[14px] font-semibold hover:opacity-90 transition-opacity">
+          <button onClick={() => navigate("/app")} className="h-[48px] px-8 bg-primary text-primary-foreground rounded-lg text-[14px] font-semibold hover:opacity-90 transition-opacity">
             {t("onboarding.dataCheck.goToDashboard")}
           </button>
         </div>
@@ -185,7 +185,7 @@ const OnboardingDataCheck = ({ integrationData, funnel, onBack }: Props) => {
       <div className="flex items-center justify-between pt-6 border-t border-[hsl(var(--dash-border))]">
         <button onClick={onBack} className="text-[13px] text-[hsl(var(--dash-text-tertiary))] hover:text-[hsl(var(--dash-text-secondary))]">← Back</button>
         <div className="flex items-center gap-3">
-          <button onClick={() => navigate("/dashboard")} className="text-[12px] text-[hsl(var(--dash-text-tertiary))] hover:text-[hsl(var(--dash-text-secondary))]">{t("onboarding.dataCheck.continueLater")}</button>
+          <button onClick={() => navigate("/app")} className="text-[12px] text-[hsl(var(--dash-text-tertiary))] hover:text-[hsl(var(--dash-text-secondary))]">{t("onboarding.dataCheck.continueLater")}</button>
           <button
             onClick={handleFinish}
             disabled={finishing}

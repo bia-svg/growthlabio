@@ -18,7 +18,7 @@ const Onboarding = () => {
 
   const handleSkip = () => {
     localStorage.setItem("gl_onboarded", "1");
-    navigate("/dashboard");
+    navigate("/app");
   };
 
   const stepLabels = [

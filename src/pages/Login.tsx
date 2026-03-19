@@ -25,7 +25,7 @@ const Login = () => {
       if (isFirstLogin) {
         navigate("/integrations");
       } else {
-        navigate("/dashboard");
+        navigate("/app");
       }
     }, 1200);
   };
@@ -38,7 +38,7 @@ const Login = () => {
       if (isFirstLogin) {
         navigate("/integrations");
       } else {
-        navigate("/dashboard");
+        navigate("/app");
       }
     }, 1000);
   };

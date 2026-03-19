@@ -27,7 +27,7 @@ const App = () => (
           <Route path="/welcome" element={<Welcome />} />
           <Route path="/integrations" element={<Onboarding />} />
           
-          <Route path="/dashboard/*" element={<Dashboard />} />
+          <Route path="/app/*" element={<Dashboard />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
