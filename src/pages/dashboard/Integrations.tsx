@@ -8,10 +8,11 @@ const adPlatforms = [
 ];
 
 const revenueSources = [
+  { name: "Stripe", desc: "Payment processing", connected: false },
   { name: "Shopify", desc: "velaris.myshopify.com", connected: true, lastSync: "8 min ago" },
   { name: "HubSpot", desc: "CRM contacts & deals", connected: false },
-  { name: "Sympla", desc: "Event tickets", connected: false },
   { name: "WooCommerce", desc: "WordPress store", connected: false, comingSoon: true },
+  { name: "Sympla", desc: "Event tickets", connected: false },
 ];
 
 const contextFiles = [
