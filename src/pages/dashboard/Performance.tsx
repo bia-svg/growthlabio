@@ -113,7 +113,7 @@ const Performance = () => {
           className="flex items-center gap-1.5 text-[13px] font-medium px-3 py-1.5 rounded-md border transition-colors bg-[hsl(var(--dash-text-primary))] text-white border-[hsl(var(--dash-text-primary))]"
         >
           <span className="w-1.5 h-1.5 rounded-full bg-white" />
-          {demoProduct.label}
+          {lang === "pt" ? demoProduct.labelPt : demoProduct.labelEn}
           <span className="ml-1 text-[10px] opacity-70 uppercase tracking-wider">{lang === "pt" ? "exemplo" : "demo"}</span>
         </button>
         <button
