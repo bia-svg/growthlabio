@@ -41,20 +41,20 @@ const siteIntegrationOptions: Record<string, { name: string; icon: string }[]> =
 
 const leadsOptions = [
   { name: "HubSpot", icon: "Hs" },
-  { name: "Pipedrive", icon: "Pd" },
   { name: "RD Station", icon: "RD" },
+  { name: "Pipedrive", icon: "Pd" },
   { name: "Google Sheets", icon: "Gs" },
   { name: "Built-in form", icon: "F" },
   { name: "Webhook", icon: "Wh" },
 ];
 
 const revenueOptions = [
-  { name: "Pagar.me", icon: "Pg" },
   { name: "Stripe", icon: "St" },
-  { name: "Mercado Pago", icon: "MP" },
-  { name: "Hotmart", icon: "H" },
   { name: "Shopify", icon: "Sh" },
   { name: "HubSpot", icon: "Hs" },
+  { name: "Mercado Pago", icon: "MP" },
+  { name: "Hotmart", icon: "H" },
+  { name: "Pagar.me", icon: "Pg" },
   { name: "Pipedrive", icon: "Pd" },
   { name: "Bling", icon: "Bl" },
   { name: "Google Sheets", icon: "Gs" },

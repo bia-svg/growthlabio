@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Info } from "lucide-react";
 
 /* ─── Demo product (trial / no integration) ─── */
-const demoProduct = { id: "ficticio", label: "Fictício" };
+const demoProduct = { id: "demo", labelPt: "Fictício", labelEn: "John Doe" };
 
 /* ─── Metric definitions with demo data ─── */
 const metricDefs: Record<string, { label: string; value: string; color?: "green" | "amber"; note: string; noteColor?: "green" | "amber" }> = {
