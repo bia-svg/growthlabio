@@ -19,8 +19,8 @@ export interface IntegrationData {
 }
 
 const adPlatformsList = [
-  { name: "Meta Ads", desc: "Facebook & Instagram", icon: "M", comingSoon: false },
   { name: "Google Ads", desc: "Search, Display & YouTube", icon: "G", comingSoon: false },
+  { name: "Meta Ads", desc: "Facebook & Instagram", icon: "M", comingSoon: false },
   { name: "TikTok Ads", desc: "TikTok for Business", icon: "T", comingSoon: true },
   { name: "LinkedIn Ads", desc: "LinkedIn Campaign Manager", icon: "in", comingSoon: true },
 ];
