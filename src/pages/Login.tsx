@@ -55,7 +55,7 @@ const Login = () => {
                 <circle cx="10" cy="3" r="1.2" fill="white" />
               </svg>
             </div>
-            GrowthLab
+            Clarivus
           </a>
         </div>
 

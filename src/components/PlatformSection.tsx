@@ -2,12 +2,14 @@ import { useTranslation } from "react-i18next";
 import RevealUp from "./RevealUp";
 
 const featureKeys = [
-  { ico: "◎", key: "performanceReport" },
-  { ico: "⟳", key: "aiInsights" },
-  { ico: "⚡", key: "optimizationQueue" },
-  { ico: "◈", key: "projectedPayback" },
-  { ico: "⊙", key: "competitorIntel" },
-  { ico: "◷", key: "goalTracker" },
+  { ico: "◎", key: "proprietaryMemory" },
+  { ico: "⟳", key: "noConflict" },
+  { ico: "⚡", key: "earlyWarning" },
+  { ico: "◈", key: "leadToCash" },
+  { ico: "⊙", key: "unifiedDashboard" },
+  { ico: "◷", key: "weeklyIntelligence" },
+  { ico: "✦", key: "optimizationQueue" },
+  { ico: "⊕", key: "competitorIntel" },
 ];
 
 const PlatformSection = () => {
@@ -26,15 +28,16 @@ const PlatformSection = () => {
         </RevealUp>
 
         <RevealUp className="mt-16">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 border border-border rounded-xl overflow-hidden">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border border-border rounded-xl overflow-hidden">
             {featureKeys.map((f, i) => (
               <div
                 key={f.key}
                 className={`p-8 px-7 border-b border-r border-border hover:bg-gl-off transition-colors
-                  ${(i + 1) % 3 === 0 ? "lg:border-r-0" : ""}
+                  ${(i + 1) % 4 === 0 ? "lg:border-r-0" : ""}
                   ${(i + 1) % 2 === 0 ? "sm:border-r-0 lg:border-r" : ""}
-                  ${i >= 3 ? "lg:border-b-0" : ""}
-                  ${i >= 4 ? "sm:border-b-0" : ""}
+                  ${(i + 1) % 4 === 0 ? "lg:border-r-0" : ""}
+                  ${i >= 4 ? "lg:border-b-0" : ""}
+                  ${i >= 6 ? "sm:border-b-0" : ""}
                 `}
               >
                 <div className="w-[34px] h-[34px] border border-border rounded-[7px] flex items-center justify-center text-sm mb-4 bg-background">

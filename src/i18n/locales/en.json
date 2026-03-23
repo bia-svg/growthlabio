@@ -7,12 +7,12 @@
     "backToSite": "← Back to site"
   },
   "hero": {
-    "badge": "AI Growth Copilot",
-    "title1": "Your AI copilot",
-    "title2": "for",
-    "title3": "digital",
-    "title4": "marketing.",
-    "subtitle": "Analyzes your ad accounts, proposes optimizations, and takes action with your approval. AI suggests. You decide and accelerate.",
+    "badge": "Marketing Agent",
+    "title1": "The only marketing agent that works for your business",
+    "title2": "24 hours a day,",
+    "title3": "7 days",
+    "title4": "a week.",
+    "subtitle": "Clarivus builds proprietary intelligence about your business and turns it into growth decisions before problems arise.",
     "cta": "Book demo",
     "howItWorks": "How it works",
     "noCommitment": "No commitment. Free trial access."
@@ -22,32 +22,40 @@
   },
   "platformSection": {
     "label": "The Platform",
-    "title": "Intelligence that amplifies\nthose who are already great.",
-    "subtitle": "GrowthLab is the copilot for traffic managers, in-house teams, consultants, and anyone working in growth and paid media. You're in control — with AI accelerating every decision.",
+    "title": "Intelligence that knows your\nbusiness better than anyone.",
+    "subtitle": "Clarivus is not another data tool. It's the first platform where AI gets smarter about your business every week and acts before you need to ask.",
     "features": {
-      "performanceReport": {
-        "title": "Performance Report",
-        "desc": "Unified dashboard per product: Spend, ROAS, CPL, and funnel from impression to conversion. Updates every 5 minutes."
+      "proprietaryMemory": {
+        "title": "Proprietary Memory",
+        "desc": "CPL history, seasonality, creative patterns, and real CVRs by product and channel. An asset that grows with your business and no generic AI can replicate."
       },
-      "aiInsights": {
-        "title": "AI Insights Weekly",
-        "desc": "Every Monday: 7-day analysis, what worked, what didn't, and 3 concrete actions for the week."
+      "noConflict": {
+        "title": "No Conflict of Interest",
+        "desc": "Platform tools are incentivized to increase your media spend. Clarivus is incentivized by your real ROAS and net revenue. When a campaign is not worth it, it says so."
+      },
+      "earlyWarning": {
+        "title": "Early Warning",
+        "desc": "Detects performance drop signals 48 to 72 hours before they appear on any dashboard. You act on the problem before it becomes a loss."
+      },
+      "leadToCash": {
+        "title": "Lead to Cash",
+        "desc": "Connects top of funnel, qualification, sales, and real revenue in a single intelligence layer. Marketing, SDR, closer, and finance speak the same language, with the same data, in real time."
+      },
+      "unifiedDashboard": {
+        "title": "Unified Dashboard",
+        "desc": "Spend, ROAS, CPL, and funnel from first click to conversion. Updates every 5 minutes."
+      },
+      "weeklyIntelligence": {
+        "title": "Weekly Intelligence",
+        "desc": "Analysis of the last 7 days: what worked, what didn't, and 3 concrete actions for the week."
       },
       "optimizationQueue": {
         "title": "Optimization Queue",
-        "desc": "Detection of saturation, high CPA, and scaling opportunities. Ready proposal, you approve, executes via API."
-      },
-      "projectedPayback": {
-        "title": "Projected Payback",
-        "desc": "Revenue projection before conversions close — real-time projected ROAS with configurable CVR per product."
+        "desc": "Detection of saturation, high CPA, and scaling opportunities. Ready proposal. You approve, it executes via API."
       },
       "competitorIntel": {
         "title": "Competitor Intel",
         "desc": "Monitors competitor ads via Meta Ad Library. AI highlights the angles they use that you haven't explored yet."
-      },
-      "goalTracker": {
-        "title": "Goal Tracker & Alerts",
-        "desc": "Daily goal traffic light on Slack. Frequency, CTR, and CPA alerts before they become irreversible."
       }
     }
   },
@@ -62,14 +70,23 @@
       "History saved — the agent learns the account context over time"
     ]
   },
+  "whoItsFor": {
+    "title": "Clarivus was built for those who are\nalready good and want to go further.",
+    "items": [
+      "Marketing professionals who want decisions, not more data",
+      "Revenue teams that need visibility from lead to close",
+      "Managers who don't have a strategist available at any hour",
+      "Any business that is tired of explaining their history to an AI every time"
+    ]
+  },
   "howAndStats": {
     "howLabel": "How it works",
     "howTitle": "From zero to insight in days.",
     "steps": {
       "s1": { "title": "Connect sources", "desc": "Meta Ads, CRMs, payment platforms. Data flowing on the same day." },
-      "s2": { "title": "Configure the product", "desc": "Define funnel, average ticket, and goals. Upload PDFs and brand guides — AI reads and uses as context." },
-      "s3": { "title": "AI analyzes and proposes", "desc": "Automatic weekly insights. Optimization queue prioritized by impact. AI Agent available 24/7." },
-      "s4": { "title": "You approve. It executes.", "desc": "Nothing changes without your approval. One click executes via Meta Ads API with full audit." }
+      "s2": { "title": "Configure the product", "desc": "Define funnel, average ticket, and goals. Upload PDFs and brand guides. AI reads and uses as context." },
+      "s3": { "title": "AI analyzes and proposes", "desc": "Automatic weekly insights. Optimization queue prioritized by impact. Agent available 24/7." },
+      "s4": { "title": "You approve. It executes.", "desc": "Nothing changes without your approval. One click executes via API with full audit." }
     },
     "statsLabel": "Results",
     "statsTitle": "The impact on your business.",
@@ -94,7 +111,7 @@
           "1 brand · up to 2 products",
           "Complete Performance Report",
           "Optimizer + Competitor Intel",
-          "Projected Payback + alerts",
+          "Weekly Intelligence + alerts",
           "UTM Diagnostics",
           "Automated billing"
         ],
@@ -134,14 +151,14 @@
     "footerCta": "Questions? Talk to the team →"
   },
   "cta": {
-    "title": "Ready to operate\nat another level?",
+    "title": "Ready to operate with clear\nvision of what lies ahead?",
     "subtitle": "30-minute demo with real data. No slides, no pitch.",
     "bookDemo": "Book demo",
-    "startTrial": "Start free trial",
-    "noCreditCard": "No credit card. Instant access."
+    "startTrial": "Start free. No credit card. Instant access.",
+    "noCreditCard": ""
   },
   "footer": {
-    "copyright": "© 2026 GrowthLab · AI Growth Copilot"
+    "copyright": "© 2026 Clarivus · Meteora Digital · Marketing Agent"
   },
   "demoModal": {
     "label": "Early access",
@@ -175,13 +192,13 @@
     "fillAll": "Please fill in all fields.",
     "socialProof": {
       "label": "Trusted by growth teams",
-      "quote": "\"We stopped guessing and started deciding. GrowthLab turned our data into a weekly action plan.\"",
+      "quote": "\"We stopped guessing and started deciding. Clarivus turned our data into a weekly action plan.\"",
       "author": "— Ana Lima, Growth Lead · Velaris Co."
     }
   },
   "welcome": {
     "title": "Welcome, Vini",
-    "subtitle": "Let's set up your GrowthLab. You'll see your first insights in under 10 minutes.",
+    "subtitle": "Let's set up your Clarivus. You'll see your first insights in under 10 minutes.",
     "cta": "Get started →"
   },
   "onboarding": {
@@ -283,12 +300,12 @@
       "insightConnectLeads": "Connecting a lead source can improve your conversion analysis."
     },
     "chat": {
-      "title": "GrowthLab AI",
+      "title": "Clarivus AI",
       "subtitle": "Setup assistant",
       "placeholder": "Ask anything about setup…",
       "thinking": "Thinking…",
       "greetings": {
-        "0": "Hey! 👋 I'm GrowthLab AI. I can help you set up your operation. Tell me: what type of business do you run?",
+        "0": "Hey! 👋 I'm Clarivus AI. I can help you set up your operation. Tell me: what type of business do you run?",
         "1": "Let's connect your data sources. Tell me which tools you use for ads, analytics, and sales — I'll guide you!",
         "2": "Time to build your funnel! Tell me how your sales journey works and I'll suggest the best structure.",
         "3": "Almost there! I'm here if you have questions about data quality or want to adjust anything."

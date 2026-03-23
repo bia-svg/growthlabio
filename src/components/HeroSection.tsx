@@ -13,7 +13,7 @@ const WindowMock = () => (
       <div className="w-[11px] h-[11px] rounded-full bg-[#FEBC2E]" />
       <div className="w-[11px] h-[11px] rounded-full bg-[#28C840]" />
       <div className="flex-1 mx-3.5 bg-background border border-[hsl(var(--dash-border))] rounded-md px-2.5 py-0.5 text-[11.5px] text-[hsl(var(--dash-text-tertiary))] text-center">
-        app.growthlab.io / velaris / orbit
+        app.clarivus.io / velaris / orbit
       </div>
     </div>
     <div className="grid grid-cols-1 md:grid-cols-[200px_1fr]">
@@ -21,8 +21,8 @@ const WindowMock = () => (
       <div className="hidden md:block border-r border-[hsl(var(--dash-border))] py-4 bg-[hsl(var(--dash-sidebar))]">
         <div className="px-3 pb-3 mb-1">
           <div className="flex items-center gap-2 px-2 mb-2">
-            <div className="w-5 h-5 bg-[hsl(var(--dash-text-primary))] rounded flex items-center justify-center text-[9px] font-bold text-white">G</div>
-            <span className="text-[13px] font-semibold text-[hsl(var(--dash-text-primary))]">GrowthLab</span>
+            <div className="w-5 h-5 bg-[hsl(var(--dash-text-primary))] rounded flex items-center justify-center text-[9px] font-bold text-white">C</div>
+            <span className="text-[13px] font-semibold text-[hsl(var(--dash-text-primary))]">Clarivus</span>
           </div>
           <div className="px-2 py-1.5 mb-1">
             <div className="text-[9px] font-semibold uppercase tracking-[0.07em] text-[hsl(var(--dash-text-tertiary))]">Active product</div>
