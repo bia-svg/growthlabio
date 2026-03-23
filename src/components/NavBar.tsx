@@ -16,7 +16,7 @@ const LogoMark = () => (
 
 const NavBar = ({ onOpenModal }: NavBarProps) => {
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   return (
     <nav className="fixed top-0 left-0 right-0 z-[200] h-[52px] flex items-center justify-between px-7 bg-background/90 backdrop-blur-[20px] backdrop-saturate-[160%] border-b border-border">
       <a href="#home" className="text-[15px] font-semibold tracking-tight text-foreground no-underline flex items-center gap-[7px]">
@@ -33,6 +33,16 @@ const NavBar = ({ onOpenModal }: NavBarProps) => {
         ))}
       </ul>
       <div className="flex gap-2 items-center">
+        <button
+          onClick={() => {
+            const newLang = i18n.language === "pt" ? "en" : "pt";
+            i18n.changeLanguage(newLang);
+            localStorage.setItem("gl_language", newLang);
+          }}
+          className="text-[13px] font-medium text-gl-g400 bg-transparent border border-border rounded-lg px-2.5 py-1.5 hover:bg-gl-g50 hover:border-gl-g200 hover:text-foreground transition-all"
+        >
+          {i18n.language === "pt" ? "🇺🇸 EN" : "🇧🇷 PT"}
+        </button>
         <button onClick={() => navigate("/login")} className="text-[13.5px] font-medium text-gl-g500 bg-transparent border border-border rounded-lg px-3.5 py-1.5 hover:bg-gl-g50 hover:border-gl-g200 hover:text-foreground transition-all">
           {t("nav.login")}
         </button>
