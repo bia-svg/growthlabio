@@ -13,7 +13,7 @@ const WindowMock = () => (
       <div className="w-[11px] h-[11px] rounded-full bg-[#FEBC2E]" />
       <div className="w-[11px] h-[11px] rounded-full bg-[#28C840]" />
       <div className="flex-1 mx-3.5 bg-background border border-[hsl(var(--dash-border))] rounded-md px-2.5 py-0.5 text-[11.5px] text-[hsl(var(--dash-text-tertiary))] text-center">
-        app.growthlab.io / velaris / orbit
+        app.clarivus.io / velaris / orbit
       </div>
     </div>
     <div className="grid grid-cols-1 md:grid-cols-[200px_1fr]">
