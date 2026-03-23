@@ -7,19 +7,20 @@ interface NavItem {
   icon: string;
   badge?: number | string;
   badgeColor?: "red" | "amber" | "green";
+  soon?: boolean;
 }
 
 const managementItems: NavItem[] = [
   { labelKey: "dashboard.sidebar.performance", path: "/app", icon: "◎" },
-  { labelKey: "dashboard.sidebar.aiCopilot", path: "/app/agent", icon: "◈" },
-  { labelKey: "dashboard.sidebar.optimizer", path: "/app/optimizer", icon: "⚡", badge: 3, badgeColor: "red" },
-  { labelKey: "dashboard.sidebar.competitor", path: "/app/competitor", icon: "⊙" },
+  { labelKey: "dashboard.sidebar.aiCopilot", path: "/app/agent", icon: "◈", soon: true },
+  { labelKey: "dashboard.sidebar.optimizer", path: "/app/optimizer", icon: "⚡", soon: true },
+  { labelKey: "dashboard.sidebar.competitor", path: "/app/competitor", icon: "⊙", soon: true },
   { labelKey: "dashboard.sidebar.goals", path: "/app/goals", icon: "◉" },
 ];
 
 const businessItems: NavItem[] = [
   { labelKey: "dashboard.sidebar.integrations", path: "/app/integrations", icon: "⊕" },
-  { labelKey: "dashboard.sidebar.attribution", path: "/app/attribution", icon: "⊞", badge: "!", badgeColor: "amber" },
+  { labelKey: "dashboard.sidebar.attribution", path: "/app/attribution", icon: "⊞", soon: true },
   { labelKey: "dashboard.sidebar.billing", path: "/app/billing", icon: "⊡" },
 ];
 
@@ -44,18 +45,26 @@ const DashSidebar = ({ optimizerCount }: DashSidebarProps) => {
   const SidebarItem = ({ item }: { item: NavItem }) => {
     const active = isActive(item.path);
     const count = item.labelKey === "dashboard.sidebar.optimizer" ? optimizerCount : item.badge;
+    const soonLabel = i18n.language === "pt" ? "Em breve" : "Soon";
     return (
       <button
         onClick={() => navigate(item.path)}
         className={`w-full flex items-center gap-2.5 px-3 py-[7px] rounded-md text-[13.5px] transition-colors ${
           active
             ? "bg-dash-active font-medium text-dash-text-primary"
-            : "text-dash-text-secondary hover:bg-dash-hover"
+            : item.soon
+              ? "text-dash-text-tertiary hover:bg-dash-hover"
+              : "text-dash-text-secondary hover:bg-dash-hover"
         }`}
       >
-        <span className="text-[14px] w-4 text-center opacity-55">{item.icon}</span>
-        <span className="flex-1 text-left">{t(item.labelKey)}</span>
-        {count !== undefined && String(count).length > 0 && (
+        <span className={`text-[14px] w-4 text-center ${item.soon ? "opacity-30" : "opacity-55"}`}>{item.icon}</span>
+        <span className={`flex-1 text-left ${item.soon ? "opacity-50" : ""}`}>{t(item.labelKey)}</span>
+        {item.soon && (
+          <span className="text-[9px] font-semibold uppercase tracking-wide px-[5px] py-[1px] rounded bg-dash-border text-dash-text-tertiary">
+            {soonLabel}
+          </span>
+        )}
+        {!item.soon && count !== undefined && String(count).length > 0 && (
           <span className={`text-[10px] font-bold px-[6px] py-[1px] rounded-full ${badgeColors[item.badgeColor || "red"]}`}>
             {count}
           </span>

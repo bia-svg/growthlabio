@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import DashSidebar from "@/components/dashboard/DashSidebar";
 import DashTopbar from "@/components/dashboard/DashTopbar";
 import AlertBanner from "@/components/dashboard/AlertBanner";
+import ComingSoonOverlay from "@/components/dashboard/ComingSoonOverlay";
 import Performance from "@/pages/dashboard/Performance";
 import AIAgent from "@/pages/dashboard/AIAgent";
 import Optimizer from "@/pages/dashboard/Optimizer";
@@ -38,11 +39,11 @@ const Dashboard = () => {
         <main className="flex-1 overflow-auto">
           <Routes>
             <Route index element={<Performance />} />
-            <Route path="agent" element={<AIAgent />} />
-            <Route path="optimizer" element={<Optimizer onCountChange={setOptimizerCount} />} />
-            <Route path="competitor" element={<Competitor />} />
+            <Route path="agent" element={<ComingSoonOverlay><AIAgent /></ComingSoonOverlay>} />
+            <Route path="optimizer" element={<ComingSoonOverlay><Optimizer onCountChange={setOptimizerCount} /></ComingSoonOverlay>} />
+            <Route path="competitor" element={<ComingSoonOverlay><Competitor /></ComingSoonOverlay>} />
             <Route path="goals" element={<Goals />} />
-            <Route path="attribution" element={<Attribution />} />
+            <Route path="attribution" element={<ComingSoonOverlay><Attribution /></ComingSoonOverlay>} />
             <Route path="billing" element={<Billing />} />
             <Route path="integrations" element={<Integrations />} />
           </Routes>
