@@ -61,7 +61,7 @@
   },
   "agent": {
     "badge": "✦ AI Agent",
-    "title": "Manage by\nconversing.",
+    "title": "Manage by\nchat.",
     "subtitle": "Chat with a copilot that reads your data in real time, proposes changes with justification, and executes with your approval. Strategy and operations in one place.",
     "features": [
       "Ask \"why did my ROAS drop?\" — get analysis with real account data",
