@@ -8,7 +8,7 @@ interface DemoModalProps {
 }
 
 const DemoModal = ({ open, onClose }: DemoModalProps) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
