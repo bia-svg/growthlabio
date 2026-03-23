@@ -230,8 +230,14 @@ const PhoneInput = ({
         <input
           type="tel"
           value={value.startsWith(selectedCountry.dial) ? value.slice(selectedCountry.dial.length).trimStart() : value}
-          onChange={(e) => onChange(selectedCountry.dial + " " + e.target.value)}
+          onChange={(e) => {
+            const digits = e.target.value.replace(/\D/g, "");
+            if (digits.length <= selectedCountry.maxDigits) {
+              onChange(selectedCountry.dial + " " + e.target.value);
+            }
+          }}
           onBlur={onBlur}
+          maxLength={selectedCountry.maxDigits + 3}
           placeholder={placeholder || "000 000 0000"}
           className={inputClasses}
         />
