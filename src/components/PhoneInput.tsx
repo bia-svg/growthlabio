@@ -6,6 +6,7 @@ interface Country {
   code: string;
   dial: string;
   flag: string;
+  maxDigits: number;
 }
 
 const countries: Country[] = [
