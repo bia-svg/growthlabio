@@ -7,6 +7,7 @@ interface NavItem {
   icon: string;
   badge?: number | string;
   badgeColor?: "red" | "amber" | "green";
+  soon?: boolean;
 }
 
 const managementItems: NavItem[] = [
