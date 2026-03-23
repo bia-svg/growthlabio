@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import DashSidebar from "@/components/dashboard/DashSidebar";
 import DashTopbar from "@/components/dashboard/DashTopbar";
 import AlertBanner from "@/components/dashboard/AlertBanner";
+import ComingSoonOverlay from "@/components/dashboard/ComingSoonOverlay";
 import Performance from "@/pages/dashboard/Performance";
 import AIAgent from "@/pages/dashboard/AIAgent";
 import Optimizer from "@/pages/dashboard/Optimizer";
