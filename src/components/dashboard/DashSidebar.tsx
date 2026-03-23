@@ -20,7 +20,7 @@ const managementItems: NavItem[] = [
 
 const businessItems: NavItem[] = [
   { labelKey: "dashboard.sidebar.integrations", path: "/app/integrations", icon: "⊕" },
-  { labelKey: "dashboard.sidebar.attribution", path: "/app/attribution", icon: "⊞", badge: "!", badgeColor: "amber" },
+  { labelKey: "dashboard.sidebar.attribution", path: "/app/attribution", icon: "⊞", soon: true },
   { labelKey: "dashboard.sidebar.billing", path: "/app/billing", icon: "⊡" },
 ];
 
