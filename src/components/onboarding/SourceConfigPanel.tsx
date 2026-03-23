@@ -123,7 +123,7 @@ const SourceConfigPanel = ({ source, category, onSave, onClose }: SourceConfigPa
 
   // Webhook special: show the webhook URL to copy
   const isWebhookIncoming = source === "Webhook" && category !== "leads";
-  const generatedWebhookUrl = "https://api.growthlab.io/webhook/v1/revenue/abc123";
+  const generatedWebhookUrl = "https://api.clarivus.io/webhook/v1/revenue/abc123";
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40" onClick={onClose}>

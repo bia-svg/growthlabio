@@ -86,7 +86,7 @@ const Signup = () => {
         <div className="flex-1 flex items-center justify-center px-12">
           <div className="max-w-[420px]">
             <div className="text-[11px] font-semibold uppercase tracking-[0.07em] text-dash-text-tertiary mb-6">
-              {lang === "pt" ? "Por que o GrowthLab?" : "Why GrowthLab?"}
+              {lang === "pt" ? "Por que o Clarivus?" : "Why Clarivus?"}
             </div>
 
             <div className="space-y-5">

@@ -6,7 +6,7 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-const SYSTEM_PROMPT = `You are GrowthLab AI — an onboarding assistant for a performance marketing platform.
+const SYSTEM_PROMPT = `You are Clarivus AI — an onboarding assistant for a performance marketing platform.
 
 Your role is to help the user set up their operation during the initial setup. You should:
 

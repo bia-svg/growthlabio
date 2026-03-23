@@ -1,53 +1,61 @@
 {
   "nav": {
-    "home": "Home",
+    "home": "Início",
     "platform": "A Plataforma",
-    "login": "Login",
+    "login": "Entrar",
     "bookDemo": "Agendar demo",
     "backToSite": "← Voltar ao site"
   },
   "hero": {
-    "badge": "AI Growth Copilot",
-    "title1": "Seu copiloto de IA",
-    "title2": "para",
-    "title3": "marketing",
-    "title4": "digital.",
-    "subtitle": "Analisa suas contas de anúncio, propõe otimizações e executa ações com sua aprovação. A IA sugere. Você decide e acelera.",
+    "badge": "Agente de Marketing",
+    "title1": "O único agente de marketing que trabalha para o seu negócio",
+    "title2": "24 horas por dia,",
+    "title3": "7 dias",
+    "title4": "por semana.",
+    "subtitle": "Clarivus acumula inteligência proprietária sobre o seu negócio e transforma isso em decisões de crescimento antes que os problemas apareçam.",
     "cta": "Agendar demo",
     "howItWorks": "Como funciona",
-    "noCommitment": "Sem compromisso. Acesso trial gratuito."
+    "noCommitment": "Sem compromisso. Acesso de avaliação gratuito."
   },
   "integrations": {
     "title": "Conecta com as plataformas que você já usa"
   },
   "platformSection": {
     "label": "A Plataforma",
-    "title": "Inteligência que amplifica\nquem já é bom.",
-    "subtitle": "GrowthLab é o copiloto para gestores de tráfego, times in-house, consultores e qualquer pessoa que trabalha com growth e mídia paga. Você no controle — com IA acelerando cada decisão.",
+    "title": "Inteligência que conhece o seu\nnegócio melhor do que ninguém.",
+    "subtitle": "Clarivus não é mais uma ferramenta de dados. É a primeira plataforma onde a IA fica mais inteligente sobre o seu negócio a cada semana e age antes que você precise pedir.",
     "features": {
-      "performanceReport": {
-        "title": "Performance Report",
-        "desc": "Dashboard unificado por produto: Spend, ROAS, CPL e funil de impressão à conversão. Atualização a cada 5 minutos."
+      "proprietaryMemory": {
+        "title": "Memória Proprietária",
+        "desc": "Histórico de CPL, sazonalidades, padrões de criativo e CVRs reais por produto e canal. Um ativo que cresce com o seu negócio e que nenhuma IA genérica replica."
       },
-      "aiInsights": {
-        "title": "AI Insights Semanal",
-        "desc": "Toda segunda-feira: análise de 7 dias, o que funcionou, o que não funcionou e 3 ações concretas para a semana."
+      "noConflict": {
+        "title": "Sem Conflito de Interesse",
+        "desc": "Ferramentas de plataforma são incentivadas a aumentar seu gasto em mídia. Clarivus é incentivado pelo seu ROAS real e pela sua receita líquida. Quando a campanha não vale a pena, ele diz."
+      },
+      "earlyWarning": {
+        "title": "Vê Antes de Acontecer",
+        "desc": "Detecta sinais de queda de performance 48 a 72 horas antes de aparecer em qualquer dashboard. Você age sobre o problema antes que ele vire prejuízo."
+      },
+      "leadToCash": {
+        "title": "Do Primeiro Clique à Receita",
+        "desc": "Conecta topo de funil, qualificação, vendas e receita real em uma única camada de inteligência. Marketing, SDR, closer e financeiro falam a mesma língua, com o mesmo dado, em tempo real."
+      },
+      "unifiedDashboard": {
+        "title": "Dashboard Unificado",
+        "desc": "Spend, ROAS, CPL e funil do primeiro clique à conversão. Atualização a cada 5 minutos."
+      },
+      "weeklyIntelligence": {
+        "title": "Insights toda segunda-feira",
+        "desc": "Análise dos últimos 7 dias: o que funcionou, o que não funcionou e 3 ações concretas para a semana."
       },
       "optimizationQueue": {
-        "title": "Optimization Queue",
-        "desc": "Detecção de saturação, CPA alto e oportunidade de escala. Proposta pronta, você aprova, executa via API."
-      },
-      "projectedPayback": {
-        "title": "Projected Payback",
-        "desc": "Projeção de receita antes das conversões fecharem — ROAS projetado em tempo real com CVR configurável por produto."
+        "title": "Fila de Otimizações",
+        "desc": "Detecção de saturação, CPA elevado e oportunidades de escala. Proposta pronta, você aprova, executa via API."
       },
       "competitorIntel": {
-        "title": "Competitor Intel",
-        "desc": "Monitora anúncios dos concorrentes via Meta Ad Library. IA aponta os ângulos que eles usam e você ainda não está explorando."
-      },
-      "goalTracker": {
-        "title": "Goal Tracker & Alertas",
-        "desc": "Semáforo de meta diário no Slack. Alertas de frequência, CTR e CPA antes de virarem problema irreversível."
+        "title": "Inteligência Competitiva",
+        "desc": "Monitora anúncios dos concorrentes via Meta Ad Library. A IA destaca os ângulos que eles usam e você ainda não explorou."
       }
     }
   },
@@ -62,21 +70,30 @@
       "Histórico salvo — o agente aprende o contexto da conta ao longo do tempo"
     ]
   },
+  "whoItsFor": {
+    "title": "Clarivus foi feito para quem já é\nbom e quer ir mais longe.",
+    "items": [
+      "Profissionais de marketing que querem decisão, não mais dado",
+      "Times de receita que precisam de visibilidade do lead ao fechamento",
+      "Gestores que não têm um estrategista disponível a qualquer hora",
+      "Qualquer negócio que cansou de explicar seu histórico pra uma IA toda vez"
+    ]
+  },
   "howAndStats": {
     "howLabel": "Como funciona",
-    "howTitle": "Do zero ao insight em dias.",
+    "howTitle": "De zero à inteligência em dias.",
     "steps": {
-      "s1": { "title": "Conecta as fontes", "desc": "Meta Ads, CRMs, plataformas de cobranças. Dados fluindo no mesmo dia." },
-      "s2": { "title": "Configura o produto", "desc": "Define funil, ticket médio e metas. Faz upload de PDFs e brand guides — a IA lê e usa como contexto." },
-      "s3": { "title": "IA analisa e propõe", "desc": "Insights semanais automáticos. Fila de otimizações priorizadas por impacto. AI Agent disponível 24/7." },
-      "s4": { "title": "Você aprova. Executa.", "desc": "Nada muda sem a sua aprovação. Um clique executa via Meta Ads API com auditoria completa." }
+      "s1": { "title": "Conecte as fontes", "desc": "Meta Ads, CRMs, plataformas de pagamento. Dados fluindo no mesmo dia." },
+      "s2": { "title": "Configure o produto", "desc": "Defina funil, ticket médio e metas. Envie PDFs e guias de marca. A IA lê e usa como contexto." },
+      "s3": { "title": "IA analisa e propõe", "desc": "Insights semanais automáticos. Fila de otimizações priorizada por impacto. Agente disponível 24/7." },
+      "s4": { "title": "Você aprova. Executa.", "desc": "Nada muda sem a sua aprovação. Um clique executa via API com auditoria completa." }
     },
     "statsLabel": "Resultados",
     "statsTitle": "O impacto no seu negócio.",
     "stats": {
       "s1": { "value": "80%", "label": "redução no tempo de análise manual" },
-      "s2": { "value": "3×", "label": "mais rápido no ciclo de otimização" },
-      "s3": { "value": "5×", "label": "mais produtos operados pelo mesmo time" },
+      "s2": { "value": "3×", "label": "ciclo de otimização mais rápido" },
+      "s3": { "value": "5×", "label": "mais produtos gerenciados pelo mesmo time" },
       "s4": { "value": "24/7", "label": "monitoramento com alertas em tempo real" }
     }
   },
@@ -94,7 +111,7 @@
           "1 marca · até 2 produtos",
           "Performance Report completo",
           "Optimizer + Competitor Intel",
-          "Projected Payback + alertas",
+          "Inteligência Semanal + alertas",
           "UTM Diagnostics",
           "Billing automatizado"
         ],
@@ -134,14 +151,14 @@
     "footerCta": "Dúvidas? Fale com o time →"
   },
   "cta": {
-    "title": "Pronto para operar\nem outro nível?",
-    "subtitle": "30 minutos de demo com dados reais. Sem slides, sem pitch.",
+    "title": "Pronto para operar com visão\nclara do que está à frente?",
+    "subtitle": "Demo de 30 minutos com dados reais. Sem slides, sem pitch.",
     "bookDemo": "Agendar demo",
-    "startTrial": "Iniciar trial gratuito",
-    "noCreditCard": "Sem cartão de crédito. Acesso imediato."
+    "startTrial": "Começar gratuitamente. Sem cartão de crédito. Acesso imediato.",
+    "noCreditCard": ""
   },
   "footer": {
-    "copyright": "© 2026 GrowthLab · AI Growth Copilot"
+    "copyright": "© 2026 Clarivus · Meteora Digital · Agente de Marketing"
   },
   "demoModal": {
     "label": "Acesso antecipado",
@@ -175,13 +192,13 @@
     "fillAll": "Preencha todos os campos.",
     "socialProof": {
       "label": "Confiança de times de growth",
-      "quote": "\"Paramos de adivinhar e começamos a decidir. O GrowthLab transformou nossos dados em um plano de ação semanal.\"",
+      "quote": "\"Paramos de adivinhar e começamos a decidir. O Clarivus transformou nossos dados em um plano de ação semanal.\"",
       "author": "— Ana Lima, Growth Lead · Velaris Co."
     }
   },
   "welcome": {
     "title": "Bem-vindo, Vini",
-    "subtitle": "Vamos configurar seu GrowthLab. Você verá seus primeiros insights em menos de 10 minutos.",
+    "subtitle": "Vamos configurar seu Clarivus. Você verá seus primeiros insights em menos de 10 minutos.",
     "cta": "Começar →"
   },
   "onboarding": {
@@ -283,12 +300,12 @@
       "insightConnectLeads": "Conectar uma fonte de leads pode melhorar sua análise de conversão."
     },
     "chat": {
-      "title": "GrowthLab AI",
+      "title": "Clarivus AI",
       "subtitle": "Assistente de setup",
       "placeholder": "Pergunte qualquer coisa sobre o setup…",
       "thinking": "Pensando…",
       "greetings": {
-        "0": "Olá! 👋 Sou o GrowthLab AI. Posso ajudar a configurar sua operação. Me conta: que tipo de negócio você tem?",
+        "0": "Olá! 👋 Sou o Clarivus AI. Posso ajudar a configurar sua operação. Me conta: que tipo de negócio você tem?",
         "1": "Vamos conectar suas fontes de dados. Me diz quais ferramentas você usa para anúncios, analytics e vendas — eu te guio!",
         "2": "Hora de montar o funil! Me conta como funciona sua jornada de vendas e eu sugiro a melhor estrutura.",
         "3": "Quase lá! Estou aqui se você tiver dúvidas sobre qualidade de dados ou quiser ajustar algo."
@@ -411,11 +428,11 @@
       "downloadPdf": "↓ Baixar PDF completo da fatura",
       "currentPlan": "Plano Atual",
       "managePlan": "Gerenciar plano →",
-      "paymentMethod": "Método de Pagamento",
+      "paymentMethod": "Forma de Pagamento",
       "updateCard": "Atualizar cartão →",
       "fiscalData": "Dados Fiscais",
       "edit": "Editar →",
-      "billingNote": "O faturamento é automático. Sua assinatura renova no dia 1º de cada mês. Para cancelar ou mudar de plano, vá em Gerenciar plano.",
+      "billingNote": "O faturamento é automático. Sua assinatura renova no dia 1 de cada mês. Para cancelar ou trocar de plano, vá em Gerenciar plano.",
       "month": "Mês",
       "plan": "Plano",
       "amount": "Valor",
@@ -424,37 +441,37 @@
     "integrations": {
       "title": "Integrações",
       "subtitle": "Fontes de dados conectadas · {{count}} ativas",
-      "adPlatforms": "Plataformas de Anúncio",
+      "adPlatforms": "Plataformas de Anúncios",
       "revenueSources": "Fontes de Receita",
       "connected": "✓ Conectado",
       "reconnect": "Reconectar",
       "disconnect": "Desconectar",
       "comingSoon": "Em breve",
-      "notifyMe": "Avisar-me",
+      "notifyMe": "Avise-me",
       "connectBtn": "Conectar",
       "disconnectConfirm": "Desconectar {{name}}? Os dados históricos serão preservados.",
       "confirm": "Confirmar",
       "cancel": "Cancelar",
       "funnelConfig": "Configuração do Funil",
-      "editFunnel": "Editar config do funil →",
+      "editFunnel": "Editar configuração do funil →",
       "manualUploads": "Uploads Manuais",
       "dropFiles": "Arraste arquivos CSV ou XLSX aqui, ou",
-      "browse": "procurar",
+      "browse": "procure",
       "aiContextLibrary": "Biblioteca de Contexto IA",
       "contextDesc": "Arquivos e URLs que o AI Agent usa para personalizar insights.",
       "addFileUrl": "+ Adicionar arquivo ou URL",
       "syncSettings": "Configurações de Sincronização",
-      "view": "Visualizar",
+      "view": "Ver",
       "delete": "Excluir"
     },
     "funnelWizard": {
       "back": "← Voltar",
-      "step": "Etapa {{current}} de {{total}}",
+      "step": "Passo {{current}} de {{total}}",
       "continue": "Continuar →",
-      "validationTitle": "Veja o que encontramos do mês passado",
+      "validationTitle": "Aqui está o que encontramos do último mês",
       "validationSubtitle": "Confirme se está correto antes de ativarmos seu dashboard.",
       "activating": "Ativando...",
-      "activate": "Está correto — ativar dashboard",
+      "activate": "Parece correto — ativar dashboard",
       "adjustConfig": "Ajustar configuração",
       "successTitle": "Dashboard ativado.",
       "successSubtitle": "Sincronizando seus dados. Primeiros insights prontos em alguns minutos.",

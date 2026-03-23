@@ -86,7 +86,7 @@ const DashSidebar = ({ optimizerCount }: DashSidebarProps) => {
             <circle cx="10" cy="3" r="1.2" fill="white" />
           </svg>
         </div>
-        <span className="text-[15px] font-semibold tracking-tight text-dash-text-primary">GrowthLab</span>
+        <span className="text-[15px] font-semibold tracking-tight text-dash-text-primary">Clarivus</span>
       </div>
 
       {/* Active product */}
