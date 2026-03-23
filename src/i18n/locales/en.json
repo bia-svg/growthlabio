@@ -8,10 +8,10 @@
   },
   "hero": {
     "badge": "Marketing Agent",
-    "title1": "The only marketing agent that works for your business",
-    "title2": "24 hours a day,",
-    "title3": "7 days",
-    "title4": "a week.",
+    "title1": "Your marketing agent.",
+    "title2": "Always on,",
+    "title3": "24/7",
+    "title4": ".",
     "subtitle": "Clarivus builds proprietary intelligence about your business and turns it into growth decisions before problems arise.",
     "cta": "Book demo",
     "howItWorks": "How it works",
@@ -22,7 +22,7 @@
   },
   "platformSection": {
     "label": "The Platform",
-    "title": "Intelligence that knows your\nbusiness better than anyone.",
+    "title": "Intelligence that knows\nyour business.",
     "subtitle": "Clarivus is not another data tool. It's the first platform where AI gets smarter about your business every week and acts before you need to ask.",
     "features": {
       "proprietaryMemory": {
@@ -61,7 +61,7 @@
   },
   "agent": {
     "badge": "✦ AI Agent",
-    "title": "Manage by\nconversing.",
+    "title": "Manage by\nchat.",
     "subtitle": "Chat with a copilot that reads your data in real time, proposes changes with justification, and executes with your approval. Strategy and operations in one place.",
     "features": [
       "Ask \"why did my ROAS drop?\" — get analysis with real account data",
@@ -71,7 +71,7 @@
     ]
   },
   "whoItsFor": {
-    "title": "Clarivus was built for those who are\nalready good and want to go further.",
+    "title": "For those already good\nwho want to go further.",
     "items": [
       "Marketing professionals who want decisions, not more data",
       "Revenue teams that need visibility from lead to close",
@@ -151,7 +151,7 @@
     "footerCta": "Questions? Talk to the team →"
   },
   "cta": {
-    "title": "Ready to operate with clear\nvision of what lies ahead?",
+    "title": "Ready to see\nwhat's ahead?",
     "subtitle": "30-minute demo with real data. No slides, no pitch.",
     "bookDemo": "Book demo",
     "startTrial": "Start free. No credit card. Instant access.",

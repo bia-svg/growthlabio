@@ -8,10 +8,10 @@
   },
   "hero": {
     "badge": "Agente de Marketing",
-    "title1": "O único agente de marketing que trabalha para o seu negócio",
-    "title2": "24 horas por dia,",
-    "title3": "7 dias",
-    "title4": "por semana.",
+    "title1": "Seu agente de marketing.",
+    "title2": "Sempre ligado,",
+    "title3": "24/7",
+    "title4": ".",
     "subtitle": "Clarivus acumula inteligência proprietária sobre o seu negócio e transforma isso em decisões de crescimento antes que os problemas apareçam.",
     "cta": "Agendar demo",
     "howItWorks": "Como funciona",
@@ -22,7 +22,7 @@
   },
   "platformSection": {
     "label": "A Plataforma",
-    "title": "Inteligência que conhece o seu\nnegócio melhor do que ninguém.",
+    "title": "Inteligência que conhece\no seu negócio.",
     "subtitle": "Clarivus não é mais uma ferramenta de dados. É a primeira plataforma onde a IA fica mais inteligente sobre o seu negócio a cada semana e age antes que você precise pedir.",
     "features": {
       "proprietaryMemory": {
@@ -61,7 +61,7 @@
   },
   "agent": {
     "badge": "✦ AI Agent",
-    "title": "Gerencie\nconversando.",
+    "title": "Gerencie por\nconversa.",
     "subtitle": "Converse com um copiloto que lê seus dados em tempo real, propõe mudanças com justificativa e executa com a sua aprovação. Estratégia e operação no mesmo lugar.",
     "features": [
       "Pergunta \"por que meu ROAS caiu?\" — recebe análise com os dados reais da conta",
@@ -71,7 +71,7 @@
     ]
   },
   "whoItsFor": {
-    "title": "Clarivus foi feito para quem já é\nbom e quer ir mais longe.",
+    "title": "Para quem já é bom\ne quer ir mais longe.",
     "items": [
       "Profissionais de marketing que querem decisão, não mais dado",
       "Times de receita que precisam de visibilidade do lead ao fechamento",
@@ -151,7 +151,7 @@
     "footerCta": "Dúvidas? Fale com o time →"
   },
   "cta": {
-    "title": "Pronto para operar com visão\nclara do que está à frente?",
+    "title": "Pronto para ver\no que vem antes?",
     "subtitle": "Demo de 30 minutos com dados reais. Sem slides, sem pitch.",
     "bookDemo": "Agendar demo",
     "startTrial": "Começar gratuitamente. Sem cartão de crédito. Acesso imediato.",
