@@ -13,7 +13,7 @@ const Footer = () => {
                 <circle cx="10" cy="3" r="1.2" fill="white" />
               </svg>
             </div>
-            GrowthLab
+            Clarivus
           </div>
           <div className="text-[12.5px] text-gl-g300">{t("footer.copyright")}</div>
         </div>

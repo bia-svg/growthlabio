@@ -4,6 +4,7 @@ import HeroSection from "@/components/HeroSection";
 import IntegrationsBar from "@/components/IntegrationsBar";
 import PlatformSection from "@/components/PlatformSection";
 import AgentSection from "@/components/AgentSection";
+import WhoItsForSection from "@/components/WhoItsForSection";
 import HowAndStats from "@/components/HowAndStats";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
@@ -21,6 +22,7 @@ const Index = () => {
       <IntegrationsBar />
       <PlatformSection />
       <AgentSection />
+      <WhoItsForSection />
       <HowAndStats />
       <CTASection onOpenModal={openModal} />
       <Footer />
