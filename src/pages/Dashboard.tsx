@@ -39,11 +39,11 @@ const Dashboard = () => {
         <main className="flex-1 overflow-auto">
           <Routes>
             <Route index element={<Performance />} />
-            <Route path="agent" element={<AIAgent />} />
-            <Route path="optimizer" element={<Optimizer onCountChange={setOptimizerCount} />} />
-            <Route path="competitor" element={<Competitor />} />
+            <Route path="agent" element={<ComingSoonOverlay><AIAgent /></ComingSoonOverlay>} />
+            <Route path="optimizer" element={<ComingSoonOverlay><Optimizer onCountChange={setOptimizerCount} /></ComingSoonOverlay>} />
+            <Route path="competitor" element={<ComingSoonOverlay><Competitor /></ComingSoonOverlay>} />
             <Route path="goals" element={<Goals />} />
-            <Route path="attribution" element={<Attribution />} />
+            <Route path="attribution" element={<ComingSoonOverlay><Attribution /></ComingSoonOverlay>} />
             <Route path="billing" element={<Billing />} />
             <Route path="integrations" element={<Integrations />} />
           </Routes>
