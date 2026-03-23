@@ -168,15 +168,12 @@ const Signup = () => {
                 <label className="block text-[11px] font-semibold uppercase tracking-[0.07em] text-dash-text-tertiary mb-1.5">
                   {lang === "pt" ? "Telefone / WhatsApp" : "Phone / WhatsApp"}
                 </label>
-                <input
-                  type="tel"
+                <PhoneInput
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
+                  onChange={setPhone}
                   onBlur={() => touch("phone")}
-                  placeholder={lang === "pt" ? "(11) 9 0000-0000" : "+1 (555) 000-0000"}
-                  className={`w-full bg-dash-sidebar border rounded-md px-3 py-2.5 text-[14px] text-dash-text-primary outline-none transition-colors placeholder:text-dash-text-tertiary ${
-                    touched.phone && !phone.trim() ? "border-dash-red" : "border-dash-border focus:border-dash-text-primary"
-                  }`}
+                  hasError={touched.phone && !phone.replace(/\+\d+\s*/, "").trim()}
+                  defaultCountry={lang === "pt" ? "BR" : "US"}
                 />
               </div>
 
