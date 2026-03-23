@@ -78,12 +78,11 @@ const DemoModal = ({ open, onClose }: DemoModalProps) => {
             </div>
             <div className="mb-3">
               <label className="block text-xs font-medium text-gl-g500 mb-1">{t("demoModal.phone")}</label>
-              <input
-                className="w-full bg-gl-off border border-border rounded-lg px-3 py-2.5 text-sm text-foreground outline-none focus:border-foreground focus:bg-background transition-colors placeholder:text-gl-g200"
-                type="tel"
+              <PhoneInput
                 value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                placeholder={t("demoModal.phonePlaceholder")}
+                onChange={setPhone}
+                variant="landing"
+                defaultCountry={i18n.language?.startsWith("pt") ? "BR" : "US"}
               />
             </div>
             <button
