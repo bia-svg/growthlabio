@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Loader2, Check, ChevronDown } from "lucide-react";
+import PhoneInput from "@/components/PhoneInput";
 
 const languages = [
   { code: "pt", label: "Português (BR)", flag: "🇧🇷" },
