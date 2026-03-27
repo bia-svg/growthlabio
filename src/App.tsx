@@ -10,6 +10,7 @@ import Login from "./pages/Login.tsx";
 import Signup from "./pages/Signup.tsx";
 import Welcome from "./pages/Welcome.tsx";
 import Onboarding from "./pages/Onboarding.tsx";
+import Privacy from "./pages/Privacy.tsx";
 
 
 const queryClient = new QueryClient();
@@ -22,6 +23,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/privacidade" element={<Privacy />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/welcome" element={<Welcome />} />
